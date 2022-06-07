@@ -1,0 +1,27 @@
+name: Needle
+description: A plugin for my server
+main: me.shjibi.needle.Main
+version: 1.0
+api-version: 1.18
+
+
+commands:
+  zb:
+    description: 向全世界/某个人发送你的坐标
+    aliases: zuobiao
+  tpa:
+    description: 申请传送
+  tpahere:
+    description: 申请拉人
+  tpaccept:
+    description: 同意传送请求
+  tpadeny:
+    description: 拒绝传送请求
+  suicide:
+    description: 自杀
+  playtime:
+    description: 查看游玩时长
+    aliases: pt
+  progress:
+    description: 你成就的进度怎么样了?
+    aliases: prg
