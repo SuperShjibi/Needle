@@ -20,6 +20,7 @@ public class SpigotUtil {
     第一个String -> 原文, 第二个String -> 译文
     */
     private static final Map<String, String> advancementTranslation = new HashMap<>();
+    private static List<String> allAdvancementNames = null;  // 存储以减少卡顿
 
     /*
     把translation.txt中的翻译加载到内存
@@ -57,13 +58,15 @@ public class SpigotUtil {
 
     /* 获取所有进度(成就)的名称(除了配方进度) */
     public static List<String> getAdvancementNameList() {
-        List<String> names = new ArrayList<>();
-        Iterator<Advancement> iter = Bukkit.getServer().advancementIterator();
-        while (iter.hasNext()) {
-            String name = iter.next().getKey().getKey();
-            if (!name.startsWith("recipes/")) names.add(name);
+        if (allAdvancementNames == null) {
+            allAdvancementNames = new ArrayList<>();
+            Iterator<Advancement> iter = Bukkit.getServer().advancementIterator();
+            while (iter.hasNext()) {
+                String name = iter.next().getKey().getKey();
+                if (!name.startsWith("recipes/")) allAdvancementNames.add(name);
+            }
         }
-        return names;
+        return allAdvancementNames;
     }
 
     /* 获取所有进度(成就)的名称(除了配方进度)，存到数组里 */
