@@ -1,9 +1,7 @@
 package me.shjibi.needle.event.listeners;
 
-import me.shjibi.needle.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
-import org.bukkit.advancement.Advancement;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,20 +9,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import static me.shjibi.needle.utils.JavaUtil.contains;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class EventChat implements Listener {
 
-    // ban一些指令
+    /* ban一些指令 */
     private static final String[] banned = {
             "rl", "reload", "plugins",
             "pl", "ver", "version", "about",
@@ -35,13 +25,13 @@ public final class EventChat implements Listener {
             "SuperShjibi"
     };
 
-    // 给聊天信息染色
+    /* 给聊天信息染色 */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent e) {
         e.setMessage(color(e.getMessage()));
     }
 
-    // 在聊天栏@玩家
+    /* 在聊天栏@玩家 */
     @EventHandler
     public void onAtPlayer(AsyncPlayerChatEvent e) {
         String msg = e.getMessage();
@@ -57,7 +47,7 @@ public final class EventChat implements Listener {
     }
 
 
-    // 处理指令
+    /* 处理指令 */
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent e) {
         String[] args = e.getMessage().split(" ");

@@ -1,10 +1,10 @@
 package me.shjibi.needle.commands.tpa;
 
 
-// 不用内部类了，类名太长
+/* 一个枚举类，代表了传送类型 */
 public enum TeleportType {
 
-    HERE, THERE;
-
+    // 不用内部类，因为写起来不方便
+    HERE, THERE
 
 }

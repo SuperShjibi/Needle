@@ -9,7 +9,7 @@ import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class EventBed implements Listener {
 
-    // 上床消息
+    /* 上床消息 */
     @EventHandler
     public void onEnterBed(PlayerBedEnterEvent e) {
         if (e.getBedEnterResult() != PlayerBedEnterEvent.BedEnterResult.OK) return;

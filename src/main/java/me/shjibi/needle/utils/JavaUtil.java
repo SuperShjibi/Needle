@@ -8,7 +8,7 @@ public final class JavaUtil {
 
     private JavaUtil() {}
 
-    // 对于数组的contains方法
+    /* 对于数组的contains方法 */
     public static <T> boolean contains(T[] array, T element) {
         boolean result = false;
         for (T t : array) {
@@ -21,9 +21,14 @@ public final class JavaUtil {
     }
 
 
-    // 返回一个数组中所有包含了s的元素
+    /* 返回一个数组中所有包含了s的字符串 */
     public static List<String> allContains(String s, String... elements) {
         return Stream.of(elements).filter(str -> str.contains(s)).collect(Collectors.toList());
+    }
+
+    /* 返回一个数组中所有以prefix开头的字符串 */
+    public static List<String> allStartsWith(String prefix, String... elements) {
+        return Stream.of(elements).filter(str -> str.startsWith(prefix)).collect(Collectors.toList());
     }
 
 }

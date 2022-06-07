@@ -31,6 +31,7 @@ public final class CommandProgress extends PlayerCommandHandler {
         return null;
     }
 
+    /* 查看成就的进度(已完成标准 或 未完成标准) */
     @Override
     protected void execute(Player p, Command command, String s, String[] args) {
         Advancement advancement = getAdvancementByName(args[0]);
@@ -40,7 +41,7 @@ public final class CommandProgress extends PlayerCommandHandler {
             return;
         }
 
-        boolean showRemaining = false;
+        boolean showRemaining = false; // 则显示未完成的
         if (args.length > 1) {
             showRemaining = Boolean.parseBoolean(args[1]);
         }

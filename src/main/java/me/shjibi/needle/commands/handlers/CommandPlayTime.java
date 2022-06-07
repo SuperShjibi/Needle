@@ -15,6 +15,7 @@ public final class CommandPlayTime extends PlayerCommandHandler {
         super(Main.getInstance(), "playtime", 0, null, color("&c该指令只能由玩家执行"));
     }
 
+    /* 查看自己(或其它玩家)的游玩时间(小时) */
     @Override
     protected void execute(Player p, Command command, String s, String[] args) {
         if (args.length == 0) {

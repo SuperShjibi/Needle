@@ -18,6 +18,7 @@ import org.spigotmc.event.entity.EntityDismountEvent;
 
 public class EventSit implements Listener {
 
+    /* 右键台阶坐下 */
     @EventHandler
     public void onSit(PlayerInteractEvent e) {
         if (e.getPlayer().isSneaking()) return;
@@ -40,6 +41,7 @@ public class EventSit implements Listener {
         });
     }
 
+    /* 按shift站起来时删除箭 */
     @EventHandler
     public void onDismount(EntityDismountEvent e) {
         if (e.getDismounted().getType() != EntityType.ARROW) return;
@@ -50,6 +52,7 @@ public class EventSit implements Listener {
         p.teleport(p.getLocation().add(0, 1, 0));
     }
 
+    /* 玩家坐着退出时删除箭 */
     @EventHandler
     public void onIrresponsibleQuit(PlayerQuitEvent e) {
         if (!e.getPlayer().isInsideVehicle()) return;

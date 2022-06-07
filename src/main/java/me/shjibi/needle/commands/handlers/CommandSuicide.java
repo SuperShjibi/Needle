@@ -12,12 +12,15 @@ import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class CommandSuicide extends PlayerCommandHandler {
 
+    // 用HashSet保存执行了自杀的人，以实现自定义死亡信息
     public static final Set<String> suiciders = new HashSet<>();
 
     public CommandSuicide() {
         super(Main.getInstance(), "suicide", 0, null, color("&c该指令只能由玩家执行"));
     }
 
+
+    /* 将指令发送者的生命值设为0 */
     @Override
     protected void execute(Player p, Command cmd, String label, String[] args) {
         suiciders.add(p.getName());

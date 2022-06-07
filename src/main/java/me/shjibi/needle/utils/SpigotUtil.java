@@ -29,7 +29,7 @@ public class SpigotUtil {
             byte[] bytes = Objects.requireNonNull(Main.class.getResourceAsStream("/translation.yml")).readAllBytes();
             String content = new String(bytes, StandardCharsets.UTF_8);
 
-            for (String line : content.split("\n")) {
+            for (String line : content.split("\r\n")) {
                 String[] pair = line.split(": ");
                 if (pair.length < 2) continue;
                 advancementTranslation.put(pair[0], pair[1]);
@@ -37,7 +37,7 @@ public class SpigotUtil {
 
 
         } catch (IOException | NullPointerException e) {
-//            e.printStackTrace();  // 一般不会出错
+            e.printStackTrace();  // 一般不会出错
             Main.getInstance().getLogger().log(Level.SEVERE, "无法加载翻译！");
         }
     }
@@ -83,6 +83,8 @@ public class SpigotUtil {
         return result;
     }
 
+
+    /* 用Bukkit的方法获取Advancement */
     public static Advancement getAdvancementByName(String name) {
         return Bukkit.getAdvancement(NamespacedKey.minecraft(name));
     }

@@ -17,6 +17,7 @@ public final class CommandZB extends PlayerCommandHandler {
         super(Main.getInstance(), "zb", 0, null, color("&c该指令只能由玩家执行"));
     }
 
+    /* 向全世界/某个人发送的坐标及所在维度 */
     @Override
     protected void execute(Player p, Command command, String s, String[] args) {
         Location loc = p.getLocation();

@@ -13,7 +13,7 @@ public class EventJoinQuit implements Listener {
 
     public static final String loginTimeout = "你太长时间未登录了";
 
-    // 原版消息前的自定义消息
+    /* 提前发送原版加入消息，并给特殊玩家特殊的入服提示 */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
         String joinMessage = e.getJoinMessage();
@@ -27,6 +27,7 @@ public class EventJoinQuit implements Listener {
         e.setJoinMessage(null);
     }
 
+    /* 登陆超时提示 */
     @EventHandler
     public void onLoginTimeout(PlayerKickEvent e) {
         if (loginTimeout.equals(e.getReason())) Bukkit.broadcastMessage(color("&e" + e.getPlayer().getName() + "因为30秒没有登录被踢出了服务器"));

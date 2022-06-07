@@ -1,6 +1,5 @@
 package me.shjibi.needle.commands.base;
 
-import me.shjibi.needle.commands.base.BaseCommandHandler;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -9,6 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/* 玩家指令(只有玩家才可以使用的指令) */
 public abstract class PlayerCommandHandler extends BaseCommandHandler {
 
     private final String notPlayerMessage;

@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 
+/* 基本注册指令处理 */
 public abstract class BaseCommandHandler implements CommandExecutor, TabCompleter {
 
     protected final String[] usage;
@@ -26,12 +27,14 @@ public abstract class BaseCommandHandler implements CommandExecutor, TabComplete
         this.usage = usage;
     }
 
+    /* 注册指令处理 */
     public void register() {
         PluginCommand command = Objects.requireNonNull(plugin.getCommand(name));
         command.setExecutor(this);
         command.setTabCompleter(this);
     }
 
+    /* 注册 */
     protected final void sendUsage(CommandSender sender) {
         if (usage == null) return;
         for (String line : usage) {

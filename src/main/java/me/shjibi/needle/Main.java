@@ -8,6 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
+    /*
+    唯一的实例
+    */
     private static Main instance;
 
     @Override

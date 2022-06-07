@@ -9,6 +9,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.List;
 
+/* 管理tpa请求，指令等 */
 public final class TPAManager {
 
     private TPAManager() {

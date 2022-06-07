@@ -16,6 +16,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
+import static me.shjibi.needle.commands.tpa.TeleportType.HERE;
+import static me.shjibi.needle.commands.tpa.TeleportType.THERE;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.stripColor;
 
@@ -23,9 +25,11 @@ public final class CommandTPA extends PlayerCommandHandler {
 
 
     public CommandTPA() {
-        super(Main.getInstance(), "tpa", 1, color("&c用法: /tpa <玩家>"), color("该指令只能由玩家执行"));
+        super(Main.getInstance(), "tpa", 1, color("&c用法: /指令 <玩家>"), color("该指令只能由玩家执行"));
     }
 
+    
+    /* 处理tpa, tpahere, tpaccept, tpadeny */
     @Override
     protected void execute(Player p, Command command, String label, String[] args) {
         Player target = Bukkit.getPlayerExact(args[0]);
@@ -43,30 +47,49 @@ public final class CommandTPA extends PlayerCommandHandler {
         if (label.equalsIgnoreCase("tpa") || label.equalsIgnoreCase("tpahere")) {
             createRequest(label, p, target);
         } else if (label.equalsIgnoreCase("tpaccept")) {
-            boolean[] results = checkRequest(target, p);
-            if (!results[0]) return;
-            acceptRequest(results[1] ? target : p,  results[1] ? p : target, results[1] ? TeleportType.THERE : TeleportType.HERE);
+            boolean[] shouldAcceptResult = checkRequest(target, p);
+            if (!shouldAcceptResult[0]) return;
+            Player from = shouldAcceptResult[1] ? target : p;
+            Player to = shouldAcceptResult[1] ? p : target;
+            TeleportType type = shouldAcceptResult[1] ? THERE : HERE;
+
+            acceptRequest(from, to, type);
+
+            boolean[] shouldDeleteResult = checkRequest(p, target);
+            if (!shouldDeleteResult[0]) return;
+            if (shouldDeleteResult[1] == shouldAcceptResult[1]) {
+                TPAManager.getInstance().removeRequest(new TeleportRequest(to, from, 0L, type));
+                p.sendMessage(color("&c由于你已经同意了对方的请求，所以你给对方的请求被删除了"));
+            }
         } else if (label.equalsIgnoreCase("tpadeny")) {
             boolean[] results = checkRequest(target, p);
             if (!results[0]) return;
-            TeleportRequest request = TPAManager.getInstance().getRequest(target, p, results[1] ? TeleportType.THERE : TeleportType.HERE);
+            TeleportRequest request = TPAManager.getInstance().getRequest(target, p, results[1] ? THERE : HERE);
             TPAManager.getInstance().removeRequest(request);
             p.sendMessage(color("&a成功拒绝"));
             target.sendMessage(color("&c对方已拒绝"));
         }
     }
 
+    /* 创建TeleportRequest */
     private void createRequest(String label, Player p, Player target) {
         boolean typeBool = label.equalsIgnoreCase("tpa"); // true则为tpa，否则为tpahere
-        TeleportType type = typeBool ? TeleportType.THERE : TeleportType.HERE;
-        Player from = typeBool ? p : target;
+        TeleportType type = typeBool ? THERE : HERE;  // 获取枚举常量
+        // 判断目的地和起始地
+        Player from = typeBool ? p : target;  
         Player to = typeBool ? target : p;
 
-        if (TPAManager.getInstance().containsRequest(to, from, type)) {
-            acceptRequest(from, to, type);
+        // 判断对方是否发送了对应的请求，如果是，则直接同意
+        TeleportType anotherType = type == THERE ? HERE : THERE;
+        if (TPAManager.getInstance().containsRequest(from, to, anotherType)) {
+            acceptRequest(from, to, anotherType);
+            return;
         }
 
+        // 创建请求
         TeleportRequest request = new TeleportRequest(from, to, System.currentTimeMillis(), type);
+
+        // 判断是否已有请求，如果有则进行提示
         if (!TPAManager.getInstance().containsRequest(request))
             TPAManager.getInstance().addRequest(request);
         else {
@@ -80,6 +103,8 @@ public final class CommandTPA extends PlayerCommandHandler {
         p.sendMessage(color(senderMessage));
         target.sendMessage(color(receiverMessage));
 
+        
+        // 发送同意/拒绝
         TextComponent accept = new TextComponent(color("&a[同意]"));
         accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&a&o点击同意"))));
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + p.getName()));
@@ -100,6 +125,8 @@ public final class CommandTPA extends PlayerCommandHandler {
         target.spigot().sendMessage(accept);
     }
 
+
+    /* 同意请求 */
     private void acceptRequest(Player from, Player to, TeleportType type) {
         TeleportRequest request = TPAManager.getInstance().getRequest(from, to, type);
         boolean result = request != null && request.accept();
@@ -113,15 +140,18 @@ public final class CommandTPA extends PlayerCommandHandler {
         TPAManager.getInstance().removeRequest(request);
     }
 
+    /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
     private boolean[] checkRequest(Player target, Player p) {
         boolean typeBool;
-        boolean exists = (typeBool = TPAManager.getInstance().containsRequest(target, p, TeleportType.THERE)) ||
-                TPAManager.getInstance().containsRequest(p, target, TeleportType.HERE);
+        boolean exists = (typeBool = TPAManager.getInstance().containsRequest(target, p, THERE)) ||
+                TPAManager.getInstance().containsRequest(p, target, HERE);
 
-        if (!exists) p.sendMessage(color("&a对方没有向你发送传送&6/&9拉人&a请求!"));
+        if (!exists) p.sendMessage(color("&a对方没有向你发送&6传送a6/&9拉人&a请求!"));
         return new boolean[] {exists, typeBool};
     }
 
+
+    /* 重写了register，因为要注册多个指令 */
     @Override
     public void register() {
         for (String command : TPAManager.COMMANDS) {

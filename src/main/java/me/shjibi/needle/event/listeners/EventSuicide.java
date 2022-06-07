@@ -8,6 +8,7 @@ import static me.shjibi.needle.commands.handlers.CommandSuicide.suiciders;
 
 public final class EventSuicide implements Listener {
 
+    /* 更换自杀时的死亡提示 */
     @EventHandler
     public void onSuicide(PlayerDeathEvent e) {
         String name = e.getEntity().getName();
