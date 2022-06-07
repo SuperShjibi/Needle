@@ -55,7 +55,7 @@ public final class CommandTPA extends PlayerCommandHandler {
 
             acceptRequest(from, to, type);
 
-            boolean[] shouldDeleteResult = checkRequest(p, target);
+            boolean[] shouldDeleteResult = checkRequest(p, target, false);
             if (!shouldDeleteResult[0]) return;
             if (shouldDeleteResult[1] == shouldAcceptResult[1]) {
                 TPAManager.getInstance().removeRequest(new TeleportRequest(to, from, 0L, type));
@@ -142,11 +142,16 @@ public final class CommandTPA extends PlayerCommandHandler {
 
     /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
     private boolean[] checkRequest(Player target, Player p) {
+        return checkRequest(target, p, true);
+    }
+
+    /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
+    private boolean[] checkRequest(Player target, Player p, boolean message) {
         boolean typeBool;
         boolean exists = (typeBool = TPAManager.getInstance().containsRequest(target, p, THERE)) ||
                 TPAManager.getInstance().containsRequest(p, target, HERE);
 
-        if (!exists) p.sendMessage(color("&a对方没有向你发送&6传送a6/&9拉人&a请求!"));
+        if (!exists && message) p.sendMessage(color("&a对方没有向你发送&6传送&a/&9拉人&a请求!"));
         return new boolean[] {exists, typeBool};
     }
 
