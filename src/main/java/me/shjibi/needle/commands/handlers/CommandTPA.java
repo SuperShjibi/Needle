@@ -29,7 +29,7 @@ public final class CommandTPA extends PlayerCommandHandler {
     }
 
     
-    /* 处理tpa, tpahere, tpaccept, tpadeny */
+    /* 处理tpa, tpahere, tpaccept, tpadeny, tpacancel */
     @Override
     protected void execute(Player p, Command command, String label, String[] args) {
         Player target = Bukkit.getPlayerExact(args[0]);
@@ -78,8 +78,8 @@ public final class CommandTPA extends PlayerCommandHandler {
             Player to = results[1] ? target : p;
             TeleportType type = results[1] ? THERE : HERE;
             TPAManager.getInstance().removeRequest(new TeleportRequest(from, to, 0L, type));
-            p.sendMessage(color("&a成功撤回对&6" + target.getName() + "&a的传送请求!"));
-            target.sendMessage(color("&6" + p.getName() + "&a已撤回对你的传送请求!"));
+            p.sendMessage(color("&7成功撤回对&e" + target.getName() + "&7的传送请求!"));
+            target.sendMessage(color("&e" + p.getName() + "&7已撤回对你的传送请求!"));
         }
     }
 
@@ -109,22 +109,28 @@ public final class CommandTPA extends PlayerCommandHandler {
             return;
         }
 
-        String senderMessage = typeBool ? "&a你给&6" + target.getName() + "&a发送了传送请求！" : "&9你给&6" + target.getName() + "&9发送了拉人请求！";
+        TextComponent senderMessage = new TextComponent(color(typeBool ? "&a你给&6" + target.getName() + "&a发送了传送请求！" : "&9你给&6" + target.getName() + "&9发送了拉人请求！"));
+        TextComponent cancel = new TextComponent(color("&7[撤回]"));
+        cancel.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&8&o点击撤回"))));
+        cancel.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpacancel " + target.getName()));
+        senderMessage.addExtra("   ");
+        senderMessage.addExtra(cancel);
+
         String receiverMessage = typeBool ?  "&6" + p.getName() + "&a给你发送了传送请求" :  "&6" + p.getName() + "&9给你发送了拉人请求";
 
-        p.sendMessage(color(senderMessage));
+        p.spigot().sendMessage(senderMessage);
         target.sendMessage(color(receiverMessage));
 
         
         // 发送同意/拒绝
         TextComponent accept = new TextComponent(color("&a[同意]"));
-        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&a&o点击同意"))));
+        accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&2&o点击同意"))));
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + p.getName()));
 
         int length = stripColor(receiverMessage).length();
 
         TextComponent deny = new TextComponent(color("&c[拒绝]"));
-        deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&c&o点击拒绝"))));
+        deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&4&o点击拒绝"))));
         deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpadeny " + p.getName()));
 
         TextComponent whiteSpace = new TextComponent(String.format("%" + length + "s", ""));

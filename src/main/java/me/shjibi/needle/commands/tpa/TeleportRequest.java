@@ -39,8 +39,8 @@ public record TeleportRequest(Player from, Player to, long start, TeleportType t
         boolean typeBool = (type == TeleportType.THERE);
         Player reqSender = typeBool ? from : to;
         Player receiver = typeBool ? to : from;
-        reqSender.sendMessage(color("&8你发送给&e" + receiver.getName() + "&8的请求已过期！"));
-        receiver.sendMessage(color("&e" + reqSender.getName() + "&8发送你的请求已过期！"));
+        reqSender.sendMessage(color("&7你发送给&e" + receiver.getName() + "&7的请求已过期！"));
+        receiver.sendMessage(color("&e" + reqSender.getName() + "&7发送你的请求已过期！"));
     }
 
     @Override

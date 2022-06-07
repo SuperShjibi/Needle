@@ -13,6 +13,7 @@ commands:
     description: 申请传送
   tpahere:
     description: 申请拉人
+    aliases: [tpah]
   tpaccept:
     description: 同意传送请求
   tpadeny:
