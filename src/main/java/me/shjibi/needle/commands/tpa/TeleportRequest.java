@@ -2,9 +2,13 @@ package me.shjibi.needle.commands.tpa;
 
 import org.bukkit.entity.Player;
 
+import static me.shjibi.needle.utils.StringUtil.color;
+
 
 /* 代表了一个传送请求，包含了起始地(Player)，目的地(Player)，请求时间(long)，以及类型(TeleportType) */
 public record TeleportRequest(Player from, Player to, long start, TeleportType type) {
+
+    public static final int REMOVE_TIME = 60;
 
     public Player getFrom() {
         if (from.isOnline()) return from;
@@ -28,7 +32,15 @@ public record TeleportRequest(Player from, Player to, long start, TeleportType t
     }
 
     public boolean shouldRemove() {
-        return (System.currentTimeMillis() - start) > 60 * 1000;
+        return (System.currentTimeMillis() - start) > REMOVE_TIME * 1000;
+    }
+
+    public void sendRemoveMessage() {
+        boolean typeBool = (type == TeleportType.THERE);
+        Player reqSender = typeBool ? from : to;
+        Player receiver = typeBool ? to : from;
+        reqSender.sendMessage(color("&8你发送给&e" + receiver.getName() + "&8的请求已过期！"));
+        receiver.sendMessage(color("&e" + reqSender.getName() + "&8发送你的请求已过期！"));
     }
 
     @Override

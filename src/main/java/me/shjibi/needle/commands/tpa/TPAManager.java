@@ -1,8 +1,7 @@
 package me.shjibi.needle.commands.tpa;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.commands.handlers.CommandTPA;
-import org.bukkit.command.CommandExecutor;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,7 +16,7 @@ public final class TPAManager {
     }
 
     public static final String[] COMMANDS = {
-            "tpa", "tpahere", "tpaccept", "tpadeny"
+            "tpa", "tpahere", "tpaccept", "tpadeny", "tpacancel"
     };
 
     private static TPAManager instance;
@@ -42,6 +41,11 @@ public final class TPAManager {
 
     public void addRequest(TeleportRequest request) {
         requests.add(request);
+        Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
+            if (!requests.contains(request)) return;
+            request.sendRemoveMessage();
+            requests.remove(request);
+        }, TeleportRequest.REMOVE_TIME * 20);
     }
 
     public void removeRequest(TeleportRequest request) {
@@ -54,16 +58,5 @@ public final class TPAManager {
         }
         return null;
     }
-
-    public void runCleaningTask() {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                requests.removeIf(TeleportRequest::shouldRemove);
-            }
-        }.runTaskTimer(Main.getInstance(), 0, 20);
-    }
-
-
 
 }

@@ -66,8 +66,20 @@ public final class CommandTPA extends PlayerCommandHandler {
             if (!results[0]) return;
             TeleportRequest request = TPAManager.getInstance().getRequest(target, p, results[1] ? THERE : HERE);
             TPAManager.getInstance().removeRequest(request);
-            p.sendMessage(color("&a成功拒绝"));
-            target.sendMessage(color("&c对方已拒绝"));
+            p.sendMessage(color("&c成功拒绝!"));
+            target.sendMessage(color("&c对方已拒绝!"));
+        } else if (label.equalsIgnoreCase("tpacancel")) {
+            boolean[] results = checkRequest(p, target, false);
+            if (!results[0]) {
+                p.sendMessage(color("&c你没有向对方发送过传送请求!"));
+                return;
+            }
+            Player from = results[1] ? p : target;
+            Player to = results[1] ? target : p;
+            TeleportType type = results[1] ? THERE : HERE;
+            TPAManager.getInstance().removeRequest(new TeleportRequest(from, to, 0L, type));
+            p.sendMessage(color("&a成功撤回对&6" + target.getName() + "&a的传送请求!"));
+            target.sendMessage(color("&6" + p.getName() + "&a已撤回对你的传送请求!"));
         }
     }
 
@@ -133,8 +145,8 @@ public final class CommandTPA extends PlayerCommandHandler {
         if (!result)
             from.sendMessage(color((request != null ? "&a对方已下线" : "&c请求已过期")));
         else {
-            from.sendMessage(color("&a已传送!"));
-            to.sendMessage(color("&a已同意传送请求!"));
+            from.sendMessage(color("&a已传送至&6" + to.getName() + "&a!"));
+            to.sendMessage(color("&a已同意&6" + from.getName() + "&a的传送请求!"));
         }
 
         TPAManager.getInstance().removeRequest(request);
@@ -146,12 +158,12 @@ public final class CommandTPA extends PlayerCommandHandler {
     }
 
     /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
-    private boolean[] checkRequest(Player target, Player p, boolean message) {
+    private boolean[] checkRequest(Player reqSender, Player receiver, boolean message) {
         boolean typeBool;
-        boolean exists = (typeBool = TPAManager.getInstance().containsRequest(target, p, THERE)) ||
-                TPAManager.getInstance().containsRequest(p, target, HERE);
+        boolean exists = (typeBool = TPAManager.getInstance().containsRequest(reqSender, receiver, THERE)) ||
+                TPAManager.getInstance().containsRequest(receiver, reqSender, HERE);
 
-        if (!exists && message) p.sendMessage(color("&a对方没有向你发送&6传送&a/&9拉人&a请求!"));
+        if (!exists && message) receiver.sendMessage(color("&c该&6传送&c/&9拉人&c请求不存在或已过期!"));
         return new boolean[] {exists, typeBool};
     }
 
