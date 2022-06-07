@@ -9,10 +9,13 @@ public final class EventManager {
 
     private EventManager() {}
 
+    // 所有Listener的名字
     private static final String[] NAMES = {
         "Anvil", "Bed", "Chat", "JoinQuit", "Sit", "Suicide"
     };
 
+
+    // 利用反射注册Listeners
     public static void registerListeners() {
         Main plugin = Main.getInstance();
         for (String name : NAMES) {

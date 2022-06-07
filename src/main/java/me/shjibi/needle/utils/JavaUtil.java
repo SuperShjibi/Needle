@@ -21,9 +21,9 @@ public final class JavaUtil {
     }
 
 
-    // 如果obj为null，返回replacement，否则返回obj
-    public static List<String> allContains(String prefix, String... elements) {
-        return Stream.of(elements).filter(str -> str.contains(prefix)).collect(Collectors.toList());
+    // 返回一个数组中所有包含了s的元素
+    public static List<String> allContains(String s, String... elements) {
+        return Stream.of(elements).filter(str -> str.contains(s)).collect(Collectors.toList());
     }
 
 }

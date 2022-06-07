@@ -24,7 +24,7 @@ public final class CommandProgress extends PlayerCommandHandler {
     @Override
     public List<String> completeTab(Player player, Command command, String s, String[] args) {
         if (args.length == 1) {
-            return allContains(args[0], getAdvancementNames());
+            return allContains(args[0], getAdvancementNamesArray());
         } else if (args.length == 2) {
             return allContains(args[1], "true", "false");
         }
