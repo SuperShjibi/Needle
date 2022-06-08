@@ -19,7 +19,7 @@ public final class CommandPlayTime extends PlayerCommandHandler {
     @Override
     protected void execute(Player p, Command command, String s, String[] args) {
         if (args.length == 0) {
-            float playTime = p.getStatistic(Statistic.TOTAL_WORLD_TIME) / 20f / 60f / 60f;
+            float playTime = p.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20f / 60f / 60f;
             p.sendMessage(color(String.format("&a你游玩了&6%.3f&a小时", playTime)));
         } else {
             String targetName = args[0];
@@ -30,7 +30,7 @@ public final class CommandPlayTime extends PlayerCommandHandler {
                 return;
             }
 
-            float playTime = target.getStatistic(Statistic.TOTAL_WORLD_TIME) / 20f / 60f / 60f;
+            float playTime = target.getStatistic(Statistic.PLAY_ONE_MINUTE) / 20f / 60f / 60f;
             p.sendMessage(color(String.format("&6%s&a游玩了&6%.3f&a小时", targetName, playTime)));
         }
     }
