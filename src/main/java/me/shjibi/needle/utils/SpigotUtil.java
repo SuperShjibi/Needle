@@ -3,8 +3,10 @@ package me.shjibi.needle.utils;
 import me.shjibi.needle.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.advancement.Advancement;
+import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +41,7 @@ public class SpigotUtil {
 
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();  // 一般不会出错
-            Main.getInstance().getLogger().log(Level.SEVERE, "无法加载翻译！");
+            Main.getInstance().getLogger().log(Level.SEVERE, "无法加载翻译!");
         }
     }
 
@@ -90,6 +92,14 @@ public class SpigotUtil {
     /* 用Bukkit的方法获取Advancement */
     public static Advancement getAdvancementByName(String name) {
         return Bukkit.getAdvancement(NamespacedKey.minecraft(name));
+    }
+
+    /* 通过名字获取离线玩家 */
+    public static OfflinePlayer getOfflinePlayer(String name) {
+        for (OfflinePlayer p : Main.getInstance().getServer().getOfflinePlayers()) {
+            if (name.equals(p.getName())) return p;
+        }
+        return null;
     }
 
 }
