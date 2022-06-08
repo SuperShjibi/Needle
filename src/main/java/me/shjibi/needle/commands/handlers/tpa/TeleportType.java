@@ -1,4 +1,4 @@
-package me.shjibi.needle.commands.tpa;
+package me.shjibi.needle.commands.handlers.tpa;
 
 
 /* 一个枚举类，代表了传送类型 */

@@ -1,4 +1,4 @@
-package me.shjibi.needle.commands.tpa;
+package me.shjibi.needle.commands.handlers.tpa;
 
 import org.bukkit.entity.Player;
 

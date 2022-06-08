@@ -2,9 +2,9 @@ package me.shjibi.needle.commands.handlers;
 
 import me.shjibi.needle.Main;
 import me.shjibi.needle.commands.base.PlayerCommandHandler;
-import me.shjibi.needle.commands.tpa.TPAManager;
-import me.shjibi.needle.commands.tpa.TeleportRequest;
-import me.shjibi.needle.commands.tpa.TeleportType;
+import me.shjibi.needle.commands.handlers.tpa.TPAManager;
+import me.shjibi.needle.commands.handlers.tpa.TeleportRequest;
+import me.shjibi.needle.commands.handlers.tpa.TeleportType;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -16,8 +16,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-import static me.shjibi.needle.commands.tpa.TeleportType.HERE;
-import static me.shjibi.needle.commands.tpa.TeleportType.THERE;
+import static me.shjibi.needle.commands.handlers.tpa.TeleportType.HERE;
+import static me.shjibi.needle.commands.handlers.tpa.TeleportType.THERE;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.stripColor;
 
