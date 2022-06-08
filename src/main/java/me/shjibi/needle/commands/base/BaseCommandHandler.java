@@ -42,26 +42,4 @@ public abstract class BaseCommandHandler implements CommandExecutor, TabComplete
             sender.sendMessage(line);
         }
     }
-
-    protected Player parsePlayer(String name) {
-        return Bukkit.getPlayerExact(name);
-    }
-
-    protected Integer parseInt(String value) {
-        try {
-            return Integer.parseInt(value);
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
-    protected Float parseFloat(String value) {
-        try {
-            return Float.parseFloat(value);
-        } catch (NumberFormatException | NullPointerException e) {
-            return null;
-        }
-    }
-
-
 }
