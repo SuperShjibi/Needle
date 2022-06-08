@@ -11,7 +11,7 @@ public final class EventManager {
 
     /* 所有Listener的名字 */
     private static final String[] NAMES = {
-        "Anvil", "Bed", "Chat", "JoinQuit", "Sit", "Suicide"
+        "Bed", "Chat", "JoinQuit", "Sit", "Suicide"
     };
 
 
