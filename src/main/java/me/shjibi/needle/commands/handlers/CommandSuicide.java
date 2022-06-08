@@ -16,7 +16,7 @@ public final class CommandSuicide extends PlayerCommandHandler {
     public static final Set<String> suiciders = new HashSet<>();
 
     public CommandSuicide() {
-        super(Main.getInstance(), "suicide", 0, null, color("&c该指令只能由玩家执行"));
+        super(Main.getInstance(), "suicide", 0, null);
     }
 
 

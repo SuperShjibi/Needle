@@ -16,9 +16,7 @@ import static me.shjibi.needle.utils.StringUtil.color;
 public final class CommandProgress extends PlayerCommandHandler {
 
     public CommandProgress() {
-        super(Main.getInstance(), "progress", 1,
-                color("&c参数错误!\n&a/progress &a<成就名> &9<是否显示未完成的(可选，默认显示已完成的)>  &7查看你的成就进度(已完成的部分/未完成的部分)"),
-                color("&c该指令只能由玩家执行"));
+        super(Main.getInstance(), "progress", 1, color("&c参数错误!\n&a/$label &a<成就名> &9<是否显示未完成的(可选，默认显示已完成的)>  &7查看你的成就进度(已完成的部分/未完成的部分)"));
     }
 
     @Override

@@ -14,7 +14,7 @@ public final class CommandZB extends PlayerCommandHandler {
 
 
     public CommandZB() {
-        super(Main.getInstance(), "zb", 0, null, color("&c该指令只能由玩家执行"));
+        super(Main.getInstance(), "zb", 0, null);
     }
 
     /* 向全世界/某个人发送的坐标及所在维度 */

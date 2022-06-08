@@ -25,7 +25,7 @@ public final class CommandTPA extends PlayerCommandHandler {
 
 
     public CommandTPA() {
-        super(Main.getInstance(), "tpa", 1, color("&c$label: /指令 <玩家>"), color("该指令只能由玩家执行"));
+        super(Main.getInstance(), "tpa", 1, color("&c用法: /$label <玩家>"));
     }
 
     
