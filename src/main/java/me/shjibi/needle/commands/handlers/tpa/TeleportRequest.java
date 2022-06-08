@@ -8,7 +8,7 @@ import static me.shjibi.needle.utils.StringUtil.color;
 /* 代表了一个传送请求，包含了起始地(Player)，目的地(Player)，请求时间(long)，以及类型(TeleportType) */
 public record TeleportRequest(Player from, Player to, long start, TeleportType type) {
 
-    public static final int REMOVE_TIME = 60;
+    public static final int REMOVE_DELAY = 60;
 
     public Player getFrom() {
         if (from.isOnline()) return from;
@@ -32,7 +32,7 @@ public record TeleportRequest(Player from, Player to, long start, TeleportType t
     }
 
     public boolean shouldRemove() {
-        return (System.currentTimeMillis() - start) > REMOVE_TIME * 1000;
+        return (System.currentTimeMillis() - start) > REMOVE_DELAY * 1000;
     }
 
     public void sendRemoveMessage() {

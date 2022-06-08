@@ -8,8 +8,6 @@ import org.bukkit.entity.Player;
 import java.util.HashSet;
 import java.util.Set;
 
-import static me.shjibi.needle.utils.StringUtil.color;
-
 public final class CommandSuicide extends PlayerCommandHandler {
 
     // 用HashSet保存执行了自杀的人，以实现自定义死亡信息

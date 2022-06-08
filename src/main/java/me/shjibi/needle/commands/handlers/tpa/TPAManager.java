@@ -14,7 +14,7 @@ public final class TPAManager {
         requests = new ArrayList<>();
     }
 
-    public static final String[] COMMANDS = {
+    public static final String[] commands = {
             "tpa", "tpahere", "tpaccept", "tpadeny", "tpacancel"
     };
 
@@ -44,7 +44,7 @@ public final class TPAManager {
             if (!requests.contains(request)) return;
             request.sendRemoveMessage();
             requests.remove(request);
-        }, TeleportRequest.REMOVE_TIME * 20);
+        }, TeleportRequest.REMOVE_DELAY * 20);
     }
 
     public void removeRequest(TeleportRequest request) {

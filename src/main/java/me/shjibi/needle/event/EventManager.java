@@ -10,7 +10,7 @@ public final class EventManager {
     private EventManager() {}
 
     /* 所有Listener的名字 */
-    private static final String[] NAMES = {
+    private static final String[] names = {
         "Bed", "Chat", "JoinQuit", "Sit", "Suicide"
     };
 
@@ -18,7 +18,7 @@ public final class EventManager {
     /* 利用反射注册Listeners */
     public static void registerListeners() {
         Main plugin = Main.getInstance();
-        for (String name : NAMES) {
+        for (String name : names) {
             try {
                 Class<?> clazz = Class.forName("me.shjibi.needle.event.listeners.Event" + name);
                 Object obj = clazz.getConstructor().newInstance();

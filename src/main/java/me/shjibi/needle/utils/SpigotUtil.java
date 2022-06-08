@@ -6,7 +6,6 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.advancement.Advancement;
-import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

@@ -19,7 +19,7 @@ import java.util.Objects;
 import static me.shjibi.needle.commands.handlers.tpa.TeleportType.HERE;
 import static me.shjibi.needle.commands.handlers.tpa.TeleportType.THERE;
 import static me.shjibi.needle.utils.StringUtil.color;
-import static me.shjibi.needle.utils.StringUtil.stripColor;
+import static me.shjibi.needle.utils.StringUtil.stripUnformattedColor;
 
 public final class CommandTPA extends PlayerCommandHandler {
 
@@ -127,7 +127,7 @@ public final class CommandTPA extends PlayerCommandHandler {
         accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&2&o点击同意"))));
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + p.getName()));
 
-        int length = stripColor(receiverMessage).length();
+        int length = stripUnformattedColor(receiverMessage).length();
 
         TextComponent deny = new TextComponent(color("&c[拒绝]"));
         deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&4&o点击拒绝"))));
@@ -177,7 +177,7 @@ public final class CommandTPA extends PlayerCommandHandler {
     /* 重写了register，因为要注册多个指令 */
     @Override
     public void register() {
-        for (String command : TPAManager.COMMANDS) {
+        for (String command : TPAManager.commands) {
             PluginCommand pluginCmd = Objects.requireNonNull(plugin.getCommand(command));
             pluginCmd.setExecutor(this);
             pluginCmd.setTabCompleter(this);
