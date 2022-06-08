@@ -109,7 +109,7 @@ public final class CommandTPA extends PlayerCommandHandler {
             return;
         }
 
-        TextComponent senderMessage = new TextComponent(color(typeBool ? "&a你给&6" + target.getName() + "&a发送了传送请求！" : "&9你给&6" + target.getName() + "&9发送了拉人请求！"));
+        TextComponent senderMessage = new TextComponent(color(typeBool ? "&a你给&6" + target.getName() + "&a发送了传送请求!" : "&9你给&6" + target.getName() + "&9发送了拉人请求!"));
         TextComponent cancel = new TextComponent(color("&7[撤回]"));
         cancel.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&8&o点击撤回"))));
         cancel.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpacancel " + target.getName()));

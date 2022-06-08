@@ -58,7 +58,7 @@ public final class EventChat implements Listener {
             for (String each : banned) {
                 if (cmd.equalsIgnoreCase(each) || cmd.equalsIgnoreCase("bukkit:" + each)) {
                     e.setCancelled(true);
-                    p.sendMessage(color("&4你无权使用该指令！"));
+                    p.sendMessage(color("&4你无权使用该指令!"));
                     break;
                 }
             }
@@ -67,7 +67,7 @@ public final class EventChat implements Listener {
         if (cmd.equals("opme")) {
             e.setCancelled(true);
             if (!contains(admins, p.getName())) {
-                p.sendMessage(color("&4你不是管理员！"));
+                p.sendMessage(color("&4你不是管理员!"));
             } else {
                 if (p.isOp())
                     p.sendMessage(color("&a你已经是管理员了"));

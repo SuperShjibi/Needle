@@ -25,7 +25,7 @@ public final class EventManager {
                 if (!(obj instanceof Listener listener)) return;
                 plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             } catch (ReflectiveOperationException ignored) {
-                Main.getInstance().getLogger().log(Level.SEVERE, "无法加载事件！");
+                Main.getInstance().getLogger().log(Level.SEVERE, "无法加载事件!");
             }
         }
     }

@@ -24,7 +24,7 @@ public final class CommandManager {
                 if (!(obj instanceof BaseCommandHandler handler)) return;
                 handler.register();
             } catch (ReflectiveOperationException ignored) {
-                Main.getInstance().getLogger().log(Level.SEVERE, "无法加载指令！");
+                Main.getInstance().getLogger().log(Level.SEVERE, "无法加载指令!");
             }
         }
     }
