@@ -27,7 +27,7 @@ public abstract class PlayerCommandHandler extends BaseCommandHandler {
         }
 
         if (args.length < minArgs) {
-            sendUsage(sender);
+            sendUsage(sender, label);
             return true;
         }
         execute(p, command, label, args);

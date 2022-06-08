@@ -35,9 +35,10 @@ public abstract class BaseCommandHandler implements CommandExecutor, TabComplete
     }
 
     /* 发送用法 */
-    protected final void sendUsage(CommandSender sender) {
+    protected final void sendUsage(CommandSender sender, String label) {
         if (usage == null) return;
         for (String line : usage) {
+            line = line.replace("$label", label);
             sender.sendMessage(line);
         }
     }
