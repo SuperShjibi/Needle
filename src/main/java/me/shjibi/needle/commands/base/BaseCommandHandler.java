@@ -34,7 +34,7 @@ public abstract class BaseCommandHandler implements CommandExecutor, TabComplete
         command.setTabCompleter(this);
     }
 
-    /* 注册 */
+    /* 发送用法 */
     protected final void sendUsage(CommandSender sender) {
         if (usage == null) return;
         for (String line : usage) {
