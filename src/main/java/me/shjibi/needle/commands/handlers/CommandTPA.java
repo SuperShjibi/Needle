@@ -177,7 +177,7 @@ public final class CommandTPA extends PlayerCommandHandler {
     /* 重写了register，因为要注册多个指令 */
     @Override
     public void register() {
-        for (String command : TPAManager.COMMANDS) {
+        for (String command : TPAManager.commands) {
             PluginCommand pluginCmd = Objects.requireNonNull(plugin.getCommand(command));
             pluginCmd.setExecutor(this);
             pluginCmd.setTabCompleter(this);
