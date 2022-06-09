@@ -16,35 +16,34 @@ public final class StringUtil {
         return colorPattern.matcher(s).replaceAll("§$1");
     }
 
-    /* 去除没有格式化(&->§)的颜色 */
-    public static String stripUnformattedColor(String s) {
+    /* 去除用&代替§的颜色 */
+    public static String stripUnformatted(String s) {
         return colorPattern.matcher(s).replaceAll("");
     }
 
-    public static String stripColor(String s) {
+    /* 去除用§表示的颜色 */
+    public static String stripFormatted(String s) {
         return stripPattern.matcher(s).replaceAll("");
     }
 
+    /* 将s中符合hexPattern的子字符串替换成我的世界中表示十六进制颜色的字符串 */
     public static String hexColor(String s) {
-        Matcher matcher = hexPattern.matcher(s);
         StringBuilder result = new StringBuilder();
+        Matcher matcher = hexPattern.matcher(s);
         while (matcher.find()) {
             String color = matcher.group(1);
-            StringBuilder replacement = new StringBuilder("§x");
+            StringBuilder formatted = new StringBuilder("§x");
             for (char c : color.toCharArray()) {
-                replacement.append("§").append(c);
+                formatted.append("§").append(c);
             }
-            matcher.appendReplacement(result, replacement.toString());
+            matcher.appendReplacement(result, formatted.toString());
         }
         return matcher.appendTail(result).toString();
     }
 
-    public static String fullColorize(String s) {
+    /* 对字符串s进行color()和hexColor() */
+    public static String fullyColorize(String s) {
         return hexColor(color(s));
-    }
-
-    public static String stripHexColor(String s) {
-        return hexPattern.matcher(s).replaceAll("");
     }
 
 
