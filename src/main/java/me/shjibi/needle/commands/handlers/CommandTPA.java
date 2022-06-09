@@ -19,7 +19,7 @@ import java.util.Objects;
 import static me.shjibi.needle.commands.handlers.tpa.TeleportType.HERE;
 import static me.shjibi.needle.commands.handlers.tpa.TeleportType.THERE;
 import static me.shjibi.needle.utils.StringUtil.color;
-import static me.shjibi.needle.utils.StringUtil.stripColor;
+import static me.shjibi.needle.utils.StringUtil.stripUnformatted;
 
 public final class CommandTPA extends PlayerCommandHandler {
 
@@ -127,7 +127,7 @@ public final class CommandTPA extends PlayerCommandHandler {
         accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&2&o点击同意"))));
         accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept " + p.getName()));
 
-        int length = stripColor(receiverMessage).length();
+        int length = stripUnformatted(receiverMessage).length();
 
         TextComponent deny = new TextComponent(color("&c[拒绝]"));
         deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new Text(color("&4&o点击拒绝"))));

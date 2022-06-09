@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
 import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
 public final class EventChat implements Listener {
 
@@ -28,7 +29,7 @@ public final class EventChat implements Listener {
     /* 给聊天信息染色 */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent e) {
-        e.setMessage(color(e.getMessage()));
+        e.setMessage(fullyColorize(e.getMessage()));
     }
 
     /* 在聊天栏@玩家 */

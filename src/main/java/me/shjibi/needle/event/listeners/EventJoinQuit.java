@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
 public class EventJoinQuit implements Listener {
 
@@ -21,7 +22,7 @@ public class EventJoinQuit implements Listener {
         String custom = null;
 
         if (name.equals("Cameraaa")) custom = "&e彩笔慎做人来辣，大家快揍他";
-        if (custom != null) Bukkit.broadcastMessage(color(custom));
+        if (custom != null) Bukkit.broadcastMessage(fullyColorize(custom));
         if (joinMessage != null) Bukkit.broadcastMessage(joinMessage);
 
         e.setJoinMessage(null);
