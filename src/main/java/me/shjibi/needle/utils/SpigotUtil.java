@@ -101,4 +101,30 @@ public class SpigotUtil {
         return null;
     }
 
+    /* 获取服务器版本号 */
+    public static String getVersion() {
+        String packageName = Bukkit.getServer().getClass().getPackage().getName();
+        return packageName.substring(packageName.lastIndexOf(".") + 1);
+    }
+
+    /* 获取NMS类 */
+    public static Class<?> getNMSClass(String name) {
+        try {
+            return Class.forName("net.minecraft.server." + getVersion() + "." + name);
+        } catch (ClassNotFoundException e) {
+            System.out.println("无法找到类! (" + name + ")");
+            return null;
+        }
+    }
+
+    public static Class<?> getCraftBukkitClass(String name) {
+        try {
+            return Class.forName("org.bukkit.craftbukkit." + getVersion() + "." + name);
+        } catch (ClassNotFoundException e) {
+            System.out.println("无法找到类! (" + name + ")");
+            return null;
+        }
+    }
+
+
 }

@@ -1,5 +1,7 @@
 package me.shjibi.needle.utils;
 
+import net.md_5.bungee.api.chat.TextComponent;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +46,11 @@ public final class StringUtil {
     /* 对字符串s进行color()和hexColor() */
     public static String fullyColorize(String s) {
         return hexColor(color(s));
+    }
+
+    /* 通过给定的String返回一个TextComponent */
+    public static TextComponent toTextComponent(String s) {
+        return new TextComponent(TextComponent.fromLegacyText(s));
     }
 
 
