@@ -20,7 +20,7 @@ public final class TPAManager {
 
     private static TPAManager instance;
 
-    private List<TeleportRequest> requests;
+    private final List<TeleportRequest> requests;
 
     public static TPAManager getInstance() {
         if (instance == null) instance = new TPAManager();
@@ -38,10 +38,17 @@ public final class TPAManager {
         return containsRequest(new TeleportRequest(from, to, 0L, type));
     }
 
+    public boolean containsRequestExactly(TeleportRequest request) {
+        for(TeleportRequest each : requests) {
+            if(each.equals(request) && each.start() == request.start()) return true;
+        }
+        return false;
+    }
+
     public void addRequest(TeleportRequest request) {
         requests.add(request);
         Bukkit.getScheduler().runTaskLater(Main.getInstance(), () -> {
-            if (!requests.contains(request)) return;
+            if (!containsRequestExactly(request)) return;
             request.sendRemoveMessage();
             requests.remove(request);
         }, TeleportRequest.REMOVE_TIME * 20);
