@@ -15,7 +15,6 @@ public final class CommandShowoff extends PlayerCommandHandler {
     @Override
     protected void execute(Player sender, Command command, String label, String[] args) {
         ItemStack item = sender.getInventory().getItemInMainHand();
-
     }
 
 }
