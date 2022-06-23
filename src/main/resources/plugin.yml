@@ -28,3 +28,6 @@ commands:
   progress:
     description: 你成就的进度怎么样了?
     aliases: prg
+  showoff:
+    description: 向全服玩家炫耀你手中的物品
+    aliases: show

@@ -11,7 +11,7 @@ public final class CommandManager {
 
     /* 所有指令处理者的名字 */
     private static final String[] NAMES = {
-            "PlayTime", "Progress", "Suicide", "TPA", "ZB"
+            "PlayTime", "Progress", "Suicide", "TPA", "ZB", "Showoff"
     };
 
 
