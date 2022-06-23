@@ -22,6 +22,7 @@ public class EventJoinQuit implements Listener {
         String custom = null;
 
         if (name.equals("Cameraaa")) custom = "&e彩笔慎做人来辣，大家快揍他";
+        if (name.equals("SuperShjiba")) custom = "{#46C8C8}肝帝Shjiba来辣，大家快揍他";
         if (custom != null) Bukkit.broadcastMessage(fullyColorize(custom));
         if (joinMessage != null) Bukkit.broadcastMessage(joinMessage);
 

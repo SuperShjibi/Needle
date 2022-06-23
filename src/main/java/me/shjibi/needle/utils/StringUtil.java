@@ -13,6 +13,20 @@ public final class StringUtil {
     private static final Pattern stripPattern = Pattern.compile("§([0-9a-fk-or])");
     private static final Pattern hexPattern = Pattern.compile("\\{#([a-fA-F0-9]{6})}");
 
+    /* 标题化字符串 */
+    public static String title(String s) {
+        String[] parts = s.split(" ");
+        StringBuilder sb = new StringBuilder(s.length());
+        for(String part : parts){
+            if(part.length() > 1 )
+                sb.append( part.substring(0, 1).toUpperCase()).append( part.substring(1).toLowerCase() );
+            else
+                sb.append(part.toUpperCase());
+            sb.append(" ");
+        }
+        return sb.toString().trim();
+    }
+
     /* 给字符串上色 */
     public static String color(String s) {
         return colorPattern.matcher(s).replaceAll("§$1");

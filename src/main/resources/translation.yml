@@ -225,7 +225,7 @@ pumpkin_pie: 南瓜派
 mutton: 生羊肉
 pufferfish: 河豚
 bread: 面包
-golden_apple: 附魔金苹果
+golden_apple: 金苹果
 cookie: 曲奇
 rotten_flesh: 腐肉
 suspicious_stew: 迷之炖菜
@@ -241,7 +241,7 @@ enchanted_golden_apple: 附魔金苹果
 mushroom_stew: 蘑菇煲
 cod: 鳕鱼
 rabbit_stew: 兔肉煲
-cooked_salmon: 鲑鱼
+cooked_salmon: 熟鲑鱼
 carrot: 胡萝卜
 killed_by_something: 死亡
 killed_something: 击杀生物
@@ -258,3 +258,4 @@ textures/entity/cat/all_black.png: 黑猫
 textures/entity/cat/persian.png: 波斯猫
 textures/entity/cat/red.png: 红虎斑猫
 textures/entity/cat/calico.png: 花猫
+

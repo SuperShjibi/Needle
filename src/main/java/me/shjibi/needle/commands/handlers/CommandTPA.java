@@ -151,8 +151,11 @@ public final class CommandTPA extends PlayerCommandHandler {
         if (!result)
             from.sendMessage(color((request != null ? "&a对方已下线" : "&c请求已过期")));
         else {
-            from.sendMessage(color("&a已传送至&6" + to.getName() + "&a!"));
-            to.sendMessage(color("&a已同意&6" + from.getName() + "&a的传送请求!"));
+            boolean typeBool = type == THERE;
+            String fromMessage = typeBool ? "&a已传送至&6" + to.getName() + "&a!" : "&9已同意&6" + to.getName() + "&9的拉人请求!";
+            String toMessage = typeBool ? "&a已同意&6" + from.getName() + "&a的传送请求!" : "&9已将&6" + from.getName() + "&9拉到了你的位置!";
+            from.sendMessage(color(fromMessage));
+            to.sendMessage(color(toMessage));
         }
 
         TPAManager.getInstance().removeRequest(request);

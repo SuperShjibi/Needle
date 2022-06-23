@@ -10,14 +10,14 @@ public final class CommandManager {
     private CommandManager() {}
 
     /* 所有指令处理者的名字 */
-    private static final String[] names = {
-            "PlayTime", "Progress", "Suicide", "TPA", "ZB"
+    private static final String[] NAMES = {
+            "PlayTime", "Progress", "Suicide", "TPA", "ZB", "Showoff"
     };
 
 
     /* 注册指令处理者(用BaseCommandHandler的register方法) */
     public static void registerHandlers() {
-        for (String name : names) {
+        for (String name : NAMES) {
             try {
                 Class<?> clazz = Class.forName("me.shjibi.needle.commands.handlers.Command" + name);
                 Object obj = clazz.getConstructor().newInstance();
