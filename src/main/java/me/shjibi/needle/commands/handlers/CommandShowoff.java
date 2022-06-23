@@ -27,11 +27,14 @@ public final class CommandShowoff extends PlayerCommandHandler {
         String typeName = title(item.getType().name().toLowerCase().replace('_', ' '));
         String id = item.getType().getKey().getKey();
         String name;
+        int amount = item.getAmount();
+
         boolean enchanted = false;
         if (item.getType().isAir()) {
             sender.sendMessage(color("&c你的手上没有物品"));
             return;
         }
+
         if (item.getItemMeta() != null) {
             enchanted = !item.getItemMeta().getEnchants().isEmpty();
             String displayName = item.getItemMeta().getDisplayName();
@@ -39,10 +42,14 @@ public final class CommandShowoff extends PlayerCommandHandler {
         } else {
             name = typeName;
         }
-        TextComponent prefix = new TextComponent(color("&6" + sender.getName() + "&a展示了他的"));
-        TextComponent showingItem = new TextComponent(color((enchanted ? "&b" : "&r") + "[" + name + "]"));
-        showingItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, item.getAmount(), ItemTag.ofNbt(nbt))));
+
+        String itemColor = (enchanted ? "&b" : "&r");
+
+        TextComponent prefix = new TextComponent(color("&6" + sender.getName() + "&a展示了他的 "));
+        TextComponent showingItem = new TextComponent(color( itemColor + "[" + name + "]"));
+        showingItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, amount, ItemTag.ofNbt(nbt))));
         prefix.addExtra(showingItem);
+        if (amount > 1) prefix.addExtra(color(itemColor + " x " + amount));
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.spigot().sendMessage(prefix);
         }
