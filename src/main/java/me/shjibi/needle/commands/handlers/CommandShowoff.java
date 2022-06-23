@@ -50,9 +50,7 @@ public final class CommandShowoff extends PlayerCommandHandler {
         showingItem.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, amount, ItemTag.ofNbt(nbt))));
         prefix.addExtra(showingItem);
         if (amount > 1) prefix.addExtra(color(itemColor + " x " + amount));
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            p.spigot().sendMessage(prefix);
-        }
+        Bukkit.spigot().broadcast(prefix);
     }
 
     private String getItemNBT(ItemStack item) {
