@@ -38,12 +38,11 @@ public final class EventChat implements Listener {
         String msg = e.getMessage();
         for (Player p : Bukkit.getOnlinePlayers()) {
             String name = p.getName();
-            if (msg.contains("@" + name) && !msg.contains(color("&a@" + name + "&r"))) {
-                msg = msg.replace("@" + name, color("&a@" + name + "&r"));
-                p.getWorld().playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
+            if (msg.toLowerCase().contains("@" + name.toLowerCase())) {
+                msg = msg.replaceAll("(?i)@" + name, color("&a@" + name + "&r"));
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
             }
         }
-
         e.setMessage(msg);
     }
 
