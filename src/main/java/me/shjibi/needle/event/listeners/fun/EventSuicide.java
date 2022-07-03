@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners;
+package me.shjibi.needle.event.listeners.fun;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

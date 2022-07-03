@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners;
+package me.shjibi.needle.event.listeners.fun;
 
 import me.shjibi.needle.Main;
 import org.bukkit.Location;

@@ -6,6 +6,8 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.advancement.Advancement;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -117,6 +119,7 @@ public class SpigotUtil {
         }
     }
 
+    /* 获取craft bukkit类 */
     public static Class<?> getCraftBukkitClass(String name) {
         try {
             return Class.forName("org.bukkit.craftbukkit." + getVersion() + "." + name);
@@ -126,5 +129,16 @@ public class SpigotUtil {
         }
     }
 
+    /* 把指定物品添加到指定玩家背包中，如果背包满了则丢在地上 */
+    public static boolean giveItem(Player p, ItemStack item) {
+        if (p == null || item == null) return false;
+        boolean result = p.getInventory().firstEmpty() != -1;
+        if (result) {
+            p.getInventory().addItem(item);
+        } else {
+            p.getWorld().dropItemNaturally(p.getLocation(), item);
+        }
+        return result;
+    }
 
 }

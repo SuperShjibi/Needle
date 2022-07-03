@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners;
+package me.shjibi.needle.event.listeners.utility;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
