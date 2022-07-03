@@ -4,14 +4,18 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.Statistic;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
+import static me.shjibi.needle.utils.SpigotUtil.giveItem;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
@@ -81,9 +85,12 @@ public final class EventChat implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            Bukkit.broadcastMessage(color("&6你已经挖掘了1200个黑曜石！"));
-            Bukkit.broadcastMessage(color("&e接下来你有几率在: "));
-            Bukkit.broadcastMessage(color("&6使用下界合金镐&a&o十分有效率地&6挖掘&a&o黑曜石&6时，触发&9&l稀有事件&6！"));
+            ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
+            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
+            if (meta == null) return;
+            meta.addStoredEnchant(Enchantment.DIG_SPEED, 6, true);
+            book.setItemMeta(meta);
+            giveItem(p, book);
         }
     }
 }

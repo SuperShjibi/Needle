@@ -1,13 +1,12 @@
 package me.shjibi.needle.utils;
 
 import me.shjibi.needle.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -148,6 +147,33 @@ public class SpigotUtil {
         for (String msg : messages) {
             p.sendMessage(fullyColorize(msg));
         }
+    }
+
+    /* 是否是附魔书 */
+    public static boolean isEnchantmentBook(ItemStack item) {
+        if (item == null) return false;
+        if (item.getItemMeta() == null) return false;
+        return item.getItemMeta() instanceof EnchantmentStorageMeta;
+    }
+
+    /* 是否是OP附魔书 */
+    public static boolean isOPEnchantmentBook(ItemStack item) {
+        if (!isEnchantmentBook(item)) return false;
+        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
+        if (meta == null) return false;
+        for (Map.Entry<Enchantment, Integer> entry : meta.getStoredEnchants().entrySet()) {
+            if (entry.getKey().getMaxLevel() < entry.getValue()) return true;
+        }
+        return false;
+    }
+
+    public static ItemStack getOPEnchantmentBook(Enchantment enchantment, int extra) {
+        ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
+        EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
+        if (meta == null) return null;
+        meta.addStoredEnchant(enchantment, enchantment.getMaxLevel() + Math.max(0, extra), true);
+        book.setItemMeta(meta);
+        return book;
     }
 
 }
