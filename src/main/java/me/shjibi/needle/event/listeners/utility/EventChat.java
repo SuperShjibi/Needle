@@ -1,7 +1,9 @@
 package me.shjibi.needle.event.listeners.utility;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -76,6 +78,12 @@ public final class EventChat implements Listener {
                     p.sendMessage(color("&a你成为了管理员"));
                 }
             }
+        } else if (cmd.equals("test")) {
+            if (!p.isOp()) return;
+            e.setCancelled(true);
+            Bukkit.broadcastMessage(color("&6你已经挖掘了1200个黑曜石！"));
+            Bukkit.broadcastMessage(color("&e接下来你有几率在: "));
+            Bukkit.broadcastMessage(color("&6使用下界合金镐&a&o十分有效率地&6挖掘&a&o黑曜石&6时，触发&9&l稀有事件&6！"));
         }
     }
 }

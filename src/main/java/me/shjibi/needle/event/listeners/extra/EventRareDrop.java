@@ -1,5 +1,6 @@
 package me.shjibi.needle.event.listeners.extra;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.enchantments.Enchantment;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.Random;
 
 import static me.shjibi.needle.utils.SpigotUtil.giveItem;
+import static me.shjibi.needle.utils.SpigotUtil.sendMessages;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 public class EventRareDrop implements Listener {
@@ -26,25 +28,27 @@ public class EventRareDrop implements Listener {
     @EventHandler
     public void onMineObsidian(BlockBreakEvent e) {
         if (e.getBlock().getType() != Material.OBSIDIAN) return;
-        Player p = e.getPlayer();
 
+        Player p = e.getPlayer();
         ItemStack item = p.getInventory().getItemInMainHand();
-        int obsidianCount = p.getStatistic(Statistic.MINE_BLOCK, Material.OBSIDIAN);
+        if (!item.getType().name().contains("_PICKAXE")) return;
+
+        int obsidianCount = p.getStatistic(Statistic.MINE_BLOCK, Material.OBSIDIAN) + 1;  // 因为这次挖掘还没录入统计信息，所以得手动加1
         if (obsidianCount < 1200) return;
-        else if (obsidianCount == 1200) {
-            p.sendMessage(color("&6你已挖掘1200黑曜石！"));
-            p.sendMessage(color("&6接下来你在&o十分有效率&o地挖掘黑曜石时，有几率触发一个&9&l稀有事件&6！"));
-        }
+
+        else if (obsidianCount == 1200) sendMessages(p,
+                "&6你已经挖掘了1200个黑曜石！",
+                           "&e接下来你有几率在: ",
+                           "&6使用下界合金镐&a&o十分有效率地&6挖掘&a&o黑曜石&6时，触发&9&l稀有事件&6！");
 
         if (item.getItemMeta() == null) return;
-        if (!item.getType().name().contains("_PICKAXE")) return;
         if (!item.containsEnchantment(Enchantment.DIG_SPEED)) return;
         int enchantmentLevel = item.getEnchantmentLevel(Enchantment.DIG_SPEED);
         if (enchantmentLevel < 5) return;
 
         int bonusChance = p.getStatistic(Statistic.MINE_BLOCK, Material.OBSIDIAN) / 1200;
         bonusChance = Math.min(12, bonusChance);
-        boolean upgrade = random.nextInt(1000) > (1000 - bonusChance);
+        boolean upgrade = random.nextInt(512) > (511 - bonusChance);
 
         if (!upgrade) return;
 
@@ -59,8 +63,9 @@ public class EventRareDrop implements Listener {
             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
             if (meta == null) return;
             meta.addStoredEnchant(Enchantment.DIG_SPEED, 6, true);
+            book.setItemMeta(meta);
             giveItem(p, book);
-            p.sendMessage(color("&9&l稀有事件: &7你的镐已经是效率VI了，所以掉落了一本效率VI的附魔书!"));
+            p.sendMessage(color("&9&l稀有事件: &7你的镐已经是效率VI了，所以你获得了一本效率VI的附魔书!"));
         }
     }
 

@@ -14,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 
+import static me.shjibi.needle.utils.StringUtil.fullyColorize;
+
 public class SpigotUtil {
 
     private SpigotUtil() {}
@@ -139,6 +141,13 @@ public class SpigotUtil {
             p.getWorld().dropItemNaturally(p.getLocation(), item);
         }
         return result;
+    }
+
+    /* 向指定玩家发送多条消息 */
+    public static void sendMessages(Player p, String... messages) {
+        for (String msg : messages) {
+            p.sendMessage(fullyColorize(msg));
+        }
     }
 
 }
