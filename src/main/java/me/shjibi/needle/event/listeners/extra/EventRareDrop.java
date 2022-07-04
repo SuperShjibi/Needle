@@ -69,7 +69,7 @@ public class EventRareDrop implements Listener {
             giveItem(p, book);
             for (Player online : Bukkit.getOnlinePlayers()) {
                 String name = online.getName().equals(luckyPlayer) ? "你" : luckyPlayer;
-                p.sendMessage(color("&c&l全服通告！&9&l稀有事件: &7" + name + "在用效率VI的镐子挖掘黑曜石时获得了一本效率VI的附魔书！"));
+                online.sendMessage(color("&c&l全服通告！&9&l稀有事件: &7" + name + "在用效率VI的镐子挖掘黑曜石时获得了一本效率VI的附魔书！"));
             }
         }
     }
@@ -91,7 +91,7 @@ public class EventRareDrop implements Listener {
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             String name = online.getName().equals(luckyPlayer) ? "你" : luckyPlayer;
-            p.sendMessage(color("&c&l全服通告！&9&l稀有事件: &7" + name + "获得了末影龙掉落的锋利VI附魔书!"));
+            online.sendMessage(color("&c&l全服通告！&9&l稀有事件: &7" + name + "获得了末影龙掉落的锋利VI附魔书!"));
         }
     }
 
@@ -111,7 +111,7 @@ public class EventRareDrop implements Listener {
 
         for (Player online : Bukkit.getOnlinePlayers()) {
             String name = online.getName().equals(luckyPlayer) ? "你" : luckyPlayer;
-            p.sendMessage(color("&c&l全服通告！&6&l罕见事件: &7" + name + "挖掘了带有魔法的金矿，获得了" + amount + "个附魔金苹果!"));
+            online.sendMessage(color("&c&l全服通告！&6&l罕见事件: &7" + name + "挖掘了带有魔法的金矿，获得了" + amount + "个附魔金苹果!"));
         }
     }
 

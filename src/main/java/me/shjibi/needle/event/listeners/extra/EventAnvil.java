@@ -56,7 +56,6 @@ public class EventAnvil implements Listener {
                 resultMeta.removeEnchant(entry.getKey());
                 resultMeta.addEnchant(entry.getKey(), entry.getValue(), true);
         }
-
         result.setItemMeta(resultMeta);
     }
     
