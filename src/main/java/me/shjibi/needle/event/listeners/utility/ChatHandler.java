@@ -3,7 +3,6 @@ package me.shjibi.needle.event.listeners.utility;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.Statistic;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +18,7 @@ import static me.shjibi.needle.utils.SpigotUtil.giveItem;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
-public final class EventChat implements Listener {
+public final class ChatHandler implements Listener {
 
     /* ban一些指令 */
     private static final String[] banned = {

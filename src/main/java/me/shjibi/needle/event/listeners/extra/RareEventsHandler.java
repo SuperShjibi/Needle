@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -19,9 +18,11 @@ import java.util.Random;
 import static me.shjibi.needle.utils.SpigotUtil.*;
 import static me.shjibi.needle.utils.StringUtil.color;
 
-public class EventRareDrop implements Listener {
+public class RareEventsHandler implements Listener {
 
     private static final Random random = new Random();
+
+
 
     /*
     * 在挖掘的黑曜石数量>=1200后，使用效率5的镐子挖掘黑曜石时，有概率升级镐子至效率6

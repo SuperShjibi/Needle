@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
-public class EventSit implements Listener {
+public class SitHandler implements Listener {
 
     /* 右键台阶坐下 */
     @EventHandler

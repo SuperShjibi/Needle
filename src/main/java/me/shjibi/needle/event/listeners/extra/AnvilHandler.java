@@ -15,7 +15,7 @@ import java.util.Map;
 import static me.shjibi.needle.utils.SpigotUtil.isEnchantmentBook;
 import static me.shjibi.needle.utils.SpigotUtil.isOPEnchantmentBook;
 
-public class EventAnvil implements Listener {
+public class AnvilHandler implements Listener {
 
     /* 修复了铁砧付不了高等级附魔书的特性 */
     @EventHandler

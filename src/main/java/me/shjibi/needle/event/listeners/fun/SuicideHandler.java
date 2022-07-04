@@ -6,7 +6,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 
 import static me.shjibi.needle.commands.handlers.CommandSuicide.suiciders;
 
-public final class EventSuicide implements Listener {
+public final class SuicideHandler implements Listener {
 
     /* 更换自杀时的死亡提示 */
     @EventHandler

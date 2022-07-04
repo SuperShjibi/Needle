@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
 
-public final class EventBed implements Listener {
+public final class BedEventHandler implements Listener {
 
     /* 上床消息 */
     @EventHandler
