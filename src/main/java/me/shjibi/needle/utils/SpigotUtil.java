@@ -196,6 +196,18 @@ public class SpigotUtil {
         }
     }
 
+    public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner, boolean notice) {
+        if (notice) playNoticeSound(winner);
+        String winnerName = winner.getName();
+        text = color("&7" + text);
+        String prefix = "&c&l全服通告! " + rarity.getText() + ": ";
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            String name = online.getName().equals(winnerName) ? "你" : winnerName;
+            online.sendMessage(color(prefix + text.replace("{name}", name)));
+        }
+    }
+
     public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
         playNoticeSound(winner);
         String winnerName = winner.getName();
@@ -264,9 +276,9 @@ public class SpigotUtil {
         new Thread(() -> {
             for (int i = 0; i < 5; i++) {
                 p.playSound(p.getLocation(), i % 2 == 0 ? Sound.BLOCK_NOTE_BLOCK_BIT : Sound.BLOCK_NOTE_BLOCK_COW_BELL
-                        , 3.5f, 1.33484f);
+                        , 10f, 1.33484f);
                 try {
-                    Thread.sleep(115);
+                    Thread.sleep(120);
                 } catch (InterruptedException ignored) {}
             }
         }).start();

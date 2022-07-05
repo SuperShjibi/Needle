@@ -16,7 +16,7 @@ import static me.shjibi.needle.utils.SpigotUtil.*;
 
 public final class DragonFightHandler implements Listener {
 
-    private static final DragonLoot[] loots = initLoots();
+    private static final Loot[] dragonLoots = initDragonLoots();
 
     @EventHandler
     public void onKillDragon(EntityDeathEvent e) {
@@ -25,7 +25,7 @@ public final class DragonFightHandler implements Listener {
 
         if (p == null) return;
 
-        DragonLoot prize = rollLoot();
+        Loot prize = rollLoot();
         if (prize == null) return;
 
         ItemStack loot = prize.loot;
@@ -37,25 +37,25 @@ public final class DragonFightHandler implements Listener {
         broadcastRandomEvent(prize.rarity, prefix, p);
     }
 
-    private static DragonLoot rollLoot() {
-        for (DragonLoot loot : loots) {
+    private static Loot rollLoot() {
+        for (Loot loot : dragonLoots) {
             if (roll(loot.chance)) return loot;
         }
         return null;
     }
 
-    private static DragonLoot[] initLoots() {
+    private static Loot[] initDragonLoots() {
         ItemStack book = getOPEnchantmentBook(Enchantment.DAMAGE_ALL, 1);
         ItemStack dragonBreath = new ItemStack(Material.DRAGON_BREATH, randomInt(1, Material.DRAGON_BREATH.getMaxStackSize()));
         ItemStack dragonHead = new ItemStack(Material.DRAGON_HEAD);
 
-        return new DragonLoot[]{
-            new DragonLoot(book, 20, EventRarity.RARE),
-            new DragonLoot(dragonBreath, 8, EventRarity.COMMON),
-            new DragonLoot(dragonHead, 15, EventRarity.RARE)
+        return new Loot[]{
+            new Loot(book, 20, EventRarity.RARE),
+            new Loot(dragonBreath, 8, EventRarity.COMMON),
+            new Loot(dragonHead, 15, EventRarity.RARE)
         };
     }
 
-    public record DragonLoot(ItemStack loot, int chance, EventRarity rarity) {}
+    public record Loot(ItemStack loot, int chance, EventRarity rarity) {}
 
 }
