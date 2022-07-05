@@ -2,6 +2,8 @@ package me.shjibi.needle.event;
 
 import me.shjibi.needle.Main;
 import me.shjibi.needle.event.listeners.extra.*;
+import me.shjibi.needle.event.listeners.extra.rare.BlockMineHandler;
+import me.shjibi.needle.event.listeners.extra.rare.DragonFightHandler;
 import me.shjibi.needle.event.listeners.fun.*;
 import me.shjibi.needle.event.listeners.utility.*;
 import org.bukkit.event.Listener;
@@ -15,8 +17,8 @@ public final class EventManager {
     /* 所有Listener的类 */
     private static final Class<?>[] LISTENERS = {
         SitHandler.class, SuicideHandler.class, BedEventHandler.class,
-        ChatHandler.class, JoinQuitHandler.class, RareEventsHandler.class,
-        AnvilHandler.class
+        ChatHandler.class, JoinQuitHandler.class, AnvilHandler.class,
+        BlockMineHandler.class, DragonFightHandler.class
     };
 
 

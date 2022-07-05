@@ -1,19 +1,26 @@
 package me.shjibi.needle.utils;
 
 import me.shjibi.needle.Main;
+import me.shjibi.needle.event.listeners.extra.rare.EventRarity;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.ItemTag;
+import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.hover.content.Item;
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionEffect;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 
-import static me.shjibi.needle.utils.StringUtil.fullyColorize;
+import static me.shjibi.needle.utils.StringUtil.*;
 
 public class SpigotUtil {
 
@@ -156,7 +163,7 @@ public class SpigotUtil {
         return item.getItemMeta() instanceof EnchantmentStorageMeta;
     }
 
-    /* 是否是OP附魔书 */
+    /* 是否是OP附魔书 (是否有一个附魔的等级超过最大附魔等级) */
     public static boolean isOPEnchantmentBook(ItemStack item) {
         if (!isEnchantmentBook(item)) return false;
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
@@ -167,6 +174,7 @@ public class SpigotUtil {
         return false;
     }
 
+    /* 获取一本OP附魔书 */
     public static ItemStack getOPEnchantmentBook(Enchantment enchantment, int extra) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
@@ -174,6 +182,94 @@ public class SpigotUtil {
         meta.addStoredEnchant(enchantment, enchantment.getMaxLevel() + Math.max(0, extra), true);
         book.setItemMeta(meta);
         return book;
+    }
+
+    public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner) {
+        playNoticeSound(winner);
+        String winnerName = winner.getName();
+        text = color("&7" + text);
+        String prefix = "&c&l全服通告! " + rarity.getText() + ": ";
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            String name = online.getName().equals(winnerName) ? "你" : winnerName;
+            online.sendMessage(color(prefix + text.replace("{name}", name)));
+        }
+    }
+
+    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
+        playNoticeSound(winner);
+        String winnerName = winner.getName();
+        String text = component.getText();
+        component.setText(color("&7" + text));
+
+        for (Player online : Bukkit.getOnlinePlayers()) {
+            String name = online.getName().equals(winnerName) ? "你" : winnerName;
+            component.setText(text.replace("{name}", name));
+
+            TextComponent prefix = new TextComponent(color("&c&l全服通告! " + rarity.getText() + ": "));
+            prefix.addExtra(component);
+
+            online.spigot().sendMessage(prefix);
+        }
+    }
+
+    public static String getFormattedItemType(ItemStack item) {
+        return title(item.getType().name().toLowerCase().replace('_', ' '));
+    }
+
+    public static String getFormattedItemType(Material type) {
+        return title(type.name().toLowerCase().replace('_', ' '));
+    }
+
+    public static TextComponent getItemShowcaseComponent(ItemStack item) {
+        String nbt = getItemNBT(item);
+        String typeName = getFormattedItemType(item);
+        String id = item.getType().getKey().getKey();
+        String name;
+        int amount = item.getAmount();
+
+        boolean enchanted = false;
+        boolean enchantBook = false;
+
+        if (item.getItemMeta() != null) {
+            enchanted = !item.getItemMeta().getEnchants().isEmpty();
+            enchantBook = item.getItemMeta() instanceof EnchantmentStorageMeta;
+
+            String displayName = item.getItemMeta().getDisplayName();
+            name = displayName.equals("") ? typeName : displayName;
+        } else {
+            name = typeName;
+        }
+
+        String itemColor = (enchanted ? "&b" : (enchantBook ? "&e" : "&r"));
+
+        TextComponent component = new TextComponent(color( itemColor + "[" + name + "]"));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, amount, ItemTag.ofNbt(nbt))));
+        if (amount > 1) component.addExtra(color(itemColor + " x " + amount));
+
+        return component;
+    }
+
+    public static String getItemNBT(ItemStack item) {
+        try {
+            Object nmsItem = item.getClass().getMethod("asNMSCopy", ItemStack.class).invoke(null, item);
+            Object nbt = nmsItem.getClass().getMethod("s").invoke(nmsItem);
+            return (String) nbt.getClass().getMethod("toString").invoke(nbt);
+        } catch (ReflectiveOperationException | NullPointerException e) {
+            return null;
+        }
+    }
+
+    public static void playNoticeSound(Player p) {
+        new Thread(() -> {
+            for (int i = 0; i < 5; i++) {
+                p.playSound(p.getLocation(), i % 2 == 0 ? Sound.BLOCK_NOTE_BLOCK_BIT : Sound.BLOCK_NOTE_BLOCK_COW_BELL
+                        , 3.5f, 1.33484f);
+                try {
+                    Thread.sleep(115);
+                } catch (InterruptedException ignored) {}
+            }
+        }).start();
     }
 
 }

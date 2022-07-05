@@ -45,7 +45,7 @@ public final class ChatHandler implements Listener {
             String name = p.getName();
             if (msg.toLowerCase().contains("@" + name.toLowerCase())) {
                 msg = msg.replaceAll("(?i)@" + name, color("&a@" + name + "&r"));
-                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 10, 1);
+                p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 2.5f, 1);
             }
         }
         e.setMessage(msg);
