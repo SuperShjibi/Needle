@@ -80,7 +80,7 @@ public class SpigotUtil {
         return allAdvancementNames;
     }
 
-    /* 获取所有进度(成就)的名称(除了配方进度)，存到数组里 */
+    /* 获取所有进度(成就)的名称(除了配方进度),存到数组里 */
     public static String[] getAdvancementNamesArray() {
         List<String> names = getAdvancementNameList();
         String[] result = new String[names.size()];
@@ -88,11 +88,11 @@ public class SpigotUtil {
     }
 
     /* 把传入Collection里的所有criteria翻译 */
-    public static List<String> translateAdvancements(Collection<String> raw) {  // should be 'translateCriteria'
+    public static List<String> translateAdvancements(Collection<String> raw) {  // 应该是'translateCriteria'
         List<String> result = new ArrayList<>();
         for (String str : raw) {
             String translated = advancementTranslation.get(str);
-            result.add(translated == null ? str : translated); // 如果没有该翻译，就用原文(应该每一个都翻译了..吧)
+            result.add(translated == null ? str : translated); // 如果没有该翻译,就用原文(应该每一个都翻译了..吧)
         }
         return result;
     }
@@ -137,7 +137,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 把指定物品添加到指定玩家背包中，如果背包满了则丢在地上 */
+    /* 把指定物品添加到指定玩家背包中,如果背包满了则丢在地上 */
     public static boolean giveItem(Player p, ItemStack item) {
         if (p == null || item == null) return false;
         boolean result = p.getInventory().firstEmpty() != -1;
@@ -282,6 +282,10 @@ public class SpigotUtil {
                 } catch (InterruptedException ignored) {}
             }
         }).start();
+    }
+
+    public static boolean isInMainIsland(Location loc) {
+        return Math.abs(loc.getBlockX()) < 500 && Math.abs(loc.getBlockZ()) < 500;
     }
 
 }

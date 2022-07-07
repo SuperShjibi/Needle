@@ -16,7 +16,7 @@ import static me.shjibi.needle.utils.SpigotUtil.*;
 public final class BlockMineHandler implements Listener {
 
     /*
-    * 在挖掘的黑曜石数量>=1200后，使用效率5的镐子挖掘黑曜石时，有概率升级镐子至效率6
+    * 在挖掘的黑曜石数量>=1200后,使用效率5的镐子挖掘黑曜石时,有概率升级镐子至效率6
     * */
     @EventHandler
     public void onMineObsidian(BlockBreakEvent e) {
@@ -26,13 +26,13 @@ public final class BlockMineHandler implements Listener {
         ItemStack item = p.getInventory().getItemInMainHand();
         if (!item.getType().name().contains("_PICKAXE")) return;
 
-        int obsidianCount = p.getStatistic(Statistic.MINE_BLOCK, Material.OBSIDIAN) + 1;  // 因为这次挖掘还没录入统计信息，所以得手动加1
+        int obsidianCount = p.getStatistic(Statistic.MINE_BLOCK, Material.OBSIDIAN) + 1;  // 因为这次挖掘还没录入统计信息,所以得手动加1
         if (obsidianCount < 1200) return;
 
         else if (obsidianCount == 1200) sendMessages(p,
-                "&6你已经挖掘了1200个黑曜石！",
+                "&6你已经挖掘了1200个黑曜石!",
                            "&e接下来你有几率在: ",
-                           "&6&a&o十分有效率地&6挖掘&a&o黑曜石&6时，触发&9&l稀有事件&6！");
+                           "&6&a&o十分有效率地&6挖掘&a&o黑曜石&6时,触发&9&l稀有事件&6!");
 
         if (item.getItemMeta() == null) return;
         if (!item.containsEnchantment(Enchantment.DIG_SPEED)) return;
@@ -71,7 +71,7 @@ public final class BlockMineHandler implements Listener {
         giveItem(p, notchApple);
 
         broadcastRandomEvent(EventRarity.VERY_RARE,
-                "{name}挖掘了带有魔法的金矿，获得了" + amount + "个附魔金苹果!",
+                "{name}挖掘了带有魔法的金矿,获得了" + amount + "个附魔金苹果!",
                 p);
     }
 

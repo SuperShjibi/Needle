@@ -59,7 +59,7 @@ public final class CommandTPA extends PlayerCommandHandler {
             if (!shouldDeleteResult[0]) return;
             if (shouldDeleteResult[1] == shouldAcceptResult[1]) {
                 TPAManager.getInstance().removeRequest(new TeleportRequest(to, from, 0L, type));
-                p.sendMessage(color("&c由于你已经同意了对方的请求，所以你给对方的请求被删除了"));
+                p.sendMessage(color("&c由于你已经同意了对方的请求,所以你给对方的请求被删除了"));
             }
         } else if (label.equalsIgnoreCase("tpadeny")) {
             boolean[] results = checkRequest(target, p);
@@ -85,13 +85,13 @@ public final class CommandTPA extends PlayerCommandHandler {
 
     /* 创建TeleportRequest */
     private void createRequest(String label, Player p, Player target) {
-        boolean typeBool = label.equalsIgnoreCase("tpa"); // true则为tpa，否则为tpahere
+        boolean typeBool = label.equalsIgnoreCase("tpa"); // true则为tpa,否则为tpahere
         TeleportType type = typeBool ? THERE : HERE;  // 获取枚举常量
         // 判断目的地和起始地
         Player from = typeBool ? p : target;  
         Player to = typeBool ? target : p;
 
-        // 判断对方是否发送了对应的请求，如果是，则直接同意
+        // 判断对方是否发送了对应的请求,如果是,则直接同意
         TeleportType anotherType = type == THERE ? HERE : THERE;
         if (TPAManager.getInstance().containsRequest(from, to, anotherType)) {
             acceptRequest(from, to, anotherType);
@@ -101,7 +101,7 @@ public final class CommandTPA extends PlayerCommandHandler {
         // 创建请求
         TeleportRequest request = new TeleportRequest(from, to, System.currentTimeMillis(), type);
 
-        // 判断是否已有请求，如果有则进行提示
+        // 判断是否已有请求,如果有则进行提示
         if (!TPAManager.getInstance().containsRequest(request))
             TPAManager.getInstance().addRequest(request);
         else {
@@ -161,12 +161,12 @@ public final class CommandTPA extends PlayerCommandHandler {
         TPAManager.getInstance().removeRequest(request);
     }
 
-    /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
+    /* 检查请求,返回布尔数组,包含{是否存在该请求(bool), 请求类型(bool)} */
     private boolean[] checkRequest(Player target, Player p) {
         return checkRequest(target, p, true);
     }
 
-    /* 检查请求，返回布尔数组，包含{是否存在该请求(bool), 请求类型(bool)} */
+    /* 检查请求,返回布尔数组,包含{是否存在该请求(bool), 请求类型(bool)} */
     private boolean[] checkRequest(Player reqSender, Player receiver, boolean message) {
         boolean typeBool;
         boolean exists = (typeBool = TPAManager.getInstance().containsRequest(reqSender, receiver, THERE)) ||
@@ -177,7 +177,7 @@ public final class CommandTPA extends PlayerCommandHandler {
     }
 
 
-    /* 重写了register，因为要注册多个指令 */
+    /* 重写了register,因为要注册多个指令 */
     @Override
     public void register() {
         for (String command : TPAManager.commands) {

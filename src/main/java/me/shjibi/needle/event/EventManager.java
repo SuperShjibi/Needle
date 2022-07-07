@@ -34,7 +34,7 @@ public final class EventManager {
                 plugin.getServer().getPluginManager().registerEvents(listener, plugin);
             }
         } catch (ReflectiveOperationException e) {
-            Main.getInstance().getLogger().log(Level.SEVERE, "无法加载事件！");
+            Main.getInstance().getLogger().log(Level.SEVERE, "无法加载事件!");
         }
 
     }

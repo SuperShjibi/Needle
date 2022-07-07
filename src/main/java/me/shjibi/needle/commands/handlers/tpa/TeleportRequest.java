@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 
-/* 代表了一个传送请求，包含了起始地(Player)，目的地(Player)，请求时间(long)，以及类型(TeleportType) */
+/* 代表了一个传送请求,包含了起始地(Player),目的地(Player),请求时间(long),以及类型(TeleportType) */
 public record TeleportRequest(Player from, Player to, long start, TeleportType type) {
 
     public static final int REMOVE_DELAY = 60;

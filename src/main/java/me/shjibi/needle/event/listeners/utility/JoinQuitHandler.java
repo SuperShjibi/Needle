@@ -14,15 +14,18 @@ public class JoinQuitHandler implements Listener {
 
     public static final String loginTimeout = "你太长时间未登录了";
 
-    /* 提前发送原版加入消息，并给特殊玩家特殊的入服提示 */
+    /* 提前发送原版加入消息,并给特殊玩家特殊的入服提示 */
     @EventHandler(priority = EventPriority.LOWEST)
     public void onJoin(PlayerJoinEvent e) {
         String joinMessage = e.getJoinMessage();
         String name = e.getPlayer().getName();
-        String custom = null;
+        String custom = switch (name) {
+            case "Cameraaa" -> "&e彩笔慎做人来辣, 大家快揍他";
+            case "SuperShjiba" -> "{#46C8C8}管理员Shjiba进入了! 快把纪关了吧~";
+            case "Hello125" -> "{#5A0F96}黑曜石肝帝Hello125来花他的欧气啦!";
+            default -> null;
+        };
 
-        if (name.equals("Cameraaa")) custom = "&e彩笔慎做人来辣，大家快揍他";
-        if (name.equals("SuperShjiba")) custom = "{#46C8C8}肝帝Shjiba来辣，大家快揍他";
         if (custom != null) Bukkit.broadcastMessage(fullyColorize(custom));
         if (joinMessage != null) Bukkit.broadcastMessage(joinMessage);
 

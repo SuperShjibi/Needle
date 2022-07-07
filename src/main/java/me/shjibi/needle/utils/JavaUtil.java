@@ -34,17 +34,17 @@ public final class JavaUtil {
         return Stream.of(elements).filter(str -> str.startsWith(prefix)).collect(Collectors.toList());
     }
 
-    /* 抽奖，有 (1 + bonus)/chance 的概率抽中 */
+    /* 抽奖,有 (1 + bonus)/chance 的概率抽中 */
     public static boolean roll(int chance, int bonusLuck) {
         return random.nextInt(chance) >= (chance - 1 - bonusLuck);
     }
 
-    /* 抽奖，有 1/chance 的概率抽中 */
+    /* 抽奖,有 1/chance 的概率抽中 */
     public static boolean roll(int chance) {
         return roll(chance, 0);
     }
 
-    /* 抽奖，有1/2的概率抽中 */
+    /* 抽奖,有1/2的概率抽中 */
     public static boolean roll() {
         return roll(2, 0);
     }

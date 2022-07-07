@@ -10,7 +10,7 @@ import java.util.Set;
 
 public final class CommandSuicide extends PlayerCommandHandler {
 
-    // 用HashSet保存执行了自杀的人，以实现自定义死亡信息
+    // 用HashSet保存执行了自杀的人,以实现自定义死亡信息
     public static final Set<String> suiciders = new HashSet<>();
 
     public CommandSuicide() {
