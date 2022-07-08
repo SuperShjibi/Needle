@@ -1,12 +1,11 @@
 package me.shjibi.needle.event.listeners.extra;
 
-import me.shjibi.needle.utils.SpigotUtil;
+import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.block.Biome;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.Entity;
@@ -19,8 +18,10 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 
 import static me.shjibi.needle.utils.JavaUtil.roll;
-import static me.shjibi.needle.utils.SpigotUtil.*;
 import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.spigot.ItemUtil.getOPEnchantmentBook;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.isInMainIsland;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.playNoticeSound;
 
 public final class EndermanKillHandler implements Listener {
 
@@ -42,7 +43,7 @@ public final class EndermanKillHandler implements Listener {
             SpigotUtil.broadcastRandomEvent(EventRarity.RARE, "{name}成功击杀了特殊末影人,并获得了保护V附魔书!", p);
         } else {
             if (world.getEnvironment() != World.Environment.THE_END) return;
-            if (world.getBiome(entity.getLocation()) == Biome.THE_END) return;
+            if (isInMainIsland(entity.getLocation())) return;
 
             if (!roll( 214)) return;
 

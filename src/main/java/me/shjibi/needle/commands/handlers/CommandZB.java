@@ -7,7 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-import static me.shjibi.needle.utils.SpigotUtil.getWorldName;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.getWorldName;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class CommandZB extends PlayerCommandHandler {

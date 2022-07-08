@@ -11,7 +11,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import static me.shjibi.needle.utils.JavaUtil.roll;
-import static me.shjibi.needle.utils.SpigotUtil.*;
+import static me.shjibi.needle.utils.spigot.ItemUtil.getOPEnchantmentBook;
+import static me.shjibi.needle.utils.spigot.ItemUtil.giveItem;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.*;
 
 public final class BlockMineHandler implements Listener {
 

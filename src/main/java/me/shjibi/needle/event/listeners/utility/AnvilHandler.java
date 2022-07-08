@@ -1,6 +1,6 @@
 package me.shjibi.needle.event.listeners.utility;
 
-import me.shjibi.needle.utils.SpigotUtil;
+import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -13,8 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.shjibi.needle.utils.SpigotUtil.isEnchantmentBook;
-import static me.shjibi.needle.utils.SpigotUtil.isOPEnchantmentBook;
+import static me.shjibi.needle.utils.spigot.ItemUtil.*;
 
 public class AnvilHandler implements Listener {
 
@@ -62,7 +61,7 @@ public class AnvilHandler implements Listener {
 
     @EventHandler
     public void onChangeName(PrepareAnvilEvent e) {
-        if (SpigotUtil.isNameUnchangeable(e.getInventory().getItem(0))) return;
+        if (isNameUnchangeable(e.getInventory().getItem(0))) return;
 
         ItemStack item = e.getResult();
         ItemStack original = e.getInventory().getItem(0);

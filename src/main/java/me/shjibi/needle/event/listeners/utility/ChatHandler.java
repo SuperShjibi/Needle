@@ -1,9 +1,7 @@
 package me.shjibi.needle.event.listeners.utility;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -11,16 +9,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
-import static me.shjibi.needle.utils.SkullTexture.SPECIAL_EYE;
-import static me.shjibi.needle.utils.SpigotUtil.*;
 import static me.shjibi.needle.utils.StringUtil.*;
+import static me.shjibi.needle.utils.spigot.ItemUtil.getSkull;
+import static me.shjibi.needle.utils.spigot.ItemUtil.setUnchangeableName;
+import static me.shjibi.needle.utils.spigot.SkullTexture.SPECIAL_EYE;
 
 public final class ChatHandler implements Listener {
 

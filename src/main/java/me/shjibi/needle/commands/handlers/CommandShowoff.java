@@ -8,8 +8,8 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import static me.shjibi.needle.utils.SpigotUtil.getItemShowcaseComponent;
 import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.spigot.ItemUtil.getItemShowcaseComponent;
 
 public final class CommandShowoff extends PlayerCommandHandler {
 

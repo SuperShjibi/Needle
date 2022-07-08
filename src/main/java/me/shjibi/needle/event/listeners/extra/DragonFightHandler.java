@@ -1,6 +1,6 @@
 package me.shjibi.needle.event.listeners.extra;
 
-import me.shjibi.needle.utils.SpigotUtil;
+import me.shjibi.needle.utils.spigot.SpigotUtil;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -13,7 +13,8 @@ import org.bukkit.inventory.ItemStack;
 
 import static me.shjibi.needle.utils.JavaUtil.randomInt;
 import static me.shjibi.needle.utils.JavaUtil.roll;
-import static me.shjibi.needle.utils.SpigotUtil.*;
+import static me.shjibi.needle.utils.spigot.ItemUtil.*;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.*;
 
 public final class DragonFightHandler implements Listener {
 

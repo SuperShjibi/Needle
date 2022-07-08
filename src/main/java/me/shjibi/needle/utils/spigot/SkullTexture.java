@@ -1,4 +1,4 @@
-package me.shjibi.needle.utils;
+package me.shjibi.needle.utils.spigot;
 
 public final class SkullTexture {
 

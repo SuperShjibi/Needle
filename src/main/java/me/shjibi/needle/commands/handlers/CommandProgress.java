@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.allContains;
-import static me.shjibi.needle.utils.SpigotUtil.*;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.*;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class CommandProgress extends PlayerCommandHandler {

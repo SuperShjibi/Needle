@@ -7,7 +7,7 @@ import org.bukkit.Statistic;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
-import static me.shjibi.needle.utils.SpigotUtil.getOfflinePlayer;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.getOfflinePlayer;
 import static me.shjibi.needle.utils.StringUtil.color;
 
 public final class CommandPlayTime extends PlayerCommandHandler {
