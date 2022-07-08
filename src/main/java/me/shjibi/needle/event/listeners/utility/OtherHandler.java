@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
@@ -27,10 +28,9 @@ public final class OtherHandler implements Listener {
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         CreatureSpawnEvent.SpawnReason reason = e.getSpawnReason();
-        if (reason != CreatureSpawnEvent.SpawnReason.SPAWNER_EGG &&
-            reason != CreatureSpawnEvent.SpawnReason.COMMAND &&
-            reason != CreatureSpawnEvent.SpawnReason.CUSTOM
-        ) return;
+        if (reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
+            reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG ||
+            reason == CreatureSpawnEvent.SpawnReason.CUSTOM) return;
         if (withinHideAndSeekArea(e.getLocation())) e.setCancelled(true);
     }
 
