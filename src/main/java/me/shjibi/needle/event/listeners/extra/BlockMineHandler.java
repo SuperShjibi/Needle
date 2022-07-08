@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners.extra.rare;
+package me.shjibi.needle.event.listeners.extra;
 
 import org.bukkit.Material;
 import org.bukkit.Statistic;

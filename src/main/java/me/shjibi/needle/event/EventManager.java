@@ -1,10 +1,9 @@
 package me.shjibi.needle.event;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.event.listeners.extra.*;
-import me.shjibi.needle.event.listeners.extra.rare.BlockMineHandler;
-import me.shjibi.needle.event.listeners.extra.rare.DragonFightHandler;
-import me.shjibi.needle.event.listeners.extra.rare.EndermanKillHandler;
+import me.shjibi.needle.event.listeners.extra.BlockMineHandler;
+import me.shjibi.needle.event.listeners.extra.DragonFightHandler;
+import me.shjibi.needle.event.listeners.extra.EndermanKillHandler;
 import me.shjibi.needle.event.listeners.fun.*;
 import me.shjibi.needle.event.listeners.utility.*;
 import org.bukkit.event.Listener;

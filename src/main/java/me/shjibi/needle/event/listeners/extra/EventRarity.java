@@ -1,6 +1,4 @@
-package me.shjibi.needle.event.listeners.extra.rare;
-
-import static me.shjibi.needle.utils.StringUtil.color;
+package me.shjibi.needle.event.listeners.extra;
 
 public enum EventRarity {
 

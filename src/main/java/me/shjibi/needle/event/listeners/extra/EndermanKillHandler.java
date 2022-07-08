@@ -1,5 +1,6 @@
-package me.shjibi.needle.event.listeners.extra.rare;
+package me.shjibi.needle.event.listeners.extra;
 
+import me.shjibi.needle.utils.SpigotUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -38,7 +39,7 @@ public final class EndermanKillHandler implements Listener {
         if (isSpecialEnderman(entity)) {
             e.getDrops().clear();
             e.getDrops().add(getOPEnchantmentBook(Enchantment.PROTECTION_ENVIRONMENTAL, 1));
-            broadcastRandomEvent(EventRarity.RARE, "{name}成功击杀了特殊末影人,并获得了保护V附魔书!", p);
+            SpigotUtil.broadcastRandomEvent(EventRarity.RARE, "{name}成功击杀了特殊末影人,并获得了保护V附魔书!", p);
         } else {
             if (world.getEnvironment() != World.Environment.THE_END) return;
             if (world.getBiome(entity.getLocation()) == Biome.THE_END) return;

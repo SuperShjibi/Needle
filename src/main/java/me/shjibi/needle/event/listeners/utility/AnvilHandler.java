@@ -1,5 +1,6 @@
-package me.shjibi.needle.event.listeners.extra;
+package me.shjibi.needle.event.listeners.utility;
 
+import me.shjibi.needle.utils.SpigotUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -57,6 +58,25 @@ public class AnvilHandler implements Listener {
                 resultMeta.addEnchant(entry.getKey(), entry.getValue(), true);
         }
         result.setItemMeta(resultMeta);
+    }
+
+    @EventHandler
+    public void onChangeName(PrepareAnvilEvent e) {
+        if (SpigotUtil.isNameUnchangeable(e.getInventory().getItem(0))) return;
+
+        ItemStack item = e.getResult();
+        ItemStack original = e.getInventory().getItem(0);
+
+        if (item == null || original == null) return;
+        ItemMeta meta = item.getItemMeta();
+        ItemMeta originalMeta = original.getItemMeta();
+        if (meta == null || originalMeta == null) return;
+
+        meta.setDisplayName(originalMeta.getDisplayName());
+        item.setItemMeta(meta);
+
+        e.setResult(item);
+        e.getInventory().setRepairCost(0);
     }
     
 }

@@ -1,5 +1,6 @@
-package me.shjibi.needle.event.listeners.extra.rare;
+package me.shjibi.needle.event.listeners.extra;
 
+import me.shjibi.needle.utils.SpigotUtil;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -34,7 +35,7 @@ public final class DragonFightHandler implements Listener {
         TextComponent prefix = new TextComponent("{name}获得了末影龙掉落的战利品: ");
         prefix.addExtra(getItemShowcaseComponent(loot));
 
-        broadcastRandomEvent(prize.rarity, prefix, p);
+        SpigotUtil.broadcastRandomEvent(prize.rarity, prefix, p);
     }
 
     private static Loot rollLoot() {

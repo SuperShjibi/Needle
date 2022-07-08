@@ -12,11 +12,15 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
-import static me.shjibi.needle.utils.SpigotUtil.giveItem;
-import static me.shjibi.needle.utils.StringUtil.color;
-import static me.shjibi.needle.utils.StringUtil.fullyColorize;
+import static me.shjibi.needle.utils.SkullTexture.SPECIAL_EYE;
+import static me.shjibi.needle.utils.SpigotUtil.*;
+import static me.shjibi.needle.utils.StringUtil.*;
 
 public final class ChatHandler implements Listener {
 
@@ -84,12 +88,15 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
-            EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
-            if (meta == null) return;
-            meta.addStoredEnchant(Enchantment.DIG_SPEED, 6, true);
-            book.setItemMeta(meta);
-            giveItem(p, book);
+            ItemStack item = getSkull(SPECIAL_EYE);
+            if (item == null) return;
+            if (item.getItemMeta() == null) return;
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(hexColor("{#6EAD69}特殊末影眼"));
+            meta.setLore(List.of(hexColor("{#4CAAAF}全世界独一无二...")));
+            item.setItemMeta(meta);
+            setUnchangeableName(item);
+            p.getInventory().addItem(item);
         }
     }
 }

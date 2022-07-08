@@ -1,7 +1,7 @@
 package me.shjibi.needle.utils;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.event.listeners.extra.rare.EventRarity;
+import me.shjibi.needle.event.listeners.extra.EventRarity;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.ItemTag;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -12,10 +12,12 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.PotionEffect;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
@@ -138,15 +140,14 @@ public class SpigotUtil {
     }
 
     /* 把指定物品添加到指定玩家背包中,如果背包满了则丢在地上 */
-    public static boolean giveItem(Player p, ItemStack item) {
-        if (p == null || item == null) return false;
-        boolean result = p.getInventory().firstEmpty() != -1;
-        if (result) {
+    public static void giveItem(Player p, ItemStack item) {
+        if (p == null || item == null) return;
+        boolean full = p.getInventory().firstEmpty() == -1;
+        if (!full) {
             p.getInventory().addItem(item);
         } else {
             p.getWorld().dropItemNaturally(p.getLocation(), item);
         }
-        return result;
     }
 
     /* 向指定玩家发送多条消息 */
@@ -286,6 +287,54 @@ public class SpigotUtil {
 
     public static boolean isInMainIsland(Location loc) {
         return Math.abs(loc.getBlockX()) < 500 && Math.abs(loc.getBlockZ()) < 500;
+    }
+
+    public static ItemStack getSkull(String textures) {
+        ItemStack head = new ItemStack(Material.PLAYER_HEAD);
+        if (textures == null || textures.isEmpty()) {
+            return head;
+        }
+
+        SkullMeta headMeta = (SkullMeta) head.getItemMeta();
+
+        if (headMeta == null) return null;
+
+        try {
+            Class<?> gameProfileClass = Class.forName("com.mojang.authlib.GameProfile");
+            Class<?> propertyClass = Class.forName("com.mojang.authlib.properties.Property");
+            Class<?> propertyMapClass = Class.forName("com.mojang.authlib.properties.PropertyMap");
+            Object gameProfile = gameProfileClass.getConstructor(UUID.class, String.class).newInstance(UUID.randomUUID(), null);
+
+            Object properties = gameProfileClass.getMethod("getProperties").invoke(gameProfile);
+            propertyMapClass.getMethod("put", Object.class, Object.class).invoke(properties, "textures",
+                    propertyClass.getConstructor(String.class, String.class).newInstance("textures", textures)
+            );
+
+            Field profileField = headMeta.getClass().getDeclaredField("profile");
+            profileField.setAccessible(true);
+            profileField.set(headMeta, gameProfile);
+        } catch (ReflectiveOperationException ignored) {
+            return null;
+        }
+
+        head.setItemMeta(headMeta);
+        return head;
+    }
+
+    public static void setUnchangeableName(ItemStack item) {
+        if (item == null) return;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return;
+        meta.getPersistentDataContainer().set(new NamespacedKey(Main.getInstance(), "final_name"),
+                PersistentDataType.SHORT, (short) 1);
+    }
+
+    public static boolean isNameUnchangeable(ItemStack item) {
+        if (item == null) return false;
+        ItemMeta meta = item.getItemMeta();
+        if (meta == null) return false;
+        Short value = meta.getPersistentDataContainer().get(new NamespacedKey(Main.getInstance(), "final_name"), PersistentDataType.SHORT);
+        return value != null && value == (short) 1;
     }
 
 }
