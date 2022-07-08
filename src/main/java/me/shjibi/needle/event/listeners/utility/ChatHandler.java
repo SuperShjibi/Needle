@@ -1,7 +1,6 @@
 package me.shjibi.needle.event.listeners.utility;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -17,6 +16,7 @@ import static me.shjibi.needle.utils.JavaUtil.contains;
 import static me.shjibi.needle.utils.StringUtil.*;
 import static me.shjibi.needle.utils.spigot.ItemUtil.*;
 import static me.shjibi.needle.utils.spigot.SkullTexture.SPECIAL_EYE;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.withinArea;
 
 public final class ChatHandler implements Listener {
 
@@ -84,14 +84,25 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            ItemStack item = getSkull(SPECIAL_EYE);
-            if (item == null) return;
-            if (item.getItemMeta() == null) return;
-            ItemMeta meta = item.getItemMeta();
-            meta.setDisplayName(hexColor("{#6EAD69}特殊末影眼"));
-            meta.setLore(List.of(hexColor("{#4CAAAF}全世界独一无二...")));
-            item.setItemMeta(meta);
-            p.getInventory().addItem(item);
+            Location loc = p.getLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            double z = loc.getZ();
+
+            int minX = 1149; int maxX = 1249; int minY = 47; int maxY = 96; int minZ = 324; int maxZ = 424;
+            boolean x1 = x > minX; boolean x2 = maxX > x;
+            boolean y1 = y > minY; boolean y2 = maxY > y;
+            boolean z1 = z > minZ; boolean z2 = maxZ > z;
+
+            Bukkit.broadcastMessage("" + ChatColor.GRAY + ChatColor.BOLD
+                    + "[DEBUG]"
+                    + " " + x + " > " + minX + ": " + x1 + ";"
+                    + " " + maxX + " > " + x + ": " + x2 + ";"
+                    + " " + y + " > " + minY + ": " + y1 + ";"
+                    + " " + maxY + " > " + y + ": " + y2 + ";"
+                    + " " + z + " > " + minZ + ": " + z1 + ";"
+                    + " " + maxZ + " > " + z + ": " + z2 + ";"
+            );
         }
     }
 }

@@ -209,8 +209,8 @@ public class SpigotUtil {
 
     public static boolean withinArea(Location loc, double minX, double maxX, double minY, double maxY, double minZ, double maxZ) {
         double x = loc.getX();
-        double y = loc.getX();
-        double z = loc.getX();
+        double y = loc.getY();
+        double z = loc.getZ();
 
         return (minX < x && maxX > x) &&
                 (minY < y && maxY > y) &&
