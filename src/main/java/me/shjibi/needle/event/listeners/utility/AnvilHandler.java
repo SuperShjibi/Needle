@@ -1,6 +1,5 @@
 package me.shjibi.needle.event.listeners.utility;
 
-import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -13,7 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.HashMap;
 import java.util.Map;
 
-import static me.shjibi.needle.utils.spigot.ItemUtil.*;
+import static me.shjibi.needle.utils.spigot.ItemUtil.isEnchantmentBook;
+import static me.shjibi.needle.utils.spigot.ItemUtil.isOPEnchantmentBook;
 
 public class AnvilHandler implements Listener {
 
@@ -53,29 +53,10 @@ public class AnvilHandler implements Listener {
         if (newEnchants.isEmpty()) return;
 
         for (Map.Entry<Enchantment, Integer> entry : newEnchants.entrySet()) {
-                resultMeta.removeEnchant(entry.getKey());
-                resultMeta.addEnchant(entry.getKey(), entry.getValue(), true);
+            resultMeta.removeEnchant(entry.getKey());
+            resultMeta.addEnchant(entry.getKey(), entry.getValue(), true);
         }
         result.setItemMeta(resultMeta);
-    }
-
-    @EventHandler
-    public void onChangeName(PrepareAnvilEvent e) {
-        if (isNameUnchangeable(e.getInventory().getItem(0))) return;
-
-        ItemStack item = e.getResult();
-        ItemStack original = e.getInventory().getItem(0);
-
-        if (item == null || original == null) return;
-        ItemMeta meta = item.getItemMeta();
-        ItemMeta originalMeta = original.getItemMeta();
-        if (meta == null || originalMeta == null) return;
-
-        meta.setDisplayName(originalMeta.getDisplayName());
-        item.setItemMeta(meta);
-
-        e.setResult(item);
-        e.getInventory().setRepairCost(0);
     }
     
 }

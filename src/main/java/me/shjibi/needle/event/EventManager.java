@@ -16,10 +16,9 @@ public final class EventManager {
 
     /* 所有Listener的类 */
     private static final Class<?>[] LISTENERS = {
-        SitHandler.class, SuicideHandler.class, BedEventHandler.class,
+        SitHandler.class, SuicideHandler.class, OtherHandler.class,
         ChatHandler.class, JoinQuitHandler.class, AnvilHandler.class,
         BlockMineHandler.class, DragonFightHandler.class, EndermanKillHandler.class,
-
     };
 
 

@@ -207,4 +207,13 @@ public class SpigotUtil {
         return Math.abs(loc.getBlockX()) < 500 && Math.abs(loc.getBlockZ()) < 500;
     }
 
+    public static boolean withinArea(Location loc, double minX, double maxX, double minY, double maxY, double minZ, double maxZ) {
+        double x = loc.getX();
+        double y = loc.getX();
+        double z = loc.getX();
+
+        return (minX < x && maxX > x) &&
+                (minY < y && maxY > y) &&
+                (minZ < z && maxZ > z);
+    }
 }

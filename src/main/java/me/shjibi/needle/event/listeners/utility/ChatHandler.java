@@ -15,8 +15,7 @@ import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
 import static me.shjibi.needle.utils.StringUtil.*;
-import static me.shjibi.needle.utils.spigot.ItemUtil.getSkull;
-import static me.shjibi.needle.utils.spigot.ItemUtil.setUnchangeableName;
+import static me.shjibi.needle.utils.spigot.ItemUtil.*;
 import static me.shjibi.needle.utils.spigot.SkullTexture.SPECIAL_EYE;
 
 public final class ChatHandler implements Listener {
@@ -92,7 +91,6 @@ public final class ChatHandler implements Listener {
             meta.setDisplayName(hexColor("{#6EAD69}特殊末影眼"));
             meta.setLore(List.of(hexColor("{#4CAAAF}全世界独一无二...")));
             item.setItemMeta(meta);
-            setUnchangeableName(item);
             p.getInventory().addItem(item);
         }
     }

@@ -59,24 +59,6 @@ public final class ItemUtil {
         return head;
     }
 
-    /* 设置不可修改名字 */
-    public static void setUnchangeableName(ItemStack item) {
-        if (item == null) return;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return;
-        meta.getPersistentDataContainer().set(new NamespacedKey(Main.getInstance(), "final_name"),
-                PersistentDataType.SHORT, (short) 1);
-    }
-
-    /* 物品名字是否不可修改 */
-    public static boolean isNameUnchangeable(ItemStack item) {
-        if (item == null) return false;
-        ItemMeta meta = item.getItemMeta();
-        if (meta == null) return false;
-        Short value = meta.getPersistentDataContainer().get(new NamespacedKey(Main.getInstance(), "final_name"), PersistentDataType.SHORT);
-        return value != null && value == (short) 1;
-    }
-
     /* 获取物品NBT */
     public static String getItemNBT(ItemStack item) {
         try {
