@@ -26,6 +26,11 @@ public final class OtherHandler implements Listener {
     /* 防刷怪 */
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent e) {
+        CreatureSpawnEvent.SpawnReason reason = e.getSpawnReason();
+        if (reason != CreatureSpawnEvent.SpawnReason.SPAWNER_EGG &&
+            reason != CreatureSpawnEvent.SpawnReason.COMMAND &&
+            reason != CreatureSpawnEvent.SpawnReason.CUSTOM
+        ) return;
         if (withinHideAndSeekArea(e.getLocation())) e.setCancelled(true);
     }
 

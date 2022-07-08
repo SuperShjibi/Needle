@@ -84,25 +84,6 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            Location loc = p.getLocation();
-            double x = loc.getX();
-            double y = loc.getY();
-            double z = loc.getZ();
-
-            int minX = 1149; int maxX = 1249; int minY = 47; int maxY = 96; int minZ = 324; int maxZ = 424;
-            boolean x1 = x > minX; boolean x2 = maxX > x;
-            boolean y1 = y > minY; boolean y2 = maxY > y;
-            boolean z1 = z > minZ; boolean z2 = maxZ > z;
-
-            Bukkit.broadcastMessage("" + ChatColor.GRAY + ChatColor.BOLD
-                    + "[DEBUG]"
-                    + " " + x + " > " + minX + ": " + x1 + ";"
-                    + " " + maxX + " > " + x + ": " + x2 + ";"
-                    + " " + y + " > " + minY + ": " + y1 + ";"
-                    + " " + maxY + " > " + y + ": " + y2 + ";"
-                    + " " + z + " > " + minZ + ": " + z1 + ";"
-                    + " " + maxZ + " > " + z + ": " + z2 + ";"
-            );
         }
     }
 }
