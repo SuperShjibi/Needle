@@ -45,7 +45,7 @@ public final class SitHandler implements Listener {
         p.getWorld().spawn(loc, Arrow.class, a -> {
             a.setTicksLived(Integer.MAX_VALUE);
             a.setMetadata("chair", new FixedMetadataValue(Main.getInstance(), "needle"));
-            a.addPassenger(e.getPlayer());
+            a.addPassenger(p);
         });
     }
 
