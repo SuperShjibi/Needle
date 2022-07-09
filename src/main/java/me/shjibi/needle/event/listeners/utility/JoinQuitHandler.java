@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
-public class JoinQuitHandler implements Listener {
+public final class JoinQuitHandler implements Listener {
 
     public static final String loginTimeout = "你太长时间未登录了";
 

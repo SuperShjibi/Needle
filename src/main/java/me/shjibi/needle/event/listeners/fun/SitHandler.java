@@ -1,8 +1,11 @@
 package me.shjibi.needle.event.listeners.fun;
 
 import me.shjibi.needle.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -16,25 +19,30 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.spigotmc.event.entity.EntityDismountEvent;
 
-public class SitHandler implements Listener {
+public final class SitHandler implements Listener {
 
     /* 右键台阶坐下 */
     @EventHandler
     public void onSit(PlayerInteractEvent e) {
-        if (e.getPlayer().isSneaking()) return;
+        Player p = e.getPlayer();
+        if (p.isSneaking()) return;
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if (e.getPlayer().isInsideVehicle()) return;
-        if (e.getClickedBlock() == null) return;
-        if (!(e.getClickedBlock().getBlockData() instanceof Stairs data)) return;
+        if (p.isInsideVehicle()) return;
+
+        Block block = e.getClickedBlock();
+        if (block == null) return;
+        if (!(block.getBlockData() instanceof Stairs data)) return;
+
         if (data.getShape() != Stairs.Shape.STRAIGHT) return;
-        if (data.isWaterlogged()) return;
+        if (data.getHalf() == Bisected.Half.TOP) return;
+        if (!block.getRelative(0, 1, 0).isPassable()) return;
 
         e.setCancelled(true);
 
-        Block under = e.getClickedBlock().getRelative(0, -1, 0);
+        Block under = block.getRelative(0, -1, 0);
         double yOffset = under.getType().isAir() || under.isLiquid() ? 0 : -0.1;
-        Location loc = e.getClickedBlock().getLocation().add(0.5, yOffset, 0.5);
-        e.getPlayer().getWorld().spawn(loc, Arrow.class, a -> {
+        Location loc = block.getLocation().add(0.5, yOffset, 0.5);
+        p.getWorld().spawn(loc, Arrow.class, a -> {
             a.setTicksLived(Integer.MAX_VALUE);
             a.setMetadata("chair", new FixedMetadataValue(Main.getInstance(), "needle"));
             a.addPassenger(e.getPlayer());
