@@ -28,7 +28,7 @@ public final class ChatHandler implements Listener {
     };
 
     private static final String[] admins = {
-            "SuperShjibi"
+            "SuperShjibi", "SuperShjiba", "dick_24", "It2Me"
     };
 
     /* 给聊天信息染色 */
