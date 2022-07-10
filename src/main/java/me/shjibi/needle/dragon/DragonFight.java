@@ -2,6 +2,7 @@ package me.shjibi.needle.dragon;
 
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
@@ -29,7 +30,10 @@ public class DragonFight implements Listener {
     @EventHandler
     public void onDragonSpawn(CreatureSpawnEvent e) {
         if (e.getEntityType() != EntityType.ENDER_DRAGON) return;
-        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.COMMAND) return;
+        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.COMMAND) {
+            e.setCancelled(true);
+            return;
+        };
         if (e.getLocation().getWorld() == null || e.getLocation().getWorld().getEnvironment() != World.Environment.THE_END) return;
 
         LivingEntity entity = e.getEntity();
@@ -63,22 +67,23 @@ public class DragonFight implements Listener {
     @EventHandler
     public void onDragonChangePhase(EnderDragonChangePhaseEvent e) {
         EnderDragon dragon = e.getEntity();
-        Bukkit.broadcastMessage("ticksLived: " + dragon.getTicksLived() + ", phase: " + e.getNewPhase());
+        DragonBattle battle = dragon.getDragonBattle();
+
+        Bukkit.broadcastMessage(ChatColor.BOLD + "[DEBUG] ticksLived: " + dragon.getTicksLived() + ", phase: " + e.getNewPhase());
         if (dragon.getTicksLived() == 0) return;
-        if (isNormalDragon(dragon)) return;
+        if (battle == null) return;
+
         EnderDragon.Phase phase = e.getNewPhase();
+
         DragonType type = getDragonType(dragon);
         if (type == null) return;
         if (phase == EnderDragon.Phase.DYING) return;
-
         List<Player> players = Objects.requireNonNull(dragon.getBossBar()).getPlayers();
 
-        boolean attacked = false;
+        phase = Objects.requireNonNullElse(handleNewPhase(battle, phase, type), phase);
+        e.setNewPhase(phase);
 
-        if (phase == EnderDragon.Phase.FLY_TO_PORTAL && roll()) {
-            phase = randomElement(EnderDragon.Phase.STRAFING, EnderDragon.Phase.CIRCLING);
-            if (phase != null) e.setNewPhase(phase);
-        }
+        boolean attacked = false;
 
         if (phase != EnderDragon.Phase.SEARCH_FOR_BREATH_ATTACK_TARGET &&
             phase != EnderDragon.Phase.ROAR_BEFORE_ATTACK &&
@@ -110,7 +115,6 @@ public class DragonFight implements Listener {
     public void onDragonDeath(EntityDeathEvent e) {
         if (e.getEntityType() != EntityType.ENDER_DRAGON) return;
         if (!(e.getEntity() instanceof EnderDragon dragon)) return;
-        if (isNormalDragon(dragon)) return;
 
         DragonType type = getDragonType(dragon);
         BossBar bossbar = dragon.getBossBar();
@@ -119,6 +123,31 @@ public class DragonFight implements Listener {
 
         String dragonTalk = randomDragonTalk(type, "death");
         Objects.requireNonNull(bossbar).getPlayers().forEach(p -> p.sendMessage(dragonTalk));
+    }
+
+    private static EnderDragon.Phase handleNewPhase(DragonBattle battle, EnderDragon.Phase phase, DragonType type) {
+        List<Player> players = battle.getBossBar().getPlayers();
+
+        switch (type) {
+            case STRONG:
+                if (phase == EnderDragon.Phase.FLY_TO_PORTAL && roll()) {
+                    players.forEach(p -> p.sendMessage(randomDragonTalk(type, "stay_circling")));
+                    return randomElement(EnderDragon.Phase.STRAFING, EnderDragon.Phase.CIRCLING);
+                }
+                return phase;
+            case TANK:
+                if (phase == EnderDragon.Phase.CIRCLING && roll(5)) {
+                    players.forEach(p -> p.sendMessage(randomDragonTalk(type, "to_portal")));
+                    return EnderDragon.Phase.LAND_ON_PORTAL;
+                }
+                if (phase == EnderDragon.Phase.LEAVE_PORTAL && roll()) {
+                    players.forEach(p -> p.sendMessage(randomDragonTalk(type, "stay_portal")));
+                    return EnderDragon.Phase.LAND_ON_PORTAL;
+                }
+                return phase;
+            default:
+                return phase;
+        }
     }
 
 }

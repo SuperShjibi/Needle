@@ -3,12 +3,14 @@ package me.shjibi.needle.custom;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
@@ -49,6 +51,14 @@ public final class OtherHandler implements Listener {
         Player p = e.getPlayer();
         if (!withinHideAndSeekArea(p.getLocation())) return;
         if (p.getGameMode() == GameMode.CREATIVE) return;
+        e.setCancelled(true);
+    }
+
+    /* 防小黑破坏 */
+    @EventHandler
+    public void onEndermanTeleport(EntityTeleportEvent e) {
+        if (e.getEntityType() != EntityType.ENDERMAN) return;
+        if (!withinHideAndSeekArea(e.getTo())) return;
         e.setCancelled(true);
     }
 

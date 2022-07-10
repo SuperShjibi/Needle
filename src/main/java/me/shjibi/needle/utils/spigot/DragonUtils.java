@@ -47,10 +47,6 @@ public final class DragonUtils {
 
     }
 
-    public static boolean isNormalDragon(EnderDragon dragon) {
-        return dragon.getDragonBattle() == null || dragon.getHealth() == 200;
-    }
-
     public static DragonType getDragonType(EnderDragon dragon) {
         if (dragon.getBossBar() == null) return null;
         String text = dragon.getBossBar().getTitle();
@@ -80,6 +76,8 @@ public final class DragonUtils {
         if (attacks.size() != 1) {
             attacks.remove(lastAttack);
             lastAttack = JavaUtil.randomElement(attacks);
+        } else {
+            lastAttack = attacks.get(0);
         }
         return lastAttack;
     }
