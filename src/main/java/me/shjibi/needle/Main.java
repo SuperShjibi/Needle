@@ -2,6 +2,7 @@ package me.shjibi.needle;
 
 import me.shjibi.needle.commands.CommandManager;
 import me.shjibi.needle.event.EventManager;
+import me.shjibi.needle.utils.spigot.DragonUtils;
 import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +18,7 @@ public final class Main extends JavaPlugin {
         instance = this;
 
         SpigotUtil.loadTranslation();
+        DragonUtils.loadDragonTalks();
 
         CommandManager.registerHandlers();
         EventManager.registerListeners();

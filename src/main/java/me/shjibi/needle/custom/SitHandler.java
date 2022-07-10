@@ -1,10 +1,8 @@
-package me.shjibi.needle.event.listeners.fun;
+package me.shjibi.needle.custom;
 
 import me.shjibi.needle.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.Bisected;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.entity.Arrow;
@@ -43,7 +41,6 @@ public final class SitHandler implements Listener {
         double yOffset = under.getType().isAir() || under.isLiquid() ? 0 : -0.1;
         Location loc = block.getLocation().add(0.5, yOffset, 0.5);
         p.getWorld().spawn(loc, Arrow.class, a -> {
-            a.setTicksLived(Integer.MAX_VALUE);
             a.setMetadata("chair", new FixedMetadataValue(Main.getInstance(), "needle"));
             a.addPassenger(p);
         });

@@ -1,22 +1,17 @@
-package me.shjibi.needle.event.listeners.utility;
+package me.shjibi.needle.custom;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
-import static me.shjibi.needle.utils.StringUtil.*;
-import static me.shjibi.needle.utils.spigot.ItemUtil.*;
-import static me.shjibi.needle.utils.spigot.SkullTexture.SPECIAL_EYE;
-import static me.shjibi.needle.utils.spigot.SpigotUtil.withinArea;
+import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
 public final class ChatHandler implements Listener {
 
