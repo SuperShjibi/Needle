@@ -1,15 +1,17 @@
-package me.shjibi.needle.event.listeners.utility;
+package me.shjibi.needle.custom;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
+import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.spigot.SpigotUtil.withinArea;
@@ -36,11 +38,28 @@ public final class OtherHandler implements Listener {
 
     /* 防破坏 */
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e) {
+    public void onBlockPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
+        if (!withinHideAndSeekArea(p.getLocation())) return;
+        if (p.getGameMode() == GameMode.CREATIVE) return;
+        e.setCancelled(true);
+    }
+
+    /* 防破坏 */
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        if (!withinHideAndSeekArea(p.getLocation())) return;
+        if (p.getGameMode() == GameMode.CREATIVE) return;
+        e.setCancelled(true);
+    }
+
+    /* 防小黑破坏 */
+    @EventHandler
+    public void onEndermanTeleport(EntityTeleportEvent e) {
+        if (e.getEntityType() != EntityType.ENDERMAN) return;
         if (!withinHideAndSeekArea(e.getTo())) return;
-        if (p.getGameMode() != GameMode.SURVIVAL || p.getGameMode() == GameMode.ADVENTURE) return;
-        p.setGameMode(GameMode.ADVENTURE);
+        e.setCancelled(true);
     }
 
     private static boolean withinHideAndSeekArea(Location loc) {

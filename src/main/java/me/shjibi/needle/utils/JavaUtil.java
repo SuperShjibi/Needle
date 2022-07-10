@@ -50,13 +50,29 @@ public final class JavaUtil {
     }
 
     /* 数组中随机一个元素 */
-    public static <T> T randomElement(T[] array) {
+    @SafeVarargs
+    public static <T> T randomElement(T... array) {
+        if (array.length == 0) return null;
         return array[random.nextInt(array.length)];
+    }
+
+    /* 列表中随机一个元素 */
+    public static <T> T randomElement(List<T> list) {
+        if (list.isEmpty()) return null;
+        return list.get(random.nextInt(list.size()));
     }
 
     /* 随机整数 */
     public static int randomInt(int start, int end) {
         return random.nextInt(start - 1, end) + 1;
+    }
+
+    public static boolean randomBool() {
+        return random.nextBoolean();
+    }
+
+    public static double randomDouble(double start, double end) {
+        return random.nextDouble(start - 1, end) + 1;
     }
 
 }

@@ -1,11 +1,16 @@
 package me.shjibi.needle.event;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.event.listeners.extra.BlockMineHandler;
-import me.shjibi.needle.event.listeners.extra.DragonFightHandler;
-import me.shjibi.needle.event.listeners.extra.EndermanKillHandler;
-import me.shjibi.needle.event.listeners.fun.*;
-import me.shjibi.needle.event.listeners.utility.*;
+import me.shjibi.needle.dragon.attack.strong.DragonPunch;
+import me.shjibi.needle.rare.BlockMineHandler;
+import me.shjibi.needle.rare.EndermanKillHandler;
+import me.shjibi.needle.dragon.DragonFight;
+import me.shjibi.needle.custom.SitHandler;
+import me.shjibi.needle.custom.SuicideHandler;
+import me.shjibi.needle.custom.AnvilHandler;
+import me.shjibi.needle.custom.ChatHandler;
+import me.shjibi.needle.custom.JoinQuitHandler;
+import me.shjibi.needle.custom.OtherHandler;
 import org.bukkit.event.Listener;
 
 import java.util.logging.Level;
@@ -18,7 +23,9 @@ public final class EventManager {
     private static final Class<?>[] LISTENERS = {
         SitHandler.class, SuicideHandler.class, OtherHandler.class,
         ChatHandler.class, JoinQuitHandler.class, AnvilHandler.class,
-        BlockMineHandler.class, DragonFightHandler.class, EndermanKillHandler.class,
+        BlockMineHandler.class, EndermanKillHandler.class, DragonFight.class,
+
+        DragonPunch.class
     };
 
 

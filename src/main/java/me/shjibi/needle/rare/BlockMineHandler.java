@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners.extra;
+package me.shjibi.needle.rare;
 
 import org.bukkit.Material;
 import org.bukkit.Statistic;
@@ -13,7 +13,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import static me.shjibi.needle.utils.JavaUtil.roll;
 import static me.shjibi.needle.utils.spigot.ItemUtil.getOPEnchantmentBook;
 import static me.shjibi.needle.utils.spigot.ItemUtil.giveItem;
-import static me.shjibi.needle.utils.spigot.SpigotUtil.*;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.broadcastRandomEvent;
+import static me.shjibi.needle.utils.spigot.SpigotUtil.sendMessages;
 
 public final class BlockMineHandler implements Listener {
 

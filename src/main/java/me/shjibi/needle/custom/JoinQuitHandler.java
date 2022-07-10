@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners.utility;
+package me.shjibi.needle.custom;
 
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerKickEvent;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
-public class JoinQuitHandler implements Listener {
+public final class JoinQuitHandler implements Listener {
 
     public static final String loginTimeout = "你太长时间未登录了";
 

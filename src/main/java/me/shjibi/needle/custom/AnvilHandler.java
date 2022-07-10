@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners.utility;
+package me.shjibi.needle.custom;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -15,7 +15,7 @@ import java.util.Map;
 import static me.shjibi.needle.utils.spigot.ItemUtil.isEnchantmentBook;
 import static me.shjibi.needle.utils.spigot.ItemUtil.isOPEnchantmentBook;
 
-public class AnvilHandler implements Listener {
+public final class AnvilHandler implements Listener {
 
     /* 修复了铁砧付不了高等级附魔书的特性 */
     @EventHandler

@@ -1,28 +1,22 @@
 package me.shjibi.needle.utils.spigot;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.event.listeners.extra.EventRarity;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.ItemTag;
+import me.shjibi.needle.rare.EventRarity;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Item;
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
-import org.bukkit.enchantments.Enchantment;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 
-import static me.shjibi.needle.utils.StringUtil.*;
+import static me.shjibi.needle.utils.StringUtil.color;
+import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
 public class SpigotUtil {
 
@@ -216,4 +210,16 @@ public class SpigotUtil {
                 (minY < y && maxY > y) &&
                 (minZ < z && maxZ > z);
     }
+
+    public static void setMaxHealth(LivingEntity entity, double maxHealth) {
+        AttributeInstance attrib = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        if (attrib != null) attrib.setBaseValue(maxHealth);
+        entity.setHealth(maxHealth);
+    }
+
+    public static void setAttackDamage(LivingEntity entity, double attackDamage) {
+        AttributeInstance attrib = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+        if (attrib != null) attrib.setBaseValue(attackDamage);
+    }
+
 }

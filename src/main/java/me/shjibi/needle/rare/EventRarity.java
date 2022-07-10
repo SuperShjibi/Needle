@@ -1,4 +1,4 @@
-package me.shjibi.needle.event.listeners.extra;
+package me.shjibi.needle.rare;
 
 public enum EventRarity {
 
