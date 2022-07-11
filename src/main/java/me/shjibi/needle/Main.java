@@ -2,13 +2,13 @@ package me.shjibi.needle;
 
 import me.shjibi.needle.commands.CommandManager;
 import me.shjibi.needle.event.EventManager;
-import me.shjibi.needle.utils.spigot.DragonUtils;
+import me.shjibi.needle.utils.spigot.DragonUtil;
 import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Main extends JavaPlugin {
 
-    /*
+    /**
     唯一的实例
     */
     private static Main instance;
@@ -18,7 +18,7 @@ public final class Main extends JavaPlugin {
         instance = this;
 
         SpigotUtil.loadTranslation();
-        DragonUtils.loadDragonTalks();
+        DragonUtil.loadDragonTalks();
 
         CommandManager.registerHandlers();
         EventManager.registerListeners();
@@ -32,6 +32,7 @@ public final class Main extends JavaPlugin {
         getLogger().info("禁用了Needle插件~");
     }
 
+    /** 获取插件实例 */
     public static Main getInstance() {
         return instance;
     }

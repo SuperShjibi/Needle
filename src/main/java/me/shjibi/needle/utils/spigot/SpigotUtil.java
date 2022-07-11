@@ -22,15 +22,15 @@ public class SpigotUtil {
 
     private SpigotUtil() {}
 
-    /*
-    把AdvancementProgress(成就进度)获取的Criterion(目标)字符串翻译成中文
-    第一个String -> 原文, 第二个String -> 译文
+    /**
+    AdvancementProgress(成就进度)的Criterion(目标)的翻译
     */
     private static final Map<String, String> advancementTranslation = new HashMap<>();
-    private static List<String> allAdvancementNames = null;  // 存储以减少卡顿
+    /** 所有的进度名 */
+    private static List<String> allAdvancementNames = null;
 
-    /*
-    把translation.txt中的翻译加载到内存
+    /**
+    把translation.yml中的翻译加载到内存
     */
     public static void loadTranslation() {
         try {
@@ -50,7 +50,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 获取世界的中文名  */
+    /** 获取世界的中文名  */
     public static String getWorldName(World world) {
         if (world == null)
             return "未知";
@@ -63,7 +63,7 @@ public class SpigotUtil {
         return "未知";
     }
 
-    /* 获取所有进度(成就)的名称(除了配方进度) */
+    /** 获取所有进度(成就)的名称(除了配方进度) */
     public static List<String> getAdvancementNameList() {
         if (allAdvancementNames == null) {
             allAdvancementNames = new ArrayList<>();
@@ -76,30 +76,30 @@ public class SpigotUtil {
         return allAdvancementNames;
     }
 
-    /* 获取所有进度(成就)的名称(除了配方进度),存到数组里 */
+    /** 获取所有进度(成就)的名称(除了配方进度),存到数组里 */
     public static String[] getAdvancementNamesArray() {
         List<String> names = getAdvancementNameList();
         String[] result = new String[names.size()];
         return names.toArray(result);
     }
 
-    /* 把传入Collection里的所有criteria翻译 */
-    public static List<String> translateAdvancements(Collection<String> raw) {  // 应该是'translateCriteria'
+    /** 把传入Collection里的所有criteria翻译 */
+    public static List<String> translateAdvancements(Collection<String> raw) {
         List<String> result = new ArrayList<>();
         for (String str : raw) {
             String translated = advancementTranslation.get(str);
-            result.add(translated == null ? str : translated); // 如果没有该翻译,就用原文(应该每一个都翻译了..吧)
+            result.add(translated == null ? str : translated);
         }
         return result;
     }
 
 
-    /* 用Bukkit的方法获取Advancement */
+    /** 通过名字获取成就 */
     public static Advancement getAdvancementByName(String name) {
         return Bukkit.getAdvancement(NamespacedKey.minecraft(name));
     }
 
-    /* 通过名字获取离线玩家 */
+    /** 通过名字获取离线玩家 */
     public static OfflinePlayer getOfflinePlayer(String name) {
         for (OfflinePlayer p : Main.getInstance().getServer().getOfflinePlayers()) {
             if (name.equals(p.getName())) return p;
@@ -107,13 +107,13 @@ public class SpigotUtil {
         return null;
     }
 
-    /* 获取服务器版本号 */
+    /** 获取服务器版本号 */
     public static String getVersion() {
         String packageName = Bukkit.getServer().getClass().getPackage().getName();
         return packageName.substring(packageName.lastIndexOf(".") + 1);
     }
 
-    /* 获取NMS类 */
+    /** 获取NMS类 */
     public static Class<?> getNMSClass(String name) {
         try {
             return Class.forName("net.minecraft.server." + getVersion() + "." + name);
@@ -123,7 +123,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 获取craft bukkit类 */
+    /** 获取CraftBukkit类 */
     public static Class<?> getCraftBukkitClass(String name) {
         try {
             return Class.forName("org.bukkit.craftbukkit." + getVersion() + "." + name);
@@ -133,13 +133,14 @@ public class SpigotUtil {
         }
     }
 
-    /* 向指定玩家发送多条消息 */
+    /** 向指定玩家发送多条消息 */
     public static void sendMessages(Player p, String... messages) {
         for (String msg : messages) {
             p.sendMessage(fullyColorize(msg));
         }
     }
 
+    /** 向全服通告随机事件 */
     public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner) {
         playNoticeSound(winner);
         String winnerName = winner.getName();
@@ -152,7 +153,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 全服通告 */
+    /** 向全服通告随机事件 */
     public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner, boolean notice) {
         if (notice) playNoticeSound(winner);
         String winnerName = winner.getName();
@@ -165,7 +166,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 全服通告(用TextComponent) */
+    /** 全服通告(用TextComponent) */
     public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
         playNoticeSound(winner);
         String winnerName = winner.getName();
@@ -183,7 +184,7 @@ public class SpigotUtil {
         }
     }
 
-    /* 播放提示音 */
+    /** 播放提示音 */
     public static void playNoticeSound(Player p) {
         new Thread(() -> {
             for (int i = 0; i < 5; i++) {
@@ -196,11 +197,12 @@ public class SpigotUtil {
         }).start();
     }
 
-    /* 是否在末地主岛范围内 */
+    /** 是否在末地主岛范围内(末地) */
     public static boolean isInMainIsland(Location loc) {
         return Math.abs(loc.getBlockX()) < 500 && Math.abs(loc.getBlockZ()) < 500;
     }
 
+    /** 判断loc是否在提供的范围内 */
     public static boolean withinArea(Location loc, double minX, double maxX, double minY, double maxY, double minZ, double maxZ) {
         double x = loc.getX();
         double y = loc.getY();
@@ -211,12 +213,14 @@ public class SpigotUtil {
                 (minZ < z && maxZ > z);
     }
 
+    /** 设置一个LivingEntity的最大生命值 */
     public static void setMaxHealth(LivingEntity entity, double maxHealth) {
         AttributeInstance attrib = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         if (attrib != null) attrib.setBaseValue(maxHealth);
         entity.setHealth(maxHealth);
     }
 
+    /** 设置一个LivingEntity的攻击上海 */
     public static void setAttackDamage(LivingEntity entity, double attackDamage) {
         AttributeInstance attrib = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
         if (attrib != null) attrib.setBaseValue(attackDamage);

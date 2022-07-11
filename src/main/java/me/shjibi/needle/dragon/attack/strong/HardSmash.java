@@ -3,7 +3,7 @@ package me.shjibi.needle.dragon.attack.strong;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.dragon.attack.Attacker;
 import me.shjibi.needle.utils.JavaUtil;
-import me.shjibi.needle.utils.spigot.DragonUtils;
+import me.shjibi.needle.utils.spigot.DragonUtil;
 import org.bukkit.Sound;
 import org.bukkit.boss.DragonBattle;
 import org.bukkit.entity.Player;
@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-import static me.shjibi.needle.utils.spigot.DragonUtils.getAllFighters;
+import static me.shjibi.needle.utils.spigot.DragonUtil.getAllFighters;
 
 public class HardSmash implements Attacker {
 
@@ -25,7 +25,7 @@ public class HardSmash implements Attacker {
             player.setVelocity(vec);
             player.getWorld().playSound(player.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
         }
-        DragonUtils.sendAttackMessage(battle, DragonAttack.HARD_SMASH, "所有人");
+        DragonUtil.sendAttackMessage(battle, DragonAttack.HARD_SMASH, "所有人");
         return true;
     }
 
