@@ -4,6 +4,7 @@ import me.shjibi.needle.Main;
 import me.shjibi.needle.dragon.DragonType;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.JavaUtil;
+import me.shjibi.needle.utils.StringUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.boss.BarColor;
@@ -21,15 +22,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
+import static me.shjibi.needle.utils.JavaUtil.logSevere;
+import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
 
-public final class DragonUtils {
+public final class DragonUtil {
 
     private static YamlConfiguration dragonTalks;
     private static String lastTalk = "";
     private static DragonAttack lastAttack;
 
-    private DragonUtils() {}
+    private DragonUtil() {}
 
     /** 加载龙的对话 */
     public static void loadDragonTalks()  {
@@ -68,11 +71,16 @@ public final class DragonUtils {
         return toChatColor(type.getColor()) + "[" + type.getName() + "]: " + ChatColor.GRAY;
     }
 
+    public static String randomMessage(String path) {
+        return color(JavaUtil.randomElement(dragonTalks.getStringList(path)));
+    }
+
     /** 从特定的键中抽取一条对话 */
     public static String randomDragonTalk(DragonType type, String category) {
         List<String> talks = dragonTalks.getStringList(type.toString().toLowerCase() + "." + category);
         talks.remove(lastTalk);
         lastTalk = JavaUtil.randomElement(talks);
+        if (lastTalk == null) return null;
         return getDragonTalkPrefix(type) + fullyColorize(lastTalk);
     }
 
@@ -91,7 +99,9 @@ public final class DragonUtils {
     /** 抽取一个适合attack的攻击对话 */
     public static String randomDragonAttackMessage(DragonAttack attack) {
         List<String> talks = dragonTalks.getStringList("attacks." + attack.toString().toLowerCase());
-        return getDragonTalkPrefix(attack.getType()) + fullyColorize(JavaUtil.randomElement(talks));
+        String message = JavaUtil.randomElement(talks);
+        if (message == null) return null;
+        return getDragonTalkPrefix(attack.getType()) + fullyColorize(message);
     }
 
     /** 发送攻击提示(xx龙使用了xx) */
@@ -107,7 +117,11 @@ public final class DragonUtils {
     public static void sendAttackMessage(DragonBattle battle, DragonAttack attack, String target, String effect) {
         DragonType type = attack.getType();
         String color = toChatColor(type.getColor()).toString();
-        String msg = color + type.getName() + ChatColor.GRAY + "对" + ChatColor.GOLD + target + ChatColor.GRAY + "使用了" + color + ChatColor.BOLD + attack.getName() + ChatColor.GRAY + ", " + effect;
+        String msg = color + type.getName() + ChatColor.GRAY + "对" +
+                ChatColor.GOLD + target + ChatColor.GRAY + "使用了" +
+                color + ChatColor.BOLD + attack.getName() +
+                ChatColor.GRAY + ", " + StringUtil.color(effect);
+
         battle.getBossBar().getPlayers().forEach(p -> p.sendMessage(msg));
     }
 
@@ -118,4 +132,10 @@ public final class DragonUtils {
         copied.removeIf(p -> p.getGameMode() != GameMode.SURVIVAL && p.getGameMode() != GameMode.ADVENTURE);
         return copied;
     }
+
+    public static void sendTalkSafely(List<Player> players, String dragonTalk, String type) {
+        if (dragonTalk != null) players.forEach(p -> p.sendMessage(dragonTalk));
+        else logSevere("没有为" + type + "找到合适的龙对话!");
+    }
+
 }

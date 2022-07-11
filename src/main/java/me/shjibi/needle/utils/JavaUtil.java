@@ -1,7 +1,11 @@
 package me.shjibi.needle.utils;
 
+import me.shjibi.needle.Main;
+import org.bukkit.Bukkit;
+
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -75,6 +79,18 @@ public final class JavaUtil {
     /** 随机浮点数 */
     public static double randomDouble(double start, double end) {
         return random.nextDouble(start - 1, end) + 1;
+    }
+
+    public static void logSevere(String msg) {
+        Main.getInstance().getLogger().log(Level.SEVERE, msg);
+    }
+
+    public static void logInfo(String msg) {
+        Main.getInstance().getLogger().info(msg);
+    }
+
+    public static void debug(String msg) {
+        Bukkit.broadcastMessage(StringUtil.color("&l[DEBUG] " + msg));
     }
 
 }
