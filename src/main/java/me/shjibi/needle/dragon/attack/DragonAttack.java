@@ -16,7 +16,9 @@ public enum DragonAttack {
     HARD_SMASH("强力敲击", DragonType.STRONG, new HardSmash()),
     ARROW_SPAM("力量射击", DragonType.STRONG, new ArrowSpam()),
 
-    STUN_ATTACK("晕厥术", DragonType.MAGICAL, new StunAttack());
+    STUN_ATTACK("晕厥术", DragonType.MAGICAL, new StunAttack()),
+    MAGIC_STORM("魔法风暴", DragonType.MAGICAL, new MagicStorm()),
+    BLACK_MAGIC("黑魔法", DragonType.MAGICAL, new BlackMagic());
 
     private final String name;
     private final DragonType type;
