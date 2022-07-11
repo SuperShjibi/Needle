@@ -3,7 +3,7 @@ package me.shjibi.needle.dragon.attack.strong;
 import me.shjibi.needle.dragon.attack.Attacker;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 
-import me.shjibi.needle.utils.spigot.DragonUtils;
+import me.shjibi.needle.utils.spigot.DragonUtil;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.boss.DragonBattle;
@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 import static me.shjibi.needle.utils.JavaUtil.*;
-import static me.shjibi.needle.utils.spigot.DragonUtils.getAllFighters;
+import static me.shjibi.needle.utils.spigot.DragonUtil.getAllFighters;
 
 public class ArrowSpam implements Attacker {
 
@@ -35,7 +35,7 @@ public class ArrowSpam implements Attacker {
             }
         }
 
-        DragonUtils.sendAttackMessage(battle, DragonAttack.ARROW_SPAM, "所有人");
+        DragonUtil.sendAttackMessage(battle, DragonAttack.ARROW_SPAM, "所有人");
         return true;
     }
 
