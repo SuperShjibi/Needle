@@ -22,7 +22,7 @@ public final class ItemUtil {
 
     private ItemUtil() {}
 
-    /* 获取指定玩家的头颅 */
+    /** 获取指定材质的头颅 */
     public static ItemStack getSkull(String textures) {
         ItemStack head = new ItemStack(Material.PLAYER_HEAD);
         if (textures == null || textures.isEmpty()) {
@@ -55,7 +55,7 @@ public final class ItemUtil {
         return head;
     }
 
-    /* 获取物品NBT */
+    /** 获取物品NBT(字符串) */
     public static String getItemNBT(ItemStack item) {
         try {
             Object nmsItem = item.getClass().getMethod("asNMSCopy", ItemStack.class).invoke(null, item);
@@ -66,17 +66,17 @@ public final class ItemUtil {
         }
     }
 
-    /* 获取格式化的物品名 */
+    /** 获取格式化的物品名(传入ItemStack) */
     public static String getFormattedItemType(ItemStack item) {
         return title(item.getType().name().toLowerCase().replace('_', ' '));
     }
 
-    /* 获取格式化的物品名 */
+    /** 获取格式化的物品名(传入Material) */
     public static String getFormattedItemType(Material type) {
         return title(type.name().toLowerCase().replace('_', ' '));
     }
 
-    /* 获取展示物品的TextComponent */
+    /** 获取展示物品的TextComponent */
     public static TextComponent getItemShowcaseComponent(ItemStack item) {
         String nbt = getItemNBT(item);
         String typeName = getFormattedItemType(item);
@@ -106,14 +106,14 @@ public final class ItemUtil {
         return component;
     }
 
-    /* 是否是附魔书 */
+    /** 是否是附魔书 */
     public static boolean isEnchantmentBook(ItemStack item) {
         if (item == null) return false;
         if (item.getItemMeta() == null) return false;
         return item.getItemMeta() instanceof EnchantmentStorageMeta;
     }
 
-    /* 是否是OP附魔书 (是否有一个附魔的等级超过最大附魔等级) */
+    /** 是否是高级附魔书 */
     public static boolean isOPEnchantmentBook(ItemStack item) {
         if (!isEnchantmentBook(item)) return false;
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) item.getItemMeta();
@@ -124,7 +124,7 @@ public final class ItemUtil {
         return false;
     }
 
-    /* 获取一本OP附魔书 */
+    /** 获取一本OP附魔书 */
     public static ItemStack getOPEnchantmentBook(Enchantment enchantment, int extra) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK);
         EnchantmentStorageMeta meta = (EnchantmentStorageMeta) book.getItemMeta();
@@ -134,7 +134,7 @@ public final class ItemUtil {
         return book;
     }
 
-    /* 把指定物品添加到指定玩家背包中,如果背包满了则丢在地上 */
+    /** 把指定物品添加到指定玩家背包中,如果背包满了则丢在地上 */
     public static void giveItem(Player p, ItemStack item) {
         if (p == null || item == null) return;
         boolean full = p.getInventory().firstEmpty() == -1;

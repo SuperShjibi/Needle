@@ -19,8 +19,8 @@ public final class EventManager {
 
     private EventManager() {}
 
-    /* 所有Listener的类 */
-    private static final Class<?>[] LISTENERS = {
+    /** 所有Listener的类 */
+    public static final Class<?>[] LISTENERS = {
         SitHandler.class, SuicideHandler.class, OtherHandler.class,
         ChatHandler.class, JoinQuitHandler.class, AnvilHandler.class,
         BlockMineHandler.class, EndermanKillHandler.class, DragonFight.class,
@@ -29,7 +29,7 @@ public final class EventManager {
     };
 
 
-    /* 利用反射注册Listeners */
+    /** 利用反射注册Listeners */
     public static void registerListeners() {
         Main plugin = Main.getInstance();
         try {

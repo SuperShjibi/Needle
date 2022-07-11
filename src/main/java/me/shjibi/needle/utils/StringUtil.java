@@ -13,7 +13,7 @@ public final class StringUtil {
     private static final Pattern stripPattern = Pattern.compile("§([0-9a-fk-or])");
     private static final Pattern hexPattern = Pattern.compile("\\{#([a-fA-F0-9]{6})}");
 
-    /* 标题化字符串 */
+    /** 标题化字符串 */
     public static String title(String s) {
         String[] parts = s.split(" ");
         StringBuilder sb = new StringBuilder(s.length());
@@ -27,22 +27,22 @@ public final class StringUtil {
         return sb.toString().trim();
     }
 
-    /* 给字符串上色 */
+    /** 给字符串上色 */
     public static String color(String s) {
         return colorPattern.matcher(s).replaceAll("§$1");
     }
 
-    /* 去除用&代替§的颜色 */
+    /** 去除 "&a" 这样的颜色 */
     public static String stripUnformatted(String s) {
         return colorPattern.matcher(s).replaceAll("");
     }
 
-    /* 去除用§表示的颜色 */
+    /** 去除 "§a" 这样的颜色 */
     public static String stripFormatted(String s) {
         return stripPattern.matcher(s).replaceAll("");
     }
 
-    /* 将s中符合hexPattern的子字符串替换成我的世界中表示十六进制颜色的字符串 */
+    /** 将s中符合hexPattern的子字符串替换成我的世界中表示十六进制颜色的格式 */
     public static String hexColor(String s) {
         StringBuilder result = new StringBuilder();
         Matcher matcher = hexPattern.matcher(s);
@@ -57,12 +57,12 @@ public final class StringUtil {
         return matcher.appendTail(result).toString();
     }
 
-    /* 对字符串s进行color()和hexColor() */
+    /** 对字符串s进行color()和hexColor() */
     public static String fullyColorize(String s) {
         return hexColor(color(s));
     }
 
-    /* 通过给定的String返回一个TextComponent */
+    /** 通过给定的String返回一个TextComponent */
     public static TextComponent toTextComponent(String s) {
         return new TextComponent(TextComponent.fromLegacyText(s));
     }
