@@ -5,6 +5,7 @@ import me.shjibi.needle.dragon.DragonType;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.JavaUtil;
 import me.shjibi.needle.utils.StringUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.boss.BarColor;
@@ -17,10 +18,9 @@ import org.bukkit.entity.Player;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import static me.shjibi.needle.utils.JavaUtil.logSevere;
 import static me.shjibi.needle.utils.StringUtil.color;
@@ -154,4 +154,31 @@ public final class DragonUtil {
         else logSevere("没有为" + type + "找到合适的龙对话!");
     }
 
+    public static void giveLoot(DragonBattle battle, Map<String, Double> damageMap) {
+
+    }
+
+    public static void sendDamageMap(DragonBattle battle, Map<String, Double> damageMap) {
+        if (battle.getEnderDragon() == null) return;
+        DragonType type = getDragonType(battle.getEnderDragon());
+        if (type == null) return;
+
+        List<Map.Entry<String, Double>> entries = damageMap.entrySet().stream().sorted(
+                (c1, c2) -> c2.getValue().compareTo(c1.getValue())
+        ).toList();
+
+        String color = toChatColor(type.getColor()).toString();
+        List<Player> players = battle.getBossBar().getPlayers();
+        players.forEach(x -> x.sendMessage(color("&7与" + color + type.getName() + "&7的战斗结束了, 下面是&c伤害&7排行榜:")));
+
+        if (entries.size() != 0) {
+            for (int i = 0; i < entries.size(); i++) {
+                Map.Entry<String, Double> entry = entries.get(i);
+                String message = color("&7 - " + color + (i + 1) + ". &6" + entry.getKey() + color + ": &c" + entry.getValue() + "&7 - ");
+                players.forEach(p -> p.sendMessage(message));
+            }
+        } else {
+            players.forEach(p -> p.sendMessage(color("&7没有人对龙造成了&c伤害&7! &l*&4&l这很可能是一个bug, 请告诉服务器管理员&l&r*")));
+        }
+    }
 }

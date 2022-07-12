@@ -3,6 +3,7 @@ package me.shjibi.needle.event;
 import me.shjibi.needle.Main;
 import me.shjibi.needle.custom.*;
 import me.shjibi.needle.dragon.DragonFight;
+import me.shjibi.needle.dragon.attack.magical.MagicStorm;
 import me.shjibi.needle.dragon.attack.magical.StunAttack;
 import me.shjibi.needle.dragon.attack.tank.DamageAbsorb;
 import me.shjibi.needle.rare.BlockMineHandler;
@@ -21,7 +22,7 @@ public final class EventManager {
         ChatHandler.class, JoinQuitHandler.class, AnvilHandler.class,
         BlockMineHandler.class, EndermanKillHandler.class, DragonFight.class,
 
-        StunAttack.class
+        StunAttack.class, MagicStorm.class
     };
 
 
