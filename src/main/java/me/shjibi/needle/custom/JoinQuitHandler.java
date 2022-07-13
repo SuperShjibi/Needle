@@ -1,5 +1,6 @@
 package me.shjibi.needle.custom;
 
+import me.shjibi.needle.utils.spigot.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,6 +31,8 @@ public final class JoinQuitHandler implements Listener {
         if (joinMessage != null) Bukkit.broadcastMessage(joinMessage);
 
         e.setJoinMessage(null);
+
+        ItemUtil.handlePlayerJoin(e.getPlayer());
     }
 
     /* 登陆超时提示 */

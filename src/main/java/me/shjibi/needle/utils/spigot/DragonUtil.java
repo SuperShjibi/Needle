@@ -5,9 +5,7 @@ import me.shjibi.needle.dragon.DragonType;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.JavaUtil;
 import me.shjibi.needle.utils.StringUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.DragonBattle;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -22,6 +20,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import static me.shjibi.needle.utils.JavaUtil.debug;
 import static me.shjibi.needle.utils.JavaUtil.logSevere;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
@@ -66,10 +65,10 @@ public final class DragonUtil {
 
     /** 通过BossBar的标题获取龙的类型 */
     public static DragonType getDragonType(EnderDragon dragon) {
-        if (dragon.getBossBar() == null) return null;
+        if (dragon.getBossBar() == null) throw new RuntimeException("无法判断龙类型!");
         String text = dragon.getBossBar().getTitle();
         for (DragonType type : DragonType.values()) if (type.getName().equals(text)) return type;
-        return null;
+        throw new RuntimeException("无法判断龙类型");
     }
 
     /** 将BarColor转成ChatColor */
@@ -150,20 +149,20 @@ public final class DragonUtil {
     }
 
     public static void sendTalkSafely(List<Player> players, String dragonTalk, String type) {
+        debug("player size: " + players.size());
         if (dragonTalk != null) players.forEach(p -> p.sendMessage(dragonTalk));
         else logSevere("没有为" + type + "找到合适的龙对话!");
     }
 
-    public static void giveLoot(DragonBattle battle, Map<String, Double> damageMap) {
+    public static void giveLoot(DragonBattle battle, Map<UUID, Double> damageMap) {
 
     }
 
-    public static void sendDamageMap(DragonBattle battle, Map<String, Double> damageMap) {
+    public static void sendDamageMap(DragonBattle battle, Map<UUID, Double> damageMap) {
         if (battle.getEnderDragon() == null) return;
         DragonType type = getDragonType(battle.getEnderDragon());
-        if (type == null) return;
 
-        List<Map.Entry<String, Double>> entries = damageMap.entrySet().stream().sorted(
+        List<Map.Entry<UUID, Double>> entries = damageMap.entrySet().stream().sorted(
                 (c1, c2) -> c2.getValue().compareTo(c1.getValue())
         ).toList();
 
@@ -173,8 +172,9 @@ public final class DragonUtil {
 
         if (entries.size() != 0) {
             for (int i = 0; i < entries.size(); i++) {
-                Map.Entry<String, Double> entry = entries.get(i);
-                String message = color("&7 - " + color + (i + 1) + ". &6" + entry.getKey() + color + ": &c" + entry.getValue() + "&7 - ");
+                Map.Entry<UUID, Double> entry = entries.get(i);
+                OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
+                String message = color("&7 - " + color + (i + 1) + ". &6" + player.getName() + color + ": &c" + entry.getValue() + "&7 - ");
                 players.forEach(p -> p.sendMessage(message));
             }
         } else {

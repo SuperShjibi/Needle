@@ -1,6 +1,10 @@
 package me.shjibi.needle.custom;
 
+import me.shjibi.needle.dragon.DragonFight;
+import me.shjibi.needle.utils.spigot.ItemUtil;
+import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,6 +12,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.inventory.ItemStack;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
 import static me.shjibi.needle.utils.StringUtil.color;
@@ -79,6 +84,8 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
+            boolean result = ItemUtil.dropItem(p.getLocation(), new ItemStack(Material.DIAMOND), p);
+            p.sendMessage("result: " + result);
         }
     }
 }

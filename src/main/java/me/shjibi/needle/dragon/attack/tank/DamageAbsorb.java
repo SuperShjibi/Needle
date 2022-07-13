@@ -11,16 +11,18 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class DamageAbsorb implements Attacker {
 
+    private static EnderDragon dragon;
+
     @Override
     public boolean attack(DragonBattle battle) {
         if (battle.getEnderDragon() == null) return false;
-        EnderDragon dragon = battle.getEnderDragon();
+        dragon = battle.getEnderDragon();
         int duration = JavaUtil.randomInt(3, 6);
         dragon.setInvulnerable(true);
         new BukkitRunnable() {
             @Override
             public void run() {
-                dragon.setInvulnerable(false);
+                onDisable();
             }
         }.runTaskLater(Main.getInstance(), duration * 20L);
 
@@ -28,6 +30,10 @@ public class DamageAbsorb implements Attacker {
         return true;
     }
 
-
+    @Override
+    public void onDisable() {
+        if (dragon == null) return;
+        dragon.setInvulnerable(false);
+    }
 
 }

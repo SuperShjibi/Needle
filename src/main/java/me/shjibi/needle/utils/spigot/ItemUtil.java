@@ -1,17 +1,25 @@
 package me.shjibi.needle.utils.spigot;
 
+import joptsimple.internal.ReflectionException;
+import me.shjibi.needle.Main;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.ItemTag;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.chat.hover.content.Item;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -19,6 +27,8 @@ import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.title;
 
 public final class ItemUtil {
+
+    private static final Map<Item, Player> hiddenItems = new HashMap<>();
 
     private ItemUtil() {}
 
@@ -58,7 +68,7 @@ public final class ItemUtil {
     /** 获取物品NBT(字符串) */
     public static String getItemNBT(ItemStack item) {
         try {
-            Object nmsItem = item.getClass().getMethod("asNMSCopy", ItemStack.class).invoke(null, item);
+            Object nmsItem = asNMSCopy(item);
             Object nbt = nmsItem.getClass().getMethod("s").invoke(nmsItem);
             return (String) nbt.getClass().getMethod("toString").invoke(nbt);
         } catch (ReflectiveOperationException | NullPointerException e) {
@@ -100,7 +110,8 @@ public final class ItemUtil {
         String itemColor = (enchanted ? "&b" : (enchantBook ? "&e" : "&r"));
 
         TextComponent component = new TextComponent(color( itemColor + "[" + name + "]"));
-        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new Item(id, amount, ItemTag.ofNbt(nbt))));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new net.md_5.bungee.api.chat.hover.content.Item
+                (id, amount, ItemTag.ofNbt(nbt))));
         if (amount > 1) component.addExtra(color(itemColor + " x " + amount));
 
         return component;
@@ -142,6 +153,47 @@ public final class ItemUtil {
             p.getInventory().addItem(item);
         } else {
             p.getWorld().dropItemNaturally(p.getLocation(), item);
+        }
+    }
+
+    /** 掉落物品, 只有指定的玩家才能看到 */
+    public static boolean dropItem(Location loc, ItemStack itemStack, Player player) {
+        if (loc.getWorld() == null) return false;
+        Item item = loc.getWorld().dropItem(loc, itemStack);
+        hiddenItems.put(item, player);
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (p.equals(player)) continue;
+            hideEntity(p, item);
+        }
+        return true;
+    }
+
+    /** 处理玩家加入 */
+    public static void handlePlayerJoin(Player p) {
+        for (Map.Entry<Item, Player> entry : hiddenItems.entrySet()) {
+            if (p.equals(entry.getValue())) continue;
+            hideEntity(p, entry.getKey());
+        }
+    }
+
+    private static void hideEntity(Player player, Entity entity) {
+        try {
+            Class<?> craftPlayerClass = SpigotUtil.getCraftBukkitClass("entity.CraftPlayer");
+            if (craftPlayerClass == null) throw new ReflectiveOperationException();
+            Method method = craftPlayerClass.getDeclaredMethod("hideEntity0", Plugin.class, Entity.class);
+            method.invoke(player, Main.getInstance(), entity);
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object asNMSCopy(ItemStack item) {
+        try {
+            Class<?> itemClass = SpigotUtil.getCraftBukkitClass("inventory.CraftItemStack");
+            if (itemClass == null) throw new ReflectiveOperationException();
+            return itemClass.getMethod("asNMSCopy", ItemStack.class).invoke(null, item);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("无法获取NMSCopy");
         }
     }
 

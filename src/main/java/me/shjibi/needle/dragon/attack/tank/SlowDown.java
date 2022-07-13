@@ -15,20 +15,32 @@ import static me.shjibi.needle.utils.StringUtil.color;
 
 public class SlowDown implements Attacker {
 
+    private static List<Player> slowPlayers;
+
     @Override
     public boolean attack(DragonBattle battle) {
-        List<Player> players = DragonUtil.getAllFighters(battle);
-        if (players.isEmpty()) return false;
-        players.forEach(p -> p.setWalkSpeed(-0.2f));
+        slowPlayers = DragonUtil.getAllFighters(battle);
+        if (slowPlayers.isEmpty()) return false;
+
+        slowPlayers.forEach(p -> p.setWalkSpeed(-0.2f));
         int duration = JavaUtil.randomInt(3, 8);
+
         new BukkitRunnable() {
             @Override
             public void run() {
-                players.forEach(p -> p.setWalkSpeed(0.2f));
+                onDisable();
             }
         }.runTaskLater(Main.getInstance(), 20L * duration);
+
         DragonUtil.sendAttackMessage(battle, DragonAttack.SLOW_DOWN, "所有人", "所有人都将保持慢速&e" + duration + "&7秒");
         return true;
+    }
+
+    @Override
+    public void onDisable() {
+        if (slowPlayers == null) return;
+        slowPlayers.forEach(p -> p.setWalkSpeed(0.2f));
+        slowPlayers.clear();
     }
 
 }

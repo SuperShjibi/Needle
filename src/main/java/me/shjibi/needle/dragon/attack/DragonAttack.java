@@ -38,6 +38,10 @@ public enum DragonAttack {
         return type;
     }
 
+    public Attacker getAttack() {
+        return attack;
+    }
+
     public boolean attack(DragonBattle battle) {
         return attack.attack(battle);
     }

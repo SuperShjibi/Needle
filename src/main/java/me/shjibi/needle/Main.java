@@ -1,6 +1,7 @@
 package me.shjibi.needle;
 
 import me.shjibi.needle.commands.CommandManager;
+import me.shjibi.needle.dragon.DragonFight;
 import me.shjibi.needle.event.EventManager;
 import me.shjibi.needle.utils.spigot.DragonUtil;
 import me.shjibi.needle.utils.spigot.SpigotUtil;
@@ -19,6 +20,7 @@ public final class Main extends JavaPlugin {
 
         SpigotUtil.loadTranslation();
         DragonUtil.loadDragonTalks();
+        DragonFight.fetchDragonInfo();
 
         CommandManager.registerHandlers();
         EventManager.registerListeners();
@@ -28,6 +30,7 @@ public final class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        DragonFight.onDisable();
         instance = null;
         getLogger().info("禁用了Needle插件~");
     }

@@ -153,6 +153,20 @@ public class SpigotUtil {
         }
     }
 
+    public static boolean sendPacket(Player p, Object packet) {
+        try {
+            Class<?> packetClass = Class.forName("net.minecraft.network.protocol.Packet");
+            if (!packetClass.isAssignableFrom(packet.getClass())) return false;
+            Object entityPlayer = p.getClass().getMethod("getHandle").invoke(p);
+            Object connection = entityPlayer.getClass().getField("b").get(entityPlayer);
+            connection.getClass().getMethod("a", packetClass).invoke(connection, packet);
+            return true;
+        } catch (ReflectiveOperationException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     /** 向全服通告随机事件 */
     public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner, boolean notice) {
         if (notice) playNoticeSound(winner);

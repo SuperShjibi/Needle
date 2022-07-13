@@ -7,4 +7,6 @@ public interface Attacker {
 
     boolean attack(DragonBattle battle);
 
+    default void onDisable() {}
+
 }

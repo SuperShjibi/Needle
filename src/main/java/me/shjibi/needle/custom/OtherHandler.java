@@ -1,5 +1,6 @@
 package me.shjibi.needle.custom;
 
+import me.shjibi.needle.utils.JavaUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -10,8 +11,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.spigot.SpigotUtil.withinArea;
@@ -60,6 +63,12 @@ public final class OtherHandler implements Listener {
         if (e.getEntityType() != EntityType.ENDERMAN) return;
         if (!withinHideAndSeekArea(e.getTo())) return;
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void test(EntityPickupItemEvent e) {
+        if (!(e.getEntity() instanceof Player p)) return;
+        JavaUtil.debug(p.getName() + " picked up a " + e.getItem().getItemStack().getType() + "!");
     }
 
     private static boolean withinHideAndSeekArea(Location loc) {
