@@ -6,6 +6,7 @@ import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -84,8 +85,8 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            boolean result = ItemUtil.dropItem(p.getLocation(), new ItemStack(Material.DIAMOND), p);
-            p.sendMessage("result: " + result);
+            Item item = ItemUtil.dropItem(p.getLocation(), new ItemStack(Material.DIAMOND), p);
+            item.setPickupDelay(20);
         }
     }
 }

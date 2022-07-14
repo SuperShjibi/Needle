@@ -22,7 +22,7 @@ import static me.shjibi.needle.utils.spigot.SpigotUtil.setMaxHealth;
 public class DragonFight implements Listener {
 
     private static final long ATTACK_COOLDOWN = 20;
-    private static final Map<UUID, Double> damageMap = new HashMap<>();
+    private static final Map<String, Double> damageMap = new HashMap<>();
 
     private static DragonBattle dragonBattle;
 
@@ -105,7 +105,7 @@ public class DragonFight implements Listener {
 
         List<Player> players = bar.getPlayers();
 
-        phase = Objects.requireNonNullElse(handleNewPhase(phase), phase);
+        phase = handleNewPhase(phase);
         e.setNewPhase(phase);
 
         if (contains(DRAGON_TALK_PHASES, phase)) {
@@ -131,11 +131,11 @@ public class DragonFight implements Listener {
             if (proj.getShooter() instanceof Player) p = (Player) proj.getShooter();
         }
         if (p == null) return;
-        if (damageMap.containsKey(p.getUniqueId())) {
-            double damage = damageMap.get(p.getUniqueId());
-            damageMap.put(p.getUniqueId(), e.getFinalDamage() + damage);
+        if (damageMap.containsKey(p.getName())) {
+            double damage = damageMap.get(p.getName());
+            damageMap.put(p.getName(), e.getFinalDamage() + damage);
         } else {
-            damageMap.put(p.getUniqueId(), e.getFinalDamage());
+            damageMap.put(p.getName(), e.getFinalDamage());
         }
     }
 

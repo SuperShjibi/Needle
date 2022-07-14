@@ -2,6 +2,7 @@ package me.shjibi.needle.utils.spigot;
 
 import me.shjibi.needle.Main;
 import me.shjibi.needle.dragon.DragonType;
+import me.shjibi.needle.dragon.Loot;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.JavaUtil;
 import me.shjibi.needle.utils.StringUtil;
@@ -154,15 +155,18 @@ public final class DragonUtil {
         else logSevere("没有为" + type + "找到合适的龙对话!");
     }
 
-    public static void giveLoot(DragonBattle battle, Map<UUID, Double> damageMap) {
-
+    public static void giveLoot(DragonBattle battle, Map<String, Double> damageMap) {
+        if (battle.getEnderDragon() == null) return;
+        List<Map.Entry<String, Double>> entries = damageMap.entrySet().stream().sorted(
+                (c1, c2) -> c2.getValue().compareTo(c1.getValue())
+        ).limit(3).toList();
     }
 
-    public static void sendDamageMap(DragonBattle battle, Map<UUID, Double> damageMap) {
+    public static void sendDamageMap(DragonBattle battle, Map<String, Double> damageMap) {
         if (battle.getEnderDragon() == null) return;
         DragonType type = getDragonType(battle.getEnderDragon());
 
-        List<Map.Entry<UUID, Double>> entries = damageMap.entrySet().stream().sorted(
+        List<Map.Entry<String, Double>> entries = damageMap.entrySet().stream().sorted(
                 (c1, c2) -> c2.getValue().compareTo(c1.getValue())
         ).toList();
 
@@ -172,9 +176,8 @@ public final class DragonUtil {
 
         if (entries.size() != 0) {
             for (int i = 0; i < entries.size(); i++) {
-                Map.Entry<UUID, Double> entry = entries.get(i);
-                OfflinePlayer player = Bukkit.getOfflinePlayer(entry.getKey());
-                String message = color("&7 - " + color + (i + 1) + ". &6" + player.getName() + color + ": &c" + entry.getValue() + "&7 - ");
+                Map.Entry<String, Double> entry = entries.get(i);
+                String message = color("&7 - " + color + (i + 1) + ". &6" + entry.getKey() + color + ": &c" + entry.getValue() + "&7 - ");
                 players.forEach(p -> p.sendMessage(message));
             }
         } else {

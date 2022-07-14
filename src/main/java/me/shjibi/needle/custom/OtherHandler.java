@@ -1,6 +1,7 @@
 package me.shjibi.needle.custom;
 
 import me.shjibi.needle.utils.JavaUtil;
+import me.shjibi.needle.utils.spigot.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -66,9 +67,10 @@ public final class OtherHandler implements Listener {
     }
 
     @EventHandler
-    public void test(EntityPickupItemEvent e) {
+    public void onItemPickup(EntityPickupItemEvent e) {
         if (!(e.getEntity() instanceof Player p)) return;
-        JavaUtil.debug(p.getName() + " picked up a " + e.getItem().getItemStack().getType() + "!");
+        boolean cancelled = ItemUtil.handleItemPickup(e.getItem(), p);
+        e.setCancelled(cancelled);
     }
 
     private static boolean withinHideAndSeekArea(Location loc) {

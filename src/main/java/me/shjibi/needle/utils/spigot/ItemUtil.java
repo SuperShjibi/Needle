@@ -1,7 +1,7 @@
 package me.shjibi.needle.utils.spigot;
 
-import joptsimple.internal.ReflectionException;
 import me.shjibi.needle.Main;
+import me.shjibi.needle.utils.JavaUtil;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.ItemTag;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -19,16 +19,14 @@ import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.title;
 
 public final class ItemUtil {
 
-    private static final Map<Item, Player> hiddenItems = new HashMap<>();
+    private static final Map<Item, String> hiddenItems = new HashMap<>();
 
     private ItemUtil() {}
 
@@ -157,36 +155,54 @@ public final class ItemUtil {
     }
 
     /** 掉落物品, 只有指定的玩家才能看到 */
-    public static boolean dropItem(Location loc, ItemStack itemStack, Player player) {
-        if (loc.getWorld() == null) return false;
+    public static Item dropItem(Location loc, ItemStack itemStack, Player player) {
+        return dropItem(loc, itemStack, player.getName());
+    }
+
+    /** 掉落物品, 只有指定玩家的名字才能看到 */
+    public static Item dropItem(Location loc, ItemStack itemStack, String name) {
+        if (loc.getWorld() == null) throw new RuntimeException("无法生成Item: 世界为null");
         Item item = loc.getWorld().dropItem(loc, itemStack);
-        hiddenItems.put(item, player);
+        hiddenItems.put(item, name);
         for (Player p : Bukkit.getOnlinePlayers()) {
-            if (p.equals(player)) continue;
-            hideEntity(p, item);
+            if (p.getName().equals(name)) continue;
+            hideItem(p, item);
         }
-        return true;
+        return item;
     }
 
     /** 处理玩家加入 */
     public static void handlePlayerJoin(Player p) {
-        for (Map.Entry<Item, Player> entry : hiddenItems.entrySet()) {
-            if (p.equals(entry.getValue())) continue;
-            hideEntity(p, entry.getKey());
+        for (Map.Entry<Item, String> entry : hiddenItems.entrySet()) {
+            if (p.getName().equals(entry.getValue())) continue;
+            hideItem(p, entry.getKey());
         }
     }
 
-    private static void hideEntity(Player player, Entity entity) {
+    /** 返回是否该取消捡起事件 */
+    public static boolean handleItemPickup(Item item, Player p) {
+        List<Item> items = hiddenItems.keySet().stream().toList();
+        int index = items.stream().map(Entity::getEntityId).toList().indexOf(item.getEntityId());
+        if (index == -1) return false;
+        boolean result = !hiddenItems.get(items.get(index)).equals(p.getName());
+        if (!result) hiddenItems.remove(items.get(index));
+        JavaUtil.debug("hiddenItems: " + hiddenItems);
+        return result;
+    }
+
+    private static void hideItem(Player player, Item item) {
         try {
             Class<?> craftPlayerClass = SpigotUtil.getCraftBukkitClass("entity.CraftPlayer");
             if (craftPlayerClass == null) throw new ReflectiveOperationException();
             Method method = craftPlayerClass.getDeclaredMethod("hideEntity0", Plugin.class, Entity.class);
-            method.invoke(player, Main.getInstance(), entity);
+            method.setAccessible(true);
+            method.invoke(player, Main.getInstance(), item);
         } catch (ReflectiveOperationException e) {
             e.printStackTrace();
         }
     }
 
+    /** 获取NMS的ItemStack */
     public static Object asNMSCopy(ItemStack item) {
         try {
             Class<?> itemClass = SpigotUtil.getCraftBukkitClass("inventory.CraftItemStack");
