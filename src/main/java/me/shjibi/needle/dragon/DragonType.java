@@ -4,10 +4,12 @@ import org.bukkit.boss.BarColor;
 
 public enum DragonType {
 
-    TANK("坦克龙", 800, 6, BarColor.YELLOW),
-    STRONG("力量龙", 450, 10, BarColor.RED),
-    MAGICAL("魔法龙", 380, 12, BarColor.BLUE),
+    TANK("坦克龙", 800, 3, BarColor.YELLOW),
+    STRONG("力量龙", 450, 5, BarColor.RED),
+    MAGICAL("魔法龙", 380, 6, BarColor.BLUE),
     WEAK("虚弱龙", 150, 1, BarColor.PINK),
+
+    /* 还没做 */
     WEIRD("诡异龙", 500, 15, BarColor.GREEN),
     MASTER("大师龙", 650, 25, BarColor.WHITE);
 
