@@ -81,16 +81,25 @@ public final class JavaUtil {
         return random.nextDouble(start - 1, end) + 1;
     }
 
+     /** 用Logger输出严重的错误 */
     public static void logSevere(String msg) {
         Main.getInstance().getLogger().log(Level.SEVERE, msg);
     }
 
+    /** 用Logger输出信息 */
     public static void logInfo(String msg) {
         Main.getInstance().getLogger().info(msg);
     }
 
+    /** 在游戏聊天框中输出debug信息 */
     public static void debug(String msg) {
         Bukkit.broadcastMessage(StringUtil.color("&l[DEBUG] " + msg));
+    }
+
+    /** 四舍五入 */
+    public static double round(double n, int digits) {
+        double a = Math.pow(10, digits);
+        return Math.round(n * a) / a;
     }
 
 }

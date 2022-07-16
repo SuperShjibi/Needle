@@ -2,6 +2,7 @@ package me.shjibi.needle.dragon;
 
 import me.shjibi.needle.Main;
 import me.shjibi.needle.dragon.attack.DragonAttack;
+import me.shjibi.needle.utils.StringUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.boss.BarStyle;
@@ -34,6 +35,10 @@ public class DragonFight implements Listener {
         @Override
         public void run() {
             if (dragonBattle == null || currentDragon == null) return;
+            if (currentDragon.isDead()) {
+                attackTask.cancel();
+                return;
+            }
             if (!roll()) return;
             lastAttack = randomDragonAttack(currentType);
             if (lastAttack != null) {
@@ -81,6 +86,7 @@ public class DragonFight implements Listener {
 
         currentDragon.setCustomName(currentType.getName());
 
+        Bukkit.broadcastMessage(StringUtil.color("&c&l全服通告! &7一条" + currentType.getName() + "在末地生成啦!"));
         String spawnMessage = randomDragonTalk(currentType, "spawn");
         sendTalkSafely(bar.getPlayers(), spawnMessage, "龙生成对话");
 
@@ -111,7 +117,6 @@ public class DragonFight implements Listener {
         if (contains(DRAGON_TALK_PHASES, phase)) {
             sendTalkSafely(players, randomDragonTalk(currentType, "phase"), "龙改变状态");
         }
-
     }
 
     @EventHandler
@@ -122,6 +127,7 @@ public class DragonFight implements Listener {
         if (e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
             e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
             e.setCancelled(true);
+            return;
         }
 
         Player p = null;
@@ -147,10 +153,12 @@ public class DragonFight implements Listener {
         DragonType type = getDragonType(dragon);
         BossBar bossbar = dragon.getBossBar();
 
-        giveLoot(dragonBattle, damageMap);
         sendDamageMap(dragonBattle, damageMap);
+        giveLoot(dragonBattle, damageMap);
+
 
         if (bossbar != null) sendTalkSafely(bossbar.getPlayers(), randomDragonTalk(type, "death"), type.getName() + "死亡");
+        attackTask.cancel();
         onDisable();
     }
 
@@ -186,15 +194,13 @@ public class DragonFight implements Listener {
         World end = Bukkit.getWorld("world_the_end");
         if (end == null) return;
         dragonBattle = end.getEnderDragonBattle();
-        if (dragonBattle == null || dragonBattle.getEnderDragon() == null) return;
+        if (dragonBattle == null || dragonBattle.getEnderDragon() == null || dragonBattle.getEnderDragon().isDead()) return;
         currentDragon = dragonBattle.getEnderDragon();
         currentType = getDragonType(currentDragon);
         attackTask.runTaskTimer(Main.getInstance(), 0, ATTACK_COOLDOWN * 20);
     }
 
     public static void onDisable() {
-        dragonBattle = null;
-        currentDragon = null;
         if (lastAttack != null) lastAttack.getAttack().onDisable();
     }
 }

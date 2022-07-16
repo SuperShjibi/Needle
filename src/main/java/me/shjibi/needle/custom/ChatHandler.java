@@ -1,11 +1,16 @@
 package me.shjibi.needle.custom;
 
+import me.shjibi.needle.Main;
 import me.shjibi.needle.dragon.DragonFight;
+import me.shjibi.needle.dragon.Loot;
 import me.shjibi.needle.utils.spigot.ItemUtil;
 import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.boss.DragonBattle;
+import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,8 +21,10 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.ItemStack;
 
 import static me.shjibi.needle.utils.JavaUtil.contains;
+import static me.shjibi.needle.utils.JavaUtil.debug;
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.StringUtil.fullyColorize;
+import static me.shjibi.needle.utils.spigot.DragonUtil.getDragonType;
 
 public final class ChatHandler implements Listener {
 
@@ -85,8 +92,11 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            Item item = ItemUtil.dropItem(p.getLocation(), new ItemStack(Material.DIAMOND), p);
-            item.setPickupDelay(20);
+            World end = Bukkit.getWorld("world_the_end");
+            if (end == null) return;
+            DragonBattle dragonBattle = end.getEnderDragonBattle();
+            if (dragonBattle == null) return;
+            debug("loc: " + dragonBattle.getEndPortalLocation());
         }
     }
 }

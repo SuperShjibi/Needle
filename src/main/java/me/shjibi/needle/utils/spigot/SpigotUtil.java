@@ -2,6 +2,7 @@ package me.shjibi.needle.utils.spigot;
 
 import me.shjibi.needle.Main;
 import me.shjibi.needle.rare.EventRarity;
+import me.shjibi.needle.utils.JavaUtil;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
@@ -142,17 +143,15 @@ public class SpigotUtil {
 
     /** 向全服通告随机事件 */
     public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner) {
-        playNoticeSound(winner);
-        String winnerName = winner.getName();
-        text = color("&7" + text);
-        String prefix = "&c&l全服通告! " + rarity.getText() + ": ";
-
-        for (Player online : Bukkit.getOnlinePlayers()) {
-            String name = online.getName().equals(winnerName) ? "你" : winnerName;
-            online.sendMessage(color(prefix + text.replace("{name}", name)));
-        }
+        broadcastRandomEvent(rarity, text, winner, true);
     }
 
+    /** 全服通告(用TextComponent) */
+    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
+        broadcastRandomEvent(rarity, component, winner, true);
+    }
+
+    /** 给指定玩家发送包 */
     public static boolean sendPacket(Player p, Object packet) {
         try {
             Class<?> packetClass = Class.forName("net.minecraft.network.protocol.Packet");
@@ -181,8 +180,8 @@ public class SpigotUtil {
     }
 
     /** 全服通告(用TextComponent) */
-    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
-        playNoticeSound(winner);
+    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner, boolean notice) {
+        if (notice) playNoticeSound(winner);
         String winnerName = winner.getName();
         String text = component.getText();
         component.setText(color("&7" + text));
@@ -234,10 +233,23 @@ public class SpigotUtil {
         entity.setHealth(maxHealth);
     }
 
-    /** 设置一个LivingEntity的攻击上海 */
+    /** 设置一个LivingEntity的攻击伤害 */
     public static void setAttackDamage(LivingEntity entity, double attackDamage) {
         AttributeInstance attrib = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
         if (attrib != null) attrib.setBaseValue(attackDamage);
     }
 
+    /** 给指定Location添加随机偏移量 */
+    public static Location addRandomOffset(Location loc, int min, int max) {
+        return addRandomOffset(loc, min, max, min, max, min, max);
+    }
+
+    /** 给指定Location添加随机偏移量 */
+    public static Location addRandomOffset(Location loc, int xMin, int xMax, int yMin, int yMax, int zMin, int zMax) {
+        int xOffset = xMin + JavaUtil.randomInt(0, xMax - xMin);
+        int yOffset = yMin + JavaUtil.randomInt(0, yMax - yMin);
+        int zOffset = zMin + JavaUtil.randomInt(0, zMax - zMin);
+        return new Location(loc.getWorld(), loc.getX() + xOffset, loc.getY() + yOffset, loc.getZ() + zOffset,
+                loc.getYaw(), loc.getPitch());
+    }
 }

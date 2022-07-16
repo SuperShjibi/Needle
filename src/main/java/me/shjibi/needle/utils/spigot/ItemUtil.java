@@ -186,7 +186,6 @@ public final class ItemUtil {
         if (index == -1) return false;
         boolean result = !hiddenItems.get(items.get(index)).equals(p.getName());
         if (!result) hiddenItems.remove(items.get(index));
-        JavaUtil.debug("hiddenItems: " + hiddenItems);
         return result;
     }
 
