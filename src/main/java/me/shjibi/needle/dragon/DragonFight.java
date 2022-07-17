@@ -1,6 +1,7 @@
 package me.shjibi.needle.dragon;
 
 import me.shjibi.needle.Main;
+import me.shjibi.needle.dragon.attack.AttackTask;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.StringUtil;
 import org.bukkit.Bukkit;
@@ -22,33 +23,17 @@ import static me.shjibi.needle.utils.spigot.SpigotUtil.setMaxHealth;
 
 public class DragonFight implements Listener {
 
-    private static final long ATTACK_COOLDOWN = 20;
+    private static final long ATTACK_COOLDOWN = 12;
     private static final Map<String, Double> damageMap = new HashMap<>();
 
     private static DragonBattle dragonBattle;
 
     private static DragonAttack lastAttack;
+
     private static EnderDragon currentDragon;
     private static DragonType currentType;
 
-    private static final BukkitRunnable attackTask = new BukkitRunnable() {
-        @Override
-        public void run() {
-            if (dragonBattle == null || currentDragon == null) return;
-            if (currentDragon.isDead()) {
-                attackTask.cancel();
-                return;
-            }
-            if (!roll()) return;
-            lastAttack = randomDragonAttack(currentType);
-            if (lastAttack != null) {
-                boolean result = lastAttack.attack(currentDragon.getDragonBattle());
-                if (result) {
-                    sendTalkSafely(dragonBattle.getBossBar().getPlayers(), randomDragonAttackMessage(lastAttack), lastAttack.getName());
-                }
-            }
-        }
-    };
+    private static BukkitRunnable attackTask = new AttackTask();
 
 
     @EventHandler
@@ -155,10 +140,11 @@ public class DragonFight implements Listener {
 
         sendDamageMap(dragonBattle, damageMap);
         giveLoot(dragonBattle, damageMap);
-
+        damageMap.clear();
 
         if (bossbar != null) sendTalkSafely(bossbar.getPlayers(), randomDragonTalk(type, "death"), type.getName() + "死亡");
         attackTask.cancel();
+        attackTask = new AttackTask();
         onDisable();
     }
 
@@ -203,4 +189,25 @@ public class DragonFight implements Listener {
     public static void onDisable() {
         if (lastAttack != null) lastAttack.getAttack().onDisable();
     }
+
+    public static DragonBattle getDragonBattle() {
+        return dragonBattle;
+    }
+
+    public static EnderDragon getCurrentDragon() {
+        return currentDragon;
+    }
+
+    public static DragonType getCurrentType() {
+        return currentType;
+    }
+
+    public static DragonAttack getLastAttack() {
+        return lastAttack;
+    }
+
+    public static void setLastAttack(DragonAttack lastAttack) {
+        DragonFight.lastAttack = lastAttack;
+    }
+
 }

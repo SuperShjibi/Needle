@@ -2,6 +2,7 @@ package me.shjibi.needle.dragon;
 
 import me.shjibi.needle.rare.EventRarity;
 import me.shjibi.needle.utils.JavaUtil;
+import me.shjibi.needle.utils.StringUtil;
 import me.shjibi.needle.utils.spigot.ItemUtil;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -40,7 +41,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     };
 
     private static final Loot[] MAGICAL_LOOTS = {
-        new Loot(getGodPot(), 50, EventRarity.VERY_RARE),
+        new Loot(getGodPot(), 45, EventRarity.VERY_RARE),
         new Loot(getPotion(new PotionEffect(PotionEffectType.HARM, 10 * 60, 3)), 25, EventRarity.RARE),
         new Loot(getPotion(new PotionEffect(PotionEffectType.POISON, 10 * 25, 3)), 20, EventRarity.COMMON),
         new Loot(getPotion(new PotionEffect(PotionEffectType.BLINDNESS, 10 * 30, 2)), 20, EventRarity.COMMON),
@@ -133,7 +134,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
         PotionMeta potMeta = ((PotionMeta) pot.getItemMeta());
 
         if (potMeta == null) return pot;
-
+        potMeta.setDisplayName(StringUtil.color("&c&l神药"));
         potMeta.addCustomEffect(effect, true);
 
         potMeta.setColor(effect.getType().getColor());

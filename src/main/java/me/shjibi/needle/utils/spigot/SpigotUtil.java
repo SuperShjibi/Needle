@@ -143,12 +143,12 @@ public class SpigotUtil {
 
     /** 向全服通告随机事件 */
     public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner) {
-        broadcastRandomEvent(rarity, text, winner, true);
+        broadcastRandomEvent(rarity, text, winner.getName(), true);
     }
 
     /** 全服通告(用TextComponent) */
     public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner) {
-        broadcastRandomEvent(rarity, component, winner, true);
+        broadcastRandomEvent(rarity, component, winner.getName(), true);
     }
 
     /** 给指定玩家发送包 */
@@ -167,9 +167,9 @@ public class SpigotUtil {
     }
 
     /** 向全服通告随机事件 */
-    public static void broadcastRandomEvent(EventRarity rarity, String text, Player winner, boolean notice) {
-        if (notice) playNoticeSound(winner);
-        String winnerName = winner.getName();
+    public static void broadcastRandomEvent(EventRarity rarity, String text, String winnerName, boolean notice) {
+        Player winner = Bukkit.getPlayerExact(winnerName);
+        if (notice && winner != null) playNoticeSound(winner);
         text = color("&7" + text);
         String prefix = "&c&l全服通告! " + rarity.getText() + ": ";
 
@@ -180,20 +180,22 @@ public class SpigotUtil {
     }
 
     /** 全服通告(用TextComponent) */
-    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, Player winner, boolean notice) {
-        if (notice) playNoticeSound(winner);
-        String winnerName = winner.getName();
+    public static void broadcastRandomEvent(EventRarity rarity, TextComponent component, String winnerName, boolean notice) {
+        Player winner = Bukkit.getPlayerExact(winnerName);
+        if (notice && winner != null) playNoticeSound(winner);
         String text = component.getText();
         component.setText(color("&7" + text));
 
         for (Player online : Bukkit.getOnlinePlayers()) {
-            String name = online.getName().equals(winnerName) ? "你" : winnerName;
+            String name = winnerName.equals(online.getName()) ? "你" : winnerName;
             component.setText(text.replace("{name}", name));
 
             TextComponent prefix = new TextComponent(color("&c&l全服通告! " + rarity.getText() + ": "));
             prefix.addExtra(component);
 
-            online.spigot().sendMessage(prefix);
+            TextComponent message = prefix.duplicate();
+
+            online.spigot().sendMessage(message);
         }
     }
 
@@ -201,8 +203,8 @@ public class SpigotUtil {
     public static void playNoticeSound(Player p) {
         new Thread(() -> {
             for (int i = 0; i < 5; i++) {
-                p.playSound(p.getLocation(), i % 2 == 0 ? Sound.BLOCK_NOTE_BLOCK_BIT : Sound.BLOCK_NOTE_BLOCK_COW_BELL
-                        , 10f, 1.33484f);
+                p.playSound(p.getLocation(), i % 2 == 0 ? Sound.BLOCK_NOTE_BLOCK_BIT : Sound.BLOCK_NOTE_BLOCK_COW_BELL,
+                        10f, 1.33484f);
                 try {
                     Thread.sleep(120);
                 } catch (InterruptedException ignored) {}
