@@ -1,9 +1,6 @@
 package me.shjibi.needle.dragon.attack;
 
 import me.shjibi.needle.dragon.DragonFight;
-import me.shjibi.needle.dragon.DragonType;
-import org.bukkit.boss.DragonBattle;
-import org.bukkit.entity.EnderDragon;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static me.shjibi.needle.utils.JavaUtil.roll;
@@ -14,7 +11,7 @@ public class AttackTask extends BukkitRunnable {
     @Override
     public void run() {
         if (DragonFight.getDragonBattle() == null || DragonFight.getCurrentDragon() == null) return;
-        if (DragonFight.getCurrentDragon().isDead()) return;
+        if (DragonFight.getCurrentDragon().getHealth() <= 2.0 || DragonFight.getCurrentDragon().isDead()) return;
 
         if (!roll()) return;
         DragonAttack randomAttack = randomDragonAttack(DragonFight.getCurrentType());

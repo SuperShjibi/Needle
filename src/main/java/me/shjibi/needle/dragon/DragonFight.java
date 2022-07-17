@@ -105,15 +105,18 @@ public class DragonFight implements Listener {
     }
 
     @EventHandler
-    public void onDamageDragon(EntityDamageByEntityEvent e) {
+    public void onDragonDamaged(EntityDamageEvent e) {
         if (e.getEntityType() != EntityType.ENDER_DRAGON) return;
         if (!(e.getEntity() instanceof EnderDragon)) return;
 
         if (e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
-            e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
-            e.setCancelled(true);
-            return;
-        }
+            e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerDamageDragon(EntityDamageByEntityEvent e) {
+        if (e.getEntityType() != EntityType.ENDER_DRAGON) return;
+        if (!(e.getEntity() instanceof EnderDragon)) return;
 
         Player p = null;
         if (e.getDamager() instanceof Player) {

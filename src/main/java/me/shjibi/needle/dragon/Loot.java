@@ -117,6 +117,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
         ItemStack pot = new ItemStack(Material.POTION);
         PotionMeta potMeta = ((PotionMeta) pot.getItemMeta());
         if (potMeta == null || GOD_EFFECTS == null) return pot;
+        potMeta.setDisplayName(StringUtil.color("&c&l神药"));
         for (PotionEffect effect : GOD_EFFECTS) {
             potMeta.addCustomEffect(effect, true);
         }
@@ -134,7 +135,6 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
         PotionMeta potMeta = ((PotionMeta) pot.getItemMeta());
 
         if (potMeta == null) return pot;
-        potMeta.setDisplayName(StringUtil.color("&c&l神药"));
         potMeta.addCustomEffect(effect, true);
 
         potMeta.setColor(effect.getType().getColor());
