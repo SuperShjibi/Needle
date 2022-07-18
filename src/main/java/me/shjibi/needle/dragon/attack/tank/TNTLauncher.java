@@ -4,7 +4,6 @@ import me.shjibi.needle.dragon.attack.Attacker;
 import me.shjibi.needle.dragon.attack.DragonAttack;
 import me.shjibi.needle.utils.JavaUtil;
 import me.shjibi.needle.utils.spigot.DragonUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.boss.DragonBattle;

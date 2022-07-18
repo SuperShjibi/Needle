@@ -5,7 +5,6 @@ import me.shjibi.needle.custom.*;
 import me.shjibi.needle.dragon.DragonFight;
 import me.shjibi.needle.dragon.attack.magical.MagicStorm;
 import me.shjibi.needle.dragon.attack.magical.StunAttack;
-import me.shjibi.needle.dragon.attack.tank.DamageAbsorb;
 import me.shjibi.needle.rare.BlockMineHandler;
 import me.shjibi.needle.rare.EndermanKillHandler;
 import org.bukkit.event.Listener;

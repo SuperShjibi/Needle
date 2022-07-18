@@ -1,7 +1,6 @@
 package me.shjibi.needle.utils.spigot;
 
 import me.shjibi.needle.Main;
-import me.shjibi.needle.utils.JavaUtil;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.ItemTag;
 import net.md_5.bungee.api.chat.TextComponent;

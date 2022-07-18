@@ -11,8 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-import static me.shjibi.needle.utils.StringUtil.color;
-
 public class SlowDown implements Attacker {
 
     private static List<Player> slowPlayers;

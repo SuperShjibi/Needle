@@ -9,9 +9,9 @@ public final class StringUtil {
 
     private StringUtil() {}
 
-    private static final Pattern colorPattern = Pattern.compile("&([0-9a-fk-or])");
-    private static final Pattern stripPattern = Pattern.compile("§([0-9a-fk-or])");
-    private static final Pattern hexPattern = Pattern.compile("\\{#([a-fA-F0-9]{6})}");
+    private static final Pattern colorPattern = Pattern.compile("&([\\da-fk-or])");
+    private static final Pattern stripPattern = Pattern.compile("§([\\da-fk-or])");
+    private static final Pattern hexPattern = Pattern.compile("\\{#([a-fA-F\\d]{6})}");
 
     /** 标题化字符串 */
     public static String title(String s) {

@@ -174,6 +174,12 @@ public class DragonFight implements Listener {
                     return EnderDragon.Phase.LAND_ON_PORTAL;
                 }
                 return phase;
+            case MAGICAL:
+                if (phase == EnderDragon.Phase.FLY_TO_PORTAL && roll(3)) {
+                    String category = "to_attack";
+                    sendTalkSafely(players, randomDragonTalk(currentType, category), category);
+                    return EnderDragon.Phase.CHARGE_PLAYER;
+                }
             default:
                 return phase;
         }

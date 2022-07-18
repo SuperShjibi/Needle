@@ -1,6 +1,5 @@
 package me.shjibi.needle.custom;
 
-import me.shjibi.needle.utils.JavaUtil;
 import me.shjibi.needle.utils.spigot.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -15,7 +14,6 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityTeleportEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
-import org.bukkit.event.player.PlayerPickupArrowEvent;
 
 import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.spigot.SpigotUtil.withinArea;

@@ -89,9 +89,16 @@ public final class DragonUtil {
     /** 从特定的键中抽取一条对话 */
     public static String randomDragonTalk(DragonType type, String category) {
         List<String> talks = dragonTalks.getStringList(type.toString().toLowerCase() + "." + category);
-        talks.remove(lastTalk);
-        lastTalk = JavaUtil.randomElement(talks);
-        if (lastTalk == null) return null;
+
+        if (talks.isEmpty()) return null;
+
+        if (talks.size() != 1) {
+            talks.remove(lastTalk);
+            lastTalk = JavaUtil.randomElement(talks);
+        } else {
+            lastTalk = talks.get(0);
+        }
+
         return getDragonTalkPrefix(type) + fullyColorize(lastTalk);
     }
 

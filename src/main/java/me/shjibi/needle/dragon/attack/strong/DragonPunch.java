@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 import static me.shjibi.needle.utils.JavaUtil.randomInt;
-import static me.shjibi.needle.utils.StringUtil.color;
 import static me.shjibi.needle.utils.spigot.DragonUtil.getAllFighters;
 
 public class DragonPunch implements Attacker {
