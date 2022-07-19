@@ -178,7 +178,7 @@ public final class DragonUtil {
             Item commonItem = ItemUtil.dropItem(normalLoc, Loot.getCommonDragonLoot(type), player);
             commonItem.setGlowing(true);
 
-            double extra = (entry.getValue() + maxHealth) / maxHealth;
+            double extra = (Math.min(maxHealth, entry.getValue()) + maxHealth) / maxHealth;
 
             for (Loot rareLoot : rareLoots) {
                 int chance = (int) (rareLoot.getChance() / extra);
