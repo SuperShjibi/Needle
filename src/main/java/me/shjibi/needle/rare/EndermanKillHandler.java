@@ -11,10 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityPlaceEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.entity.*;
 
 import static me.shjibi.needle.utils.JavaUtil.roll;
 import static me.shjibi.needle.utils.StringUtil.color;
@@ -72,7 +69,7 @@ public final class EndermanKillHandler implements Listener {
     }
 
     @EventHandler
-    public void onEntityPlace(EntityPlaceEvent e) {
+    public void onEntityPlace(EntityChangeBlockEvent e) {
         if (!isSpecialEnderman(e.getEntity())) return;
         e.setCancelled(true);
     }
