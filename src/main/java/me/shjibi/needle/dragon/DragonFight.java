@@ -32,6 +32,7 @@ public class DragonFight implements Listener {
 
     private static EnderDragon currentDragon;
     private static DragonType currentType;
+    private static DragonType nextType;
 
     private static BukkitRunnable attackTask = new AttackTask();
 
@@ -56,7 +57,13 @@ public class DragonFight implements Listener {
 
         dragonBattle = currentDragon.getDragonBattle();
 
-        currentType = DragonType.WEAK;
+        if (nextType != null) {
+            currentType = nextType;
+            nextType = null;
+        } else {
+            currentType = DragonType.WEAK;
+        }
+
         for (DragonType type : DragonType.values()) {
             if (roll(type.getChance())) {
                 currentType = type;
@@ -226,6 +233,10 @@ public class DragonFight implements Listener {
 
     public static void setLastAttack(DragonAttack lastAttack) {
         DragonFight.lastAttack = lastAttack;
+    }
+
+    public static void setNextType(DragonType type) {
+        nextType = type;
     }
 
 }

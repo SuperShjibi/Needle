@@ -41,4 +41,11 @@ public enum DragonType {
         return color;
     }
 
+    public static DragonType getDragonType(String name) {
+        for (DragonType value : values()) {
+            if (value.toString().equals(name)) return value;
+        }
+        return null;
+    }
+
 }

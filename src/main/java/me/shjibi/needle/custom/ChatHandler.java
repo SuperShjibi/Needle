@@ -1,5 +1,7 @@
 package me.shjibi.needle.custom;
 
+import me.shjibi.needle.dragon.DragonFight;
+import me.shjibi.needle.dragon.DragonType;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -82,11 +84,18 @@ public final class ChatHandler implements Listener {
         } else if (cmd.equals("test")) {
             if (!p.isOp()) return;
             e.setCancelled(true);
-            World end = Bukkit.getWorld("world_the_end");
-            if (end == null) return;
-            DragonBattle dragonBattle = end.getEnderDragonBattle();
-            if (dragonBattle == null) return;
-            debug("loc: " + dragonBattle.getEndPortalLocation());
+            p.sendMessage(color("&l[DEBUG] 测试指令, 目前没有作用!"));
+        } else if (cmd.equalsIgnoreCase("s_d_t")) {
+            if (args.length < 2) {
+                p.sendMessage(color("&c该指令至少要一个参数!"));
+            } else {
+                DragonType type = DragonType.getDragonType(args[1]);
+                if (type == null) p.sendMessage(color("&c未知的类型!"));
+                else {
+                    p.sendMessage(color("&a已设置"));
+                    DragonFight.setNextType(type);
+                }
+            }
         }
     }
 }
