@@ -7,6 +7,14 @@ import me.shjibi.needle.utils.spigot.DragonUtil;
 import me.shjibi.needle.utils.spigot.SpigotUtil;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/*
+*
+* TODO: rank
+* 给SuperShjiba -> [JIB+++] (JIB颜色: {241, 31, 249}; 加号颜色: {255,25,25}, {50,230,220}, {215,220,60})
+*
+* */
+
+
 public final class Main extends JavaPlugin {
 
     /**
