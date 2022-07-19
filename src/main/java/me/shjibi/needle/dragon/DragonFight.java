@@ -62,12 +62,11 @@ public class DragonFight implements Listener {
             nextType = null;
         } else {
             currentType = DragonType.WEAK;
-        }
-
-        for (DragonType type : DragonType.values()) {
-            if (roll(type.getChance())) {
-                currentType = type;
-                break;
+            for (DragonType type : DragonType.values()) {
+                if (roll(type.getChance())) {
+                    currentType = type;
+                    break;
+                }
             }
         }
 
