@@ -85,7 +85,9 @@ public final class ChatHandler implements Listener {
             if (!p.isOp()) return;
             e.setCancelled(true);
             p.sendMessage(color("&l[DEBUG] 测试指令, 目前没有作用!"));
-        } else if (cmd.equalsIgnoreCase("s_d_t")) {
+        } else if (cmd.equalsIgnoreCase("s_n_d_t")) {
+            if (!p.isOp()) return;
+            e.setCancelled(true);
             if (args.length < 2) {
                 p.sendMessage(color("&c该指令至少要一个参数!"));
             } else {
