@@ -52,6 +52,7 @@ public class DragonFight implements Listener {
         if (!(entity instanceof EnderDragon)) return;
         currentDragon = (EnderDragon) entity;
         if (currentDragon.getDragonBattle() == null) return;
+        damageMap.clear();
 
         dragonBattle = currentDragon.getDragonBattle();
 
@@ -143,7 +144,6 @@ public class DragonFight implements Listener {
 
         sendDamageMap(dragonBattle, damageMap);
         giveLoot(dragonBattle, damageMap);
-        damageMap.clear();
 
         if (bossbar != null) sendTalkSafely(bossbar.getPlayers(), randomDragonTalk(type, "death"), type.getName() + "死亡");
         attackTask.cancel();
@@ -159,7 +159,7 @@ public class DragonFight implements Listener {
                 if (phase == EnderDragon.Phase.FLY_TO_PORTAL && roll()) {
                     String category = "stay_circling";
                     sendTalkSafely(players, randomDragonTalk(currentType, category), category);
-                    return randomElement(EnderDragon.Phase.STRAFING, EnderDragon.Phase.CIRCLING);
+                    return chooseFromArray(EnderDragon.Phase.STRAFING, EnderDragon.Phase.CIRCLING);
                 }
                 return phase;
             case TANK:
@@ -180,6 +180,12 @@ public class DragonFight implements Listener {
                     sendTalkSafely(players, randomDragonTalk(currentType, category), category);
                     return EnderDragon.Phase.CHARGE_PLAYER;
                 }
+            case WEIRD:
+                if (phase == EnderDragon.Phase.FLY_TO_PORTAL && roll(3, 1)) {
+                    String category = "stay_circling";
+                    sendTalkSafely(players, randomDragonTalk(currentType, category), category);
+                    return EnderDragon.Phase.CIRCLING;
+                }
             default:
                 return phase;
         }
@@ -192,6 +198,9 @@ public class DragonFight implements Listener {
         if (dragonBattle == null || dragonBattle.getEnderDragon() == null || dragonBattle.getEnderDragon().isDead()) return;
         currentDragon = dragonBattle.getEnderDragon();
         currentType = getDragonType(currentDragon);
+        BossBar bar = dragonBattle.getBossBar();
+        bar.setStyle(BarStyle.SEGMENTED_6);
+        bar.setColor(currentType.getColor());
         attackTask.runTaskTimer(Main.getInstance(), 0, ATTACK_COOLDOWN * 20);
     }
 

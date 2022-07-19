@@ -4,6 +4,7 @@ import me.shjibi.needle.dragon.DragonType;
 import me.shjibi.needle.dragon.attack.magical.*;
 import me.shjibi.needle.dragon.attack.strong.*;
 import me.shjibi.needle.dragon.attack.tank.*;
+import me.shjibi.needle.dragon.attack.weird.WeirdLightning;
 import org.bukkit.boss.DragonBattle;
 
 public enum DragonAttack {
@@ -18,7 +19,9 @@ public enum DragonAttack {
 
     STUN_ATTACK("晕厥术", DragonType.MAGICAL, new StunAttack()),
     MAGIC_STORM("魔法风暴", DragonType.MAGICAL, new MagicStorm()),
-    BLACK_MAGIC("黑魔法", DragonType.MAGICAL, new BlackMagic());
+    BLACK_MAGIC("黑魔法", DragonType.MAGICAL, new BlackMagic()),
+
+    WEIRD_LIGHTNING("诡异闪电",DragonType.WEIRD, new WeirdLightning());
 
     private final String name;
     private final DragonType type;

@@ -55,7 +55,7 @@ public final class JavaUtil {
 
     /** 数组中随机一个元素 */
     @SafeVarargs
-    public static <T> T randomElement(T... array) {
+    public static <T> T chooseFromArray(T... array) {
         if (array.length == 0) throw new ArrayIndexOutOfBoundsException("Empty array!");
         return array[random.nextInt(array.length)];
     }

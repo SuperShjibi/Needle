@@ -55,7 +55,10 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     };
 
     private static final Loot[] WEIRD_LOOTS = {
-
+        new Loot(new ItemStack(Material.BEACON),5, EventRarity.COMMON),
+        new Loot(new ItemStack(Material.ENCHANTED_GOLDEN_APPLE, 1),15, EventRarity.COMMON),
+        new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.CHANNELING, 0), 25, EventRarity.RARE),
+        new Loot(new ItemStack(Material.WITHER_SKELETON_SKULL, 15), 35, EventRarity.VERY_RARE),
     };
 
     private static final Loot[] MASTER_LOOTS = {
@@ -98,7 +101,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     }
 
     public static ItemStack randomSkull() {
-        Material material = JavaUtil.randomElement(Material.CREEPER_HEAD, Material.ZOMBIE_HEAD, Material.SKELETON_SKULL);
+        Material material = JavaUtil.chooseFromArray(Material.CREEPER_HEAD, Material.ZOMBIE_HEAD, Material.SKELETON_SKULL);
         return new ItemStack(material, JavaUtil.randomInt(1, 10));
     }
 
@@ -111,11 +114,11 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
                 new ItemStack(Material.FERMENTED_SPIDER_EYE, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.EXPERIENCE_BOTTLE, JavaUtil.randomInt(1, 64)),
         };
-        return JavaUtil.randomElement(potions);
+        return JavaUtil.chooseFromArray(potions);
     }
 
     public static ItemStack randomStrongItem() {
-        return JavaUtil.randomElement(
+        return JavaUtil.chooseFromArray(
                 new ItemStack(Material.END_STONE, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.END_CRYSTAL, JavaUtil.randomInt(1, 16)),
                 new ItemStack(Material.TNT, JavaUtil.randomInt(1, 32)),
@@ -124,7 +127,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     }
 
     public static ItemStack randomWeakItem() {
-        return JavaUtil.randomElement(
+        return JavaUtil.chooseFromArray(
                 new ItemStack(Material.RED_SAND, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.SAND, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.SOUL_SAND, JavaUtil.randomInt(1, 64)),
@@ -134,7 +137,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     }
 
     public static ItemStack randomTankItem() {
-        return JavaUtil.randomElement(
+        return JavaUtil.chooseFromArray(
                 new ItemStack(Material.OBSIDIAN, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.BONE_BLOCK, JavaUtil.randomInt(1, 64)),
                 new ItemStack(Material.ANVIL, JavaUtil.randomInt(1, 3))
@@ -142,9 +145,11 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
     }
 
     public static ItemStack randomWeirdItem() {
-        return JavaUtil.randomElement(
-                ItemUtil.getSkull(SkullTexture.SPECIAL_EYE), new ItemStack(Material.ENDER_EYE, JavaUtil.randomInt(1, 64)
-                ));
+        return JavaUtil.chooseFromArray(
+                ItemUtil.getSkull(SkullTexture.SPECIAL_EYE),
+                new ItemStack(Material.ENDER_EYE, JavaUtil.randomInt(1, 16)),
+                new ItemStack(Material.NETHERITE_INGOT, JavaUtil.randomInt(1, 2))
+        );
     }
 
     public static ItemStack getGodPot() {

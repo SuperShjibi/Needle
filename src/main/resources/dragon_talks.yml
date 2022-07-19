@@ -32,6 +32,9 @@ attacks:
     - "我用黑魔法让你失明、中毒、虚弱"
     - "这是很&0&l黑&7的魔法...喜欢吗"
     - "黑魔法~&b❤&7"
+  weird_lightning:
+    - "pwq"
+    - "＼(ﾟｰﾟ＼)"
 
 weak:
   spawn:
@@ -126,6 +129,8 @@ weird:
     - "( ′д｀ )σ See you~"
     - "( ﾟдﾟ)つ Bye"
     - "awsl"
+  to_circling:
+    - "≧ ﹏ ≦"
 
 master:
   spawn:
