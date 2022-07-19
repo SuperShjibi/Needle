@@ -2,6 +2,7 @@ package me.shjibi.needle.dragon;
 
 import me.shjibi.needle.rare.EventRarity;
 import me.shjibi.needle.utils.JavaUtil;
+import me.shjibi.needle.utils.SkullTexture;
 import me.shjibi.needle.utils.StringUtil;
 import me.shjibi.needle.utils.spigot.ItemUtil;
 import org.bukkit.Color;
@@ -34,7 +35,7 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
 
     private static final Loot[] TANK_LOOTS = {
         new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_ENVIRONMENTAL, 1), 50, EventRarity.VERY_RARE),
-        new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_EXPLOSIONS, 1), 25, EventRarity.RARE),
+        new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_EXPLOSIONS, 1), 12, EventRarity.COMMON),
         new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_FALL, 1), 55, EventRarity.VERY_RARE),
         new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_FIRE, 1), 25, EventRarity.RARE),
         new Loot(ItemUtil.getOPEnchantmentBook(Enchantment.PROTECTION_PROJECTILE, 1), 25, EventRarity.RARE)
@@ -87,10 +88,10 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
 
     public static ItemStack getCommonDragonLoot(DragonType type) {
         return switch (type) {
-            case STRONG -> new ItemStack(Material.END_STONE, JavaUtil.randomInt(1, 64));
-            case TANK -> new ItemStack(Material.OBSIDIAN, JavaUtil.randomInt(1, 64));
-            case WEAK -> new ItemStack(Material.RED_SAND, JavaUtil.randomInt(1, 64));
-            case WEIRD -> new ItemStack(Material.ENDER_PEARL, JavaUtil.randomInt(1, 16));
+            case STRONG -> randomStrongItem();
+            case TANK -> randomTankItem();
+            case WEAK -> randomWeakItem();
+            case WEIRD -> randomWeirdItem();
             case MASTER -> randomSkull();
             case MAGICAL -> randomMagicItem();
         };
@@ -111,6 +112,39 @@ public record Loot(ItemStack loot, int chance, EventRarity rarity) {
                 new ItemStack(Material.EXPERIENCE_BOTTLE, JavaUtil.randomInt(1, 64)),
         };
         return JavaUtil.randomElement(potions);
+    }
+
+    public static ItemStack randomStrongItem() {
+        return JavaUtil.randomElement(
+                new ItemStack(Material.END_STONE, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.END_CRYSTAL, JavaUtil.randomInt(1, 16)),
+                new ItemStack(Material.TNT, JavaUtil.randomInt(1, 32)),
+                ItemUtil.getOPEnchantmentBook(Enchantment.DAMAGE_ALL, 0)
+        );
+    }
+
+    public static ItemStack randomWeakItem() {
+        return JavaUtil.randomElement(
+                new ItemStack(Material.RED_SAND, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.SAND, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.SOUL_SAND, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.GRAVEL, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.COARSE_DIRT, JavaUtil.randomInt(1, 64))
+        );
+    }
+
+    public static ItemStack randomTankItem() {
+        return JavaUtil.randomElement(
+                new ItemStack(Material.OBSIDIAN, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.BONE_BLOCK, JavaUtil.randomInt(1, 64)),
+                new ItemStack(Material.ANVIL, JavaUtil.randomInt(1, 3))
+        );
+    }
+
+    public static ItemStack randomWeirdItem() {
+        return JavaUtil.randomElement(
+                ItemUtil.getSkull(SkullTexture.SPECIAL_EYE), new ItemStack(Material.ENDER_EYE, JavaUtil.randomInt(1, 64)
+                ));
     }
 
     public static ItemStack getGodPot() {
