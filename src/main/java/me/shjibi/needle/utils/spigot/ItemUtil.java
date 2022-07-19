@@ -106,7 +106,7 @@ public final class ItemUtil {
 
         String itemColor = (enchanted ? "&b" : (enchantBook ? "&e" : "&r"));
 
-        TextComponent component = new TextComponent(color( itemColor + "[" + name + "&r]"));
+        TextComponent component = new TextComponent(color("[" + itemColor + name + "&r]"));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_ITEM, new net.md_5.bungee.api.chat.hover.content.Item
                 (id, amount, ItemTag.ofNbt(nbt))));
         if (amount > 1) component.addExtra(color(itemColor + " x " + amount));
