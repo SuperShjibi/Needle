@@ -7,6 +7,7 @@ import me.shjibi.needle.utils.spigot.DragonUtil;
 import org.bukkit.*;
 import org.bukkit.boss.DragonBattle;
 import org.bukkit.entity.AreaEffectCloud;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -93,6 +94,11 @@ public class MagicStorm implements Attacker, Listener {
         block.setInvulnerable(true);
         block.setVelocity(vector);
         return block;
+    }
+
+    @Override
+    public void onDisable() {
+        blocks.forEach(Entity::remove);
     }
 
 }

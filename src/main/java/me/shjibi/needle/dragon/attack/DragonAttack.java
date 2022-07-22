@@ -14,8 +14,8 @@ public enum DragonAttack {
     SLOW_DOWN("重量增加", DragonType.TANK, new SlowDown()),
 
     DRAGON_PUNCH("巨龙拳击", DragonType.STRONG, new DragonPunch()),
-    HARD_SMASH("强力敲击", DragonType.STRONG, new HardSmash()),
-    ARROW_SPAM("力量射击", DragonType.STRONG, new ArrowSpam()),
+    HARD_SMASH("强力砸撞", DragonType.STRONG, new HardSmash()),
+    ARROW_SPAM("箭矢泛滥", DragonType.STRONG, new ArrowSpam()),
 
     STUN_ATTACK("晕厥术", DragonType.MAGICAL, new StunAttack()),
     MAGIC_STORM("魔法风暴", DragonType.MAGICAL, new MagicStorm()),
